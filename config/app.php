@@ -163,6 +163,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        Barryvdh\TranslationManager\ManagerServiceProvider::class,
+
         /*
          * Package Service Providers...
          */

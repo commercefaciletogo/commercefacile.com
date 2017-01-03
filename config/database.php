@@ -79,6 +79,18 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'testing' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_TEST_HOST', 'localhost'),
+            'database'  => env('DB_TEST_DATABASE', 'commercefacile_test'),
+            'username'  => env('DB_TEST_USERNAME', 'commercefacile'),
+            'password'  => env('DB_TEST_PASSWORD', 'commercefacile'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ]
+
     ],
 
     /*

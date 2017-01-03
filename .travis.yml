@@ -1,0 +1,15 @@
+language: php
+
+php:
+  - 5.7
+
+before_script:
+  - mkdir bootstrap/cache
+  - cp .travis.env .env
+  - mysql -e 'create database commercefacile_test;'
+  - composer self-update
+  - composer install --no-interaction
+  - php artisan key:generate
+
+script:
+  - vendor/bin/phpunit
