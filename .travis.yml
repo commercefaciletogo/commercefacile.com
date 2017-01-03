@@ -4,7 +4,6 @@ php:
   - 7.0
 
 before_script:
-  - mkdir bootstrap/cache
   - cp .travis.env .env
   - mysql -e 'create database commercefacile_test;'
   - composer self-update
