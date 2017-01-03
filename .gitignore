@@ -1,0 +1,11 @@
+/node_modules
+/public/storage
+/storage/*.key
+/vendor
+/.idea
+.env
+.local.env
+.production.env
+/socket/node_modules
+/.docker
+/.docker-compose
