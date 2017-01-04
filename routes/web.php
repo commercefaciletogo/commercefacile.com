@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['middleware' => ['web']], function(){
+    Route::get('/', function () {
+        return view('welcome');
+    });
+});
+
+
+
+Route::get('/location', function(){
+    geoip()->getClientIP();
+    return [
+        'ip' => geoip()->getClientIP(),
+        'location' => geoip()->getLocation()->getAttribute("country"),
+    ];
 });

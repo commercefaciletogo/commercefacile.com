@@ -1,0 +1,89 @@
+ version: '2'
+
+ services: 
+
+    nginx:
+        build:
+            context: .
+            dockerfile: .docker/docker-ngnix.dockerfile
+        container_name: ngnix
+        volumes:
+            - ./:/var/www/
+        links:
+            - commercefacile-server
+        ports:
+            - "8080:80"
+            - "443:443"
+        networks:
+            - commercefacileapp-network
+
+    commercefacile-server:
+        build:
+            context: .
+            dockerfile: .docker/server.dockerfile
+        container_name: commercefacile-server
+        volumes:
+            - ./:/var/www/
+        depends_on:
+            - commercefacile-db
+            - commercefacile-queue
+            - commercefacile-redis
+            - commercefacile-socket
+        links:
+            - commercefacile-db
+            - commercefacile-queue
+            - commercefacile-redis
+        networks:
+            - commercefacileapp-network
+
+    commercefacile-db:
+        image: mysql:latest
+        container_name: commercefacile-db
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=commercefacile
+            - MYSQL_DATABASE=commercefacile
+            - MYSQL_USER=commercefacile
+            - MYSQL_PASSWORD=commercefacile
+        networks:
+            - commercefacileapp-network
+
+    commercefacile-queue:
+        image: thomasdolar/beanstalkd
+        container_name: commercefacile-queue
+        ports:
+            - "11300:11300"
+        networks:
+            - commercefacileapp-network
+
+    commercefacile-redis:
+        image: sameersbn/redis
+        container_name: commercefacile-redis
+        volumes:
+            - ./storage/docker/redis:/var/lib/redis
+        ports:
+            - "6379:6379"
+        networks:
+            - commercefacileapp-network
+
+    commercefacile-socket:
+        build:
+            context: .
+            dockerfile: .docker/socket.dockerfile
+        container_name: commercefacile-socket
+        links:
+            - commercefacile-redis:redis
+        depends_on:
+            - commercefacile-redis
+        volumes:
+            - ./socket:/var/www/socket
+        ports:
+            - "3000:3000"
+        networks:
+            - commercefacileapp-network
+
+
+ networks: 
+    commercefacileapp-network: 
+        driver: bridge
