@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "name": "commercefacile-socket",
+  "devDependencies": {
+
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "ioredis": "^1.15.1",
+    "lodash": "^4.17.2",
+    "redis.io": "^1.0.0",
+    "socket.io": "^1.4.5"
+  }
+}

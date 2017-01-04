@@ -4,58 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f29a0e3c0b83652e27d2ba6136353e62",
-    "content-hash": "56e3809ded3b48128925a64a6e305127",
+    "hash": "55dc391a40764da60b263f8ef5fd40ee",
+    "content-hash": "dba259f0e1fb51dde64cd681b921b2cb",
     "packages": [
-        {
-            "name": "barryvdh/laravel-translation-manager",
-            "version": "v0.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/barryvdh/laravel-translation-manager.git",
-                "reference": "05921dff9b2af33b67c9ed3839a82a1258190d46"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-translation-manager/zipball/05921dff9b2af33b67c9ed3839a82a1258190d46",
-                "reference": "05921dff9b2af33b67c9ed3839a82a1258190d46",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "5.0.x|5.1.x|5.2.x|5.3.x",
-                "illuminate/translation": "5.0.x|5.1.x|5.2.x|5.3.x",
-                "php": ">=5.4.0",
-                "symfony/finder": "~2.3|~3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Barryvdh\\TranslationManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Manage Laravel Translations",
-            "keywords": [
-                "laravel",
-                "translations",
-                "translator"
-            ],
-            "time": "2016-09-28 11:18:49"
-        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.1.0",
@@ -2299,61 +2250,6 @@
             "time": "2016-12-08 14:58:14"
         },
         {
-            "name": "themsaid/laravel-langman",
-            "version": "v1.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/themsaid/laravel-langman.git",
-                "reference": "0abd7ce039e6e65e51b9e421aa3ff9b31b714867"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/themsaid/laravel-langman/zipball/0abd7ce039e6e65e51b9e421aa3ff9b31b714867",
-                "reference": "0abd7ce039e6e65e51b9e421aa3ff9b31b714867",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "5.1.* || 5.2.* || 5.3.*",
-                "illuminate/filesystem": "5.1.* || 5.2.* || 5.3.*",
-                "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
-                "php": "^5.5.9 || ^7.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.4",
-                "orchestra/database": "3.3.x-dev",
-                "orchestra/testbench": "3.3.x-dev",
-                "phpunit/phpunit": "^4.8 || ^5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Themsaid\\Langman\\": "src"
-                },
-                "classmap": [
-                    "tests"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mohamed Said",
-                    "email": "theMohamedSaid@gmail.com",
-                    "homepage": "https://themsaid.github.io"
-                }
-            ],
-            "description": "Manage language files with ease.",
-            "homepage": "https://github.com/themsaid/laravel-langman",
-            "keywords": [
-                "laravel",
-                "localization",
-                "multilingual"
-            ],
-            "time": "2016-09-03 06:49:21"
-        },
-        {
             "name": "torann/geoip",
             "version": "1.0.2",
             "source": {
@@ -3994,6 +3890,61 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2016-12-10 10:07:06"
+        },
+        {
+            "name": "themsaid/laravel-langman",
+            "version": "v1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/themsaid/laravel-langman.git",
+                "reference": "0abd7ce039e6e65e51b9e421aa3ff9b31b714867"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/themsaid/laravel-langman/zipball/0abd7ce039e6e65e51b9e421aa3ff9b31b714867",
+                "reference": "0abd7ce039e6e65e51b9e421aa3ff9b31b714867",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/filesystem": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
+                "php": "^5.5.9 || ^7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.4",
+                "orchestra/database": "3.3.x-dev",
+                "orchestra/testbench": "3.3.x-dev",
+                "phpunit/phpunit": "^4.8 || ^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Themsaid\\Langman\\": "src"
+                },
+                "classmap": [
+                    "tests"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohamed Said",
+                    "email": "theMohamedSaid@gmail.com",
+                    "homepage": "https://themsaid.github.io"
+                }
+            ],
+            "description": "Manage language files with ease.",
+            "homepage": "https://github.com/themsaid/laravel-langman",
+            "keywords": [
+                "laravel",
+                "localization",
+                "multilingual"
+            ],
+            "time": "2016-09-03 06:49:21"
         },
         {
             "name": "webmozart/assert",

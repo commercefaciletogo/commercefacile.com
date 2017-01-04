@@ -163,7 +163,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        Barryvdh\TranslationManager\ManagerServiceProvider::class,
         Themsaid\Langman\LangmanServiceProvider::class,
         \Torann\GeoIP\GeoIPServiceProvider::class,
 
