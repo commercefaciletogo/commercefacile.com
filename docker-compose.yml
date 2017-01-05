@@ -6,11 +6,14 @@
         build:
             context: .
             dockerfile: .docker/docker-ngnix.dockerfile
-        container_name: ngnix
+        container_name: commercefacile-ngnix
         volumes:
             - ./:/var/www/
+        depends_on:
+            - commercefacile-elk
         links:
             - commercefacile-server
+            - commercefacile-elk
         ports:
             - "8080:80"
             - "443:443"
@@ -80,6 +83,18 @@
             - ./socket:/var/www/socket
         ports:
             - "3000:3000"
+        networks:
+            - commercefacileapp-network
+
+    commercefacile-elk:
+        image: sebp/elk
+        container_name: commercefacile-elk
+        ports:
+            - "5601:5601"
+            - "9200:9200"
+            - "5044:5044"
+        volumes:
+            - /var/elk-data:/var/lib/elasticsearch
         networks:
             - commercefacileapp-network
 
