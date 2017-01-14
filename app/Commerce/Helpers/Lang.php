@@ -20,12 +20,12 @@ class Lang
      */
     public function get()
     {
-        $local = "en";
+        $locale = "en";
 
         if($this->frs()->contains($this->country)){
-            $local = "fr";
+            $locale = "fr";
         }
-        return $local;
+        return $locale;
     }
 
     /**

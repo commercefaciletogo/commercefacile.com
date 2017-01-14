@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Country;
 use Closure;
 use Commerce\Helpers\Lang;
 use Illuminate\Support\Facades\App;
@@ -17,9 +18,11 @@ class LanguageMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $country = geoip()->getLocation()->getAttribute('country');
-        $locale = (new Lang($country))->get();
-        App::setLocale($locale);
+        $country_id = 1;
+        $c = geoip()->getLocation()->getAttribute('country');
+        $country = Country::where('name', $c)->first();
+        if($country) $country_id = $country->id;
+        session()->put('country_id', $country_id);
         return $next($request);
     }
 }

@@ -15,6 +15,10 @@
     "vue-resource": "^1.0.3"
   },
   "dependencies": {
-    "semantic-ui": "^2.2.7"
+    "axios": "^0.15.3",
+    "semantic-ui": "^2.2.7",
+    "sortablejs": "^1.5.0-rc1",
+    "vue-img-loader": "^0.1.6",
+    "vue-sortable": "^0.1.3"
   }
 }

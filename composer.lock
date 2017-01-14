@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "55dc391a40764da60b263f8ef5fd40ee",
-    "content-hash": "dba259f0e1fb51dde64cd681b921b2cb",
+    "hash": "655be2aa4f3579426b2739b3982be4e0",
+    "content-hash": "2c9d5376bb8f8532effd955c6fd7d2cc",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -327,6 +327,84 @@
                 "uri"
             ],
             "time": "2016-06-24 23:00:38"
+        },
+        {
+            "name": "hesto/core",
+            "version": "v1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hesto/core.git",
+                "reference": "31f95264daf92b73629476c7cd928355967937b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hesto/core/zipball/31f95264daf92b73629476c7cd928355967937b1",
+                "reference": "31f95264daf92b73629476c7cd928355967937b1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hesto\\Core\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hesto",
+                    "email": "losiakp@gmail.com"
+                }
+            ],
+            "description": "Core classes for my other modules",
+            "time": "2016-11-24 14:09:12"
+        },
+        {
+            "name": "hesto/multi-auth",
+            "version": "v1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Hesto/multi-auth.git",
+                "reference": "baf8ed31c0012b73f3154664707b06f2722fac79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Hesto/multi-auth/zipball/baf8ed31c0012b73f3154664707b06f2722fac79",
+                "reference": "baf8ed31c0012b73f3154664707b06f2722fac79",
+                "shasum": ""
+            },
+            "require": {
+                "hesto/core": ">=1.0.3",
+                "php": ">=5.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hesto\\MultiAuth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hesto",
+                    "email": "losiakp@gmail.com"
+                }
+            ],
+            "description": "Multi Auth for Laravel 5.3",
+            "keywords": [
+                "auth",
+                "laravel",
+                "multi"
+            ],
+            "time": "2016-11-21 14:37:17"
         },
         {
             "name": "intervention/image",
@@ -844,6 +922,54 @@
             "description": "Internal MaxMind Web Service API",
             "homepage": "https://github.com/maxmind/mm-web-service-api-php",
             "time": "2016-08-18 16:36:52"
+        },
+        {
+            "name": "mcamara/laravel-localization",
+            "version": "1.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcamara/laravel-localization.git",
+                "reference": "400a5e577f34acf4b0e4f9cade10a63d91899152"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcamara/laravel-localization/zipball/400a5e577f34acf4b0e4f9cade10a63d91899152",
+                "reference": "400a5e577f34acf4b0e4f9cade10a63d91899152",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.2",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "3.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [],
+                "psr-0": {
+                    "Mcamara\\LaravelLocalization": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Cámara",
+                    "email": "mcamara88@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy localization for Laravel",
+            "homepage": "https://github.com/mcamara/laravel-localization",
+            "keywords": [
+                "laravel",
+                "localization",
+                "php"
+            ],
+            "time": "2016-12-31 17:44:39"
         },
         {
             "name": "monolog/monolog",

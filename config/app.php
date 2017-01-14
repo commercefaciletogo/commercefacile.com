@@ -163,14 +163,13 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        Themsaid\Langman\LangmanServiceProvider::class,
-        \Torann\GeoIP\GeoIPServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
-
-        //
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        Themsaid\Langman\LangmanServiceProvider::class,
+        Torann\GeoIP\GeoIPServiceProvider::class,
+        Hesto\MultiAuth\MultiAuthServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
 
     ],
 
