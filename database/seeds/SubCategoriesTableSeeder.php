@@ -12,15 +12,15 @@ class SubCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sub_categories')->insert($this->get_data());
+        DB::table('categories')->insert($this->get_data());
     }
 
     private function get_data(){
-        collect($this->get_sub_categories())->map(function($s_c){
+        return collect($this->get_sub_categories())->map(function($s_c){
             return [
-                'name' => $s_c['name'],
+                'name' => title_case($s_c['name']),
                 'slug' => str_slug($s_c['name']),
-                'category_id' => $s_c['category_id']
+                'parent_id' => $s_c['category_id']
             ];
         })->toArray();
     }

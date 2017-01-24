@@ -12,6 +12,7 @@ class CountriesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('countries')->truncate();
         foreach ($this->get_countries() as $country){
             DB::table('countries')->insert([
                 'name' => $country,

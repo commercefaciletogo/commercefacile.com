@@ -12,11 +12,12 @@ class RegionsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('regions')->insert($this->get_regions());
+        DB::table('regions')->truncate();
+        DB::table('regions')->insert($this->get_data());
     }
 
     private function get_data(){
-        collect($this->get_regions())->map(function($region){
+        return collect($this->get_regions())->map(function($region){
             return [
                 'name' => $region['name'],
                 'country_id' => $region['country_id'],

@@ -23,4 +23,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Category::class, function(Faker\Generator $faker){
+    $name = $faker->name;
 
+    return [
+        'name' => $name,
+        'slug' => str_slug($name),
+    ];
+});
+
+$factory->define(App\SubCategory::class, function(Faker\Generator $faker){
+    $name = $faker->name;
+
+    return [
+        'name' => $name,
+        'slug' => str_slug($name),
+        'category_id' => App\Category::all()->random()->id
+    ];
+});

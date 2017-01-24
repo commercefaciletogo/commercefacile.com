@@ -12,13 +12,14 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('categories')->truncate();
         DB::table('categories')->insert($this->get_data());
     }
 
     private function get_data(){
-        collect($this->get_categories())->map(function($cat){
+        return collect($this->get_categories())->map(function($cat){
             return [
-                'name' => $cat,
+                'name' => title_case($cat),
                 'slug' => str_slug($cat)
             ];
         })->toArray();

@@ -2,10 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
+    /**
+     * @var Category
+     */
+    private $category;
+
+    /**
+     * CategoriesController constructor.
+     * @param Category $category
+     */
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +28,17 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->category->with('children')->whereNull('parent_id')->get();
+        $categories = collect($categories)->map(function($category){
+            return [
+                'id' => $category->id,
+                'name' => $category->name,
+                'children' => $category->children
+            ];
+        });
+
+
+        return response()->json($categories);
     }
 
     /**

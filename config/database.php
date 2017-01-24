@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlite'),
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +48,13 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => env('DB_DATABASE/..', database_path('database.sqlite')),
+            'prefix' => '',
+        ],
+
+        'testing' => [
+            'driver' => 'sqlite',
+            'database' => env('DB_TESTING_DATABASE/..', database_path('testing.sqlite')),
             'prefix' => '',
         ],
 
@@ -79,17 +85,17 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'testing' => [
-            'driver'    => 'mysql',
-            'host'      => env('DB_TEST_HOST', 'localhost'),
-            'database'  => env('DB_TEST_DATABASE', 'commercefacile_test'),
-            'username'  => env('DB_TEST_USERNAME', 'commercefacile'),
-            'password'  => env('DB_TEST_PASSWORD', 'commercefacile'),
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-            'strict'    => false,
-        ]
+//        'testing' => [
+//            'driver'    => 'mysql',
+//            'host'      => env('DB_TEST_HOST', 'localhost'),
+//            'database'  => env('DB_TEST_DATABASE', 'commercefacile_test'),
+//            'username'  => env('DB_TEST_USERNAME', 'commercefacile'),
+//            'password'  => env('DB_TEST_PASSWORD', 'commercefacile'),
+//            'charset'   => 'utf8',
+//            'collation' => 'utf8_unicode_ci',
+//            'prefix'    => '',
+//            'strict'    => false,
+//        ]
 
     ],
 

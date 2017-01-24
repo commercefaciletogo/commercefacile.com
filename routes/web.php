@@ -16,6 +16,14 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['middleware' => ['country']], function(){
 
+    Route::resource("categories", "CategoriesController");
+    Route::resource("sub-categories", "SubCategoriesController");
+
+    Route::resource("cities", "CitiesController");
+    Route::resource("regions", "RegionsController");
+
+    Route::get('/locations', ['as' => 'locations.index', 'uses' => 'LocationsController@index']);
+
     Route::group(['prefix' => LaravelLocalization::setLocale(),
         'middleware' => [ 'localize', 'localeSessionRedirect', 'localizationRedirect' ]], function(){
 
@@ -36,17 +44,22 @@ Route::group(['middleware' => ['country']], function(){
 
         Route::get('/', ['as' => 'home.page', 'uses' => 'PagesController@home']);
 
+
         Route::get("ads", ['as' => 'ads.multiple', 'uses' => 'AdsController@multiple']);
         Route::get("ads/create", ['as' => 'ads.create', 'uses' => 'AdsController@create']);
         Route::post("ads", ['as' => 'ads.save', 'uses' => 'AdsController@save']);
         Route::get("ads/{id}", ['as' => 'ads.single', 'uses' => 'AdsController@single']);
+
+
+
+
+
+
+
+        Route::get('/{user_name}', ['as' => 'user.profile', 'uses' => 'UsersController@profile']);
+        Route::get('/{user_name}/settings', ['as' => 'user.profile.settings', 'uses' => 'UsersController@settings']);
+        Route::get('/{user_name}/favorites', ['as' => 'user.profile.favorites', 'uses' => 'UsersController@favorites']);
     });
-
-    Route::resource("categories", "CategoriesController");
-    Route::resource("sub-categories", "SubCategoriesController");
-
-    Route::resource("cities", "CitiesController");
-    Route::resource("regions", "RegionsController");
 
 });
 

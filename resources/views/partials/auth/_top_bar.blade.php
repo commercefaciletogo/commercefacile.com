@@ -1,4 +1,4 @@
-<div class="fluid container" style="background: #e8eaee;">
+<div class="fluid container" style="background: #1D305D; color: white;">
     <div class="ui container">
         <div class="ui borderless menu" style="
         border-radius: 0;
@@ -6,7 +6,7 @@
         box-shadow: none;
         background: transparent;
     ">
-            <a class="item" href="{{ route('home.page') }}">
+            <a class="item" href="{{ route('home.page') }}" style="color: white;">
                 {{--<img src="" alt="">--}}
                 LOGO
             </a>
