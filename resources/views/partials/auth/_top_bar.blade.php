@@ -7,8 +7,7 @@
         background: transparent;
     ">
             <a class="item" href="{{ route('home.page') }}" style="color: white;">
-                {{--<img src="" alt="">--}}
-                LOGO
+                <img src="/img/logo-acro.png" alt="">
             </a>
             <div class="right menu">
                 <div class="item">

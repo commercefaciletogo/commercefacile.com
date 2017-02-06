@@ -1,8 +1,12 @@
 <html>
 <head>
     <title>Commercefacile.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
     <style>
+        html{
+            height: 100%;
+        }
         body{
             display: flex;
             min-height: 100vh;
@@ -10,16 +14,6 @@
         }
         body > div.ui.container.fluid{
             flex: 1;
-        }
-
-        /*div#main > div.ui.container {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-        }*/
-
-        .ui.vertical.footer.segment {
-            border-top: .4em solid #33446d;
         }
 
         .ui.vertical.footer.segment a{
@@ -101,13 +95,21 @@
             color: #33446d;
         }
 
+        @media only screen and (max-width: 767px){
+            .ui.container{
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+        }
+
+
     </style>
     @yield('styles')
 </head>
 <body>
-@include('partials.auth._top_bar')
 
-<div class="ui container fluid" style="background: #f5f6f8; justify-content: center; align-items: stretch;">
+<div class="ui container fluid" style="background: #e8eaee;">
+    @include('partials.auth._top_bar')
     @yield('main')
 </div>
 

@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 class AdsController extends Controller
 {
-    public function multiple(){}
+    public function multiple()
+    {
+        return view('pages.ads.multiple');
+    }
 
     public function single($id){}
 

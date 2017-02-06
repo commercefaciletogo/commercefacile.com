@@ -6,6 +6,7 @@ import Categories from '../components/ads/create/Categories.vue';
 import CategoryItem from '../components/ads/create/CategoryMenuItem.vue';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
+import OptionItem from '../components/ads/create/OptionItem.vue';
 
 new Vue({
     el: 'div#main',
@@ -49,7 +50,7 @@ new Vue({
         'image-preview': ImagePreview,
         'categories': Categories,
         'sub-categories': SubCategories,
-        'option-item' : CategoryItem
+        'option-item' : OptionItem
     },
     methods: {
         ReorderImages(event){
@@ -67,8 +68,7 @@ new Vue({
             this.newAd.photos = _.reject(this.newAd.photos, {'name': name});
         },
         chooseCategory(e){
-            console.log(e.target);
-            $('.categories').modal('refresh').modal('show');
+
         },
         fetchSub(category){
             this.selectedCategory = category;
@@ -91,11 +91,11 @@ new Vue({
                     console.log(error);
                 });
         },
-        closeModal(subCategory){
-            this.selectedSubCategory = subCategory;
-            this.newAd.category.text = `${this.selectedCategory.name} > ${this.selectedSubCategory.name}`;
-            this.newAd.category.subId = this.selectedSubCategory.id;
-            $('.categories').modal('hide');
+        closeModal({id, name}){
+            this.selectedSubCategory = {id, name};
+            this.newAd.category.text = `${name}`;
+            this.newAd.category.subId = id;
+            $('#chooseCategory').remodal().close();
         },
         preview(){
 
@@ -121,6 +121,8 @@ new Vue({
                 this.user.location.id = value;
             }.bind(this)
         });
+
+        $('#chooseCategory').accordion();
 
         this.fetchCategories();
         this.fetchLocations();

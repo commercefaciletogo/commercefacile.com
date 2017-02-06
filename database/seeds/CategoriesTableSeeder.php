@@ -27,18 +27,18 @@ class CategoriesTableSeeder extends Seeder
 
     private function get_categories(){
         return [
-            'electronics',
-            'vehicles',
-            'jobs and services',
-            'fashion and beauty',
-            'education',
-            'food and agriculture',
-            'construction and industrial',
-            'animal and pets',
-            'home, furniture and garden',
-            'real estate',
-            'hobby, art and sport',
-            'other',
+            'Electronics',
+            'Vehicles',
+            'Fashion & Beauty',
+            'Education',
+            'Food and agriculture',
+            'Construction & Industrial',
+            'Animals & Pets',
+            'Home, Furniture & Garden',
+            'Real Estate',
+            'Hobby, Art & Sport',
+            'Other',
+//            'Jobs & Services',
         ];
     }
 }

@@ -33,6 +33,7 @@ class CategoriesController extends Controller
             return [
                 'id' => $category->id,
                 'name' => $category->name,
+                'icon' => "/img/icons/{$category->slug}.png",
                 'children' => $category->children
             ];
         });
@@ -70,7 +71,8 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = $this->category->with('children')->where('id', $id)->first()->children;
+        return response()->json($categories);
     }
 
     /**

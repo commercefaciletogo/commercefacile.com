@@ -1,8 +1,8 @@
-<div class="ui vertical footer segment" style="">
+<div class="ui vertical footer segment" style="background: white; border-top: solid 5px #33446d; border-bottom: 0;">
     <div class="ui center aligned container">
         <div class="ui stackable divided grid">
             <div class="three wide column">
-                <h4 class="ui header">How to sell fast</h4>
+                <h4 class="ui header">{{ trans('general.how_to_sell_fast') }}</h4>
                 <div class="ui link list">
                     <a href="#" class="item">Link One</a>
                     <a href="#" class="item">Link Two</a>
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui header">Help & Support</h4>
+                <h4 class="ui header">{{ trans('general.help_and_support') }}</h4>
                 <div class="ui link list">
                     <a href="#" class="item">Link One</a>
                     <a href="#" class="item">Link Two</a>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui header">Social</h4>
+                <h4 class="ui header">{{ trans('general.social') }}</h4>
                 <div class="ui link list">
                     <a href="#" class="item">Link One</a>
                     <a href="#" class="item">Link Two</a>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui header">About us</h4>
+                <h4 class="ui header">{{ trans('general.about_us') }}</h4>
                 <div class="ui link list">
                     <a href="#" class="item">Link One</a>
                     <a href="#" class="item">Link Two</a>
@@ -38,14 +38,20 @@
                 </div>
             </div>
             <div class="four wide column">
-                <h4 class="ui header">Footer Header</h4>
-                <p style="color: #77829d;">Extra space for a call to action inside the footer that could help re-engage users.</p>
+                <h4 class="ui header">{{ trans('general.languages') }}</h4>
+                <div class="ui link list">
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <a class="item" rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
+                            {{ $properties['native'] }}
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
         <div class="ui section divider"></div>
-        <img src="assets/images/logo.png" class="ui centered mini image">
+        <img src="/img/logo-acro.png" class="ui centered mini image">
         <div class="ui horizontal " style="color: #a4acbe;">
-            Copyright &COPY; Commercefacile SARL
+            Copyright &COPY; Commercefacile SARL, {{ trans('general.all_right_reserved') }}
         </div>
     </div>
 </div>
