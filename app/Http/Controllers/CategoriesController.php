@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class CategoriesController extends Controller
 {
@@ -30,16 +32,31 @@ class CategoriesController extends Controller
     {
         $categories = $this->category->with('children')->whereNull('parent_id')->get();
         $categories = collect($categories)->map(function($category){
+           $category = $category->translate(LaravelLocalization::getCurrentLocale());
             return [
-                'id' => $category->id,
+                'id' => $category->category_id,
                 'name' => $category->name,
-                'icon' => "/img/icons/{$category->slug}.png",
-                'children' => $category->children
+                'icon' => "/img/icons/{$category->key}.png",
+                'slug' => $category->slug,
+                'children' => $this->get_sub_categories($category->category_id)
             ];
         });
 
 
         return response()->json($categories);
+    }
+
+    private function get_sub_categories($parent_id)
+    {
+        $categories = $this->category->where('parent_id', $parent_id)->get();
+        return $categories->map(function($category){
+            $category = $category->translate(LaravelLocalization::getCurrentLocale());
+            return [
+                'id' => $category->category_id,
+                'name' => $category->name,
+                'slug' => $category->slug
+            ];
+        });
     }
 
     /**

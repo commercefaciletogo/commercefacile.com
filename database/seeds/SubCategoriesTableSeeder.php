@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Category;
 
 class SubCategoriesTableSeeder extends Seeder
 {
@@ -12,82 +13,99 @@ class SubCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert($this->get_data());
+        foreach ($this->get_data() as $data) {
+            Category::create($data);
+        }
+        // DB::table('categories')->insert($this->get_data());
     }
 
     private function get_data(){
         return collect($this->get_sub_categories())->map(function($s_c){
+            $sub_cat_en = trans("category.{$s_c['key']}", [], "messages", "en");
+            $sub_cat_fr = trans("category.{$s_c['key']}", [], "messages", "fr");
+
             return [
-                'name' => title_case($s_c['name']),
-                'slug' => str_slug($s_c['name']),
-                'parent_id' => $s_c['category_id']
+                'parent_id' => $s_c['category_id'],
+                'key' => $s_c['key'],
+                'en' => [
+                    'name' => title_case($sub_cat_en),
+                    'slug' => str_slug($sub_cat_en),
+                    'key' => $s_c['key'],
+                    'parent_id' => $s_c['category_id'],
+                ],
+                'fr' => [
+                    'name' => title_case($sub_cat_fr),
+                    'slug' => str_slug($sub_cat_fr),
+                    'key' => $s_c['key'],
+                    'parent_id' => $s_c['category_id'],
+                ]
             ];
         })->toArray();
     }
 
     private function get_sub_categories(){
         return [
-            ['name' => 'mobile phones', 'category_id' => 1],
-            ['name' => 'mobile phone accessories', 'category_id' => 1],
-            ['name' => 'computers and tablets', 'category_id' => 1],
-            ['name' => 'computers accessories', 'category_id' => 1],
-            ['name' => 'tvs', 'category_id' => 1],
-            ['name' => 'tv and video accessories', 'category_id' => 1],
-            ['name' => 'cameras', 'category_id' => 1],
-            ['name' => 'audio and mp3', 'category_id' => 1],
-            ['name' => 'other electronics', 'category_id' => 1],
+            ['key' => 'mob_pho', 'category_id' => 1],
+            ['key' => 'mob_pho_acc', 'category_id' => 1],
+            ['key' => 'comp_tab', 'category_id' => 1],
+            ['key' => 'comp_acc', 'category_id' => 1],
+            ['key' => 'tvs', 'category_id' => 1],
+            ['key' => 'tv_video', 'category_id' => 1],
+            ['key' => 'cam', 'category_id' => 1],
+            ['key' => 'audio_mp3', 'category_id' => 1],
+            ['key' => 'other_elec', 'category_id' => 1],
 
-            ['name' => 'car accessories', 'category_id' => 2],
-            ['name' => 'cars', 'category_id' => 2],
-            ['name' => 'motorcycles', 'category_id' => 2],
-            ['name' => 'other vehicles', 'category_id' => 2],
-            ['name' => 'bicycles', 'category_id' => 2],
+            ['key' => 'car_acc', 'category_id' => 2],
+            ['key' => 'cars', 'category_id' => 2],
+            ['key' => 'moto', 'category_id' => 2],
+            ['key' => 'other_veh', 'category_id' => 2],
+            ['key' => 'bicy', 'category_id' => 2],
 
-//            ['name' => 'offered jobs', 'category_id' => 3],
-//            ['name' => 'seeking jobs', 'category_id' => 3],
-//            ['name' => 'services', 'category_id' => 3],
+//            ['key' => 'off_job', 'category_id' => 3],
+//            ['key' => 'seek_job', 'category_id' => 3],
+//            ['key' => 'serv', 'category_id' => 3],
 
-            ['name' => 'clothing and shoes', 'category_id' => 3],
-            ['name' => 'health and beauty', 'category_id' => 3],
-            ['name' => 'watches, jewelry and accessories', 'category_id' => 3],
-            ['name' => 'other personal items', 'category_id' => 3],
+            ['key' => 'clot_sho', 'category_id' => 3],
+            ['key' => 'heal_beau', 'category_id' => 3],
+            ['key' => 'watch_jew', 'category_id' => 3],
+            ['key' => 'other_pers_item', 'category_id' => 3],
 
-            ['name' => 'textbooks', 'category_id' => 4],
-            ['name' => 'teaching and training', 'category_id' => 4],
-            ['name' => 'other education', 'category_id' => 4],
+            ['key' => 'textb', 'category_id' => 4],
+            ['key' => 'teach_train', 'category_id' => 4],
+            ['key' => 'other_educ', 'category_id' => 4],
 
-            ['name' => 'food', 'category_id' => 5],
-            ['name' => 'crops, seeds and plants', 'category_id' => 5],
-            ['name' => 'chemical, tools and machinery', 'category_id' => 5],
-            ['name' => 'other food and agriculture', 'category_id' => 5],
+            ['key' => 'food', 'category_id' => 5],
+            ['key' => 'crop_seed', 'category_id' => 5],
+            ['key' => 'chem_tool', 'category_id' => 5],
+            ['key' => 'other_food', 'category_id' => 5],
 
-            ['name' => 'construction tools and equipment', 'category_id' => 6],
-            ['name' => 'construction and building materials', 'category_id' => 6],
-            ['name' => 'business and industrial equipment', 'category_id' => 6],
-            ['name' => 'construction services', 'category_id' => 6],
+            ['key' => 'const_tool', 'category_id' => 6],
+            ['key' => 'const_build', 'category_id' => 6],
+            ['key' => 'busi_indus', 'category_id' => 6],
+            ['key' => 'const_serv', 'category_id' => 6],
 
-            ['name' => 'pets', 'category_id' => 7],
-            ['name' => 'farm animals', 'category_id' => 7],
-            ['name' => 'food for animals', 'category_id' => 7],
-            ['name' => 'accessories for animals', 'category_id' => 7],
-            ['name' => 'caretakers, pet sitters and dog walkers', 'category_id' => 7],
-            ['name' => 'veterinary services', 'category_id' => 7],
-            ['name' => 'grooming services', 'category_id' => 7],
-            ['name' => 'other pets and animals', 'category_id' => 7],
+            ['key' => 'pets', 'category_id' => 7],
+            ['key' => 'farm_anim', 'category_id' => 7],
+            ['key' => 'food_anim', 'category_id' => 7],
+            ['key' => 'acc_anim', 'category_id' => 7],
+            ['key' => 'care_pet', 'category_id' => 7],
+            ['key' => 'verte_serv', 'category_id' => 7],
+            ['key' => 'groom_serv', 'category_id' => 7],
+            ['key' => 'other_pets', 'category_id' => 7],
 
-            ['name' => 'furniture', 'category_id' => 8],
-            ['name' => 'home appliances', 'category_id' => 8],
-            ['name' => 'electricity, garden, air conditioner, bathroom', 'category_id' => 8],
-            ['name' => 'other home items', 'category_id' => 8],
+            ['key' => 'furni', 'category_id' => 8],
+            ['key' => 'home_appl', 'category_id' => 8],
+            ['key' => 'elec_gard', 'category_id' => 8],
+            ['key' => 'other_home_item', 'category_id' => 8],
 
-            ['name' => 'houses', 'category_id' => 9],
-            ['name' => 'apartment', 'category_id' => 9],
-            ['name' => 'rooms', 'category_id' => 9],
-            ['name' => 'land', 'category_id' => 9],
-            ['name' => 'commercial property', 'category_id' => 9],
+            ['key' => 'houses', 'category_id' => 9],
+            ['key' => 'apart', 'category_id' => 9],
+            ['key' => 'rooms', 'category_id' => 9],
+            ['key' => 'land', 'category_id' => 9],
+            ['key' => 'comm_prop', 'category_id' => 9],
 
-            ['name' => 'toys and games', 'category_id' => 10],
-            ['name' => 'books, cds, dvds', 'category_id' => 10],
+            ['key' => 'toys_games', 'category_id' => 10],
+            ['key' => 'books_cds', 'category_id' => 10],
         ];
     }
 }

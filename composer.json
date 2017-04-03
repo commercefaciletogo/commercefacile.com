@@ -6,12 +6,22 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "delight-im/ids": "^1.0",
+        "elasticsearch/elasticsearch": "^5.1",
         "geoip2/geoip2": "^2.4",
+        "hashids/hashids": "^2.0",
         "hesto/multi-auth": "^1.0",
         "intervention/image": "^2.3",
         "laravel/framework": "5.3.*",
+        "laravel/scout": "2.0.2",
+        "league/flysystem-dropbox": "^1.0",
+        "league/flysystem-rackspace": "1.0",
+        "league/fractal": "^0.15.0",
         "mcamara/laravel-localization": "^1.1",
+        "pda/pheanstalk": "^3.1",
         "predis/predis": "^1.1",
+        "ramsey/uuid": "^3.5",
+        "tamayo/laravel-scout-elastic": "2.0.0",
         "torann/geoip": "^1.0"
     },
     "require-dev": {
@@ -27,7 +37,8 @@
             "database"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Commerce\\": "app/Commerce"
         }
     },
     "autoload-dev": {

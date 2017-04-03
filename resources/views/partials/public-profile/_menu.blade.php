@@ -1,0 +1,3 @@
+<a href="{{ route('user.profile', ['user_name' => 'thomas']) }}" class="item {{ request()->route()->getName() == 'user.profile' ? "active":  '' }} ">{{trans('general.ads')}}</a>
+<a href="{{ route('user.profile.favorites', ['user_name' => 'thomas']) }}" class="item {{ request()->route()->getName() == 'user.profile.favorites' ? "active":  '' }} ">{{trans('general.favorites')}}</a>
+<a href="{{ route('user.profile.settings', ['user_name' => 'thomas']) }}" class="item  {{ request()->route()->getName() == 'user.profile.settings' ? "active":  '' }} ">{{trans('general.settings')}}</a>

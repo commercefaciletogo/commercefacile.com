@@ -15,13 +15,13 @@
         },
         computed: {
             image(){
-                return URL.createObjectURL(this.src);
+                return URL.createObjectURL(this.src.file);
             }
         },
         props: ['src'],
         methods: {
             remove(){
-                this.$emit('remove', this.src.name);
+                this.$emit('remove', this.src.id);
             }
         },
         mounted(){

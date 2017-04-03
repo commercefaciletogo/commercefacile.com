@@ -18,13 +18,14 @@
                             <div class="item">
                                 <a href="{{ route('ads.create') }}" class="ui button post-ad">{{ trans('general.p_f_a') }}</a>
                             </div>
-                            @if(Auth::guest())
+                            @if(Auth::guard('user')->guest())
                                 <div class="item">
                                     <a href="{{ route('user.get.login') }}" class="ui button signin naked" >{{ trans('auth.sign_in') }}</a>
                                 </div>
                             @else
                                 <div class="item">
-                                    <a class="ui button account" >{{ trans('general.my_account') }}</a>
+                                    <a href="{{ route('user.profile', ['user_name' => Auth::guard('user')->user()->slug]) }}"
+                                       class="ui button account" >{{ trans('general.my_account') }}</a>
                                 </div>
                             @endif
                         </div>
@@ -41,19 +42,20 @@
                     <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none;">
 
                         <a class="item" href="{{ route('home.page') }}" style="color: white;">
-                            <img style="width: 10em;" src="/img/logo.png" alt="">
+                            <img class="ui small image" src="{!! asset('/img/logos/logo_w_n.png') !!}" alt="">
                         </a>
                         <div class="right menu">
                             <div class="item">
                                 <a href="{{ route('ads.create') }}" class="ui button post-ad">{{ trans('general.p_f_a') }}</a>
                             </div>
-                            @if(Auth::guest())
+                            @if(auth('user')->guest())
                                 <div class="item">
                                     <a href="{{ route('user.get.login') }}" class="ui button signin naked" >{{ trans('auth.sign_in') }}</a>
                                 </div>
                             @else
                                 <div class="item">
-                                    <a class="ui button account" >{{ trans('general.my_account') }}</a>
+                                    <a href="{{ route('user.profile', ['user_name' => auth('user')->user()->slug]) }}"
+                                       class="ui button account" >{{ trans('general.my_account') }}</a>
                                 </div>
                             @endif
                         </div>
@@ -68,23 +70,24 @@
             <div style="background: white; border-bottom: 2px solid #d1d5de;">
                 <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none;">
                     <a class="item" href="{{ route('home.page') }}" style="color: white;">
-                        <img src="/img/logo-acro.png" alt="">
+                        <img src="{!! asset('/img/logos/logo_acro.png') !!}" alt="">
                     </a>
                     <div class="right menu">
-                        @if(Auth::guest())
-                            <div class="item">
-                                <a href="{{ route('ads.create') }}" class="ui button post-ad">{{ trans('general.p_f_a') }}</a>
-                            </div>
+                        <div class="item">
+                            <a href="{{ route('ads.create') }}" class="ui button post-ad" style="">{{ trans('general.p_f_a') }}</a>
+                        </div>
+                        @if(auth('user')->guest())
+                            <a class="item" href="{{ route('user.get.login') }}">
+                                <i class="icon big sign in" style="color: rgb(96, 110, 141);"></i>
+                            </a>
                         @else
-                            <div class="item">
-                                <a class="ui button account" >{{ trans('general.my_account') }}</a>
-                            </div>
+                            <a class="item" href="{{ route('user.profile', ['user_name' => auth('user')->user()->slug]) }}">
+                                <img src="{!! asset('/img/icons/user.png') !!}" alt="">
+                            </a>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>

@@ -14,52 +14,103 @@
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::group(['middleware' => ['country']], function(){
+Route::resource("sub-categories", "SubCategoriesController");
 
-    Route::resource("categories", "CategoriesController");
-    Route::resource("sub-categories", "SubCategoriesController");
+Route::resource("cities", "CitiesController");
+Route::resource("regions", "RegionsController");
 
-    Route::resource("cities", "CitiesController");
-    Route::resource("regions", "RegionsController");
+Route::group(['prefix' => LaravelLocalization::setLocale(),
+    'middleware' => [ 'localize', 'localeSessionRedirect', 'localizationRedirect' ]], function(){
 
-    Route::get('/locations', ['as' => 'locations.index', 'uses' => 'LocationsController@index']);
 
-    Route::group(['prefix' => LaravelLocalization::setLocale(),
-        'middleware' => [ 'localize', 'localeSessionRedirect', 'localizationRedirect' ]], function(){
 
-        Route::group(['prefix' => 'user'], function () {
-            Route::get('/login', ['as' => 'user.get.login', 'uses' => 'UserAuth\LoginController@showLoginForm']);
-            Route::post('/login', ['as' => 'user.post.login', 'uses' => 'UserAuth\LoginController@login']);
-            Route::post('/logout', ['as' => 'user.post.logout', 'uses' => 'UserAuth\LoginController@logout']);
 
-            Route::get('/register', ['as' => 'user.get.register', 'uses' => 'UserAuth\RegisterController@showRegistrationForm']);
-            Route::post('/register', ['as' => 'user.post.register', 'uses' => 'UserAuth\RegisterController@register']);
+    Route::group(['prefix' => 'admin'], function () {
 
-            Route::post('/password/email', ['as' => 'user.post.email', 'uses' => 'UserAuth\ForgotPasswordController@sendResetLinkEmail']);
-            Route::post('/password/reset', ['as' => 'user.post.pass.reset', 'uses' => 'UserAuth\ResetPasswordController@reset']);
-            Route::get('/password/reset', ['as' => 'user.get.pass.reset', 'uses' => 'UserAuth\ForgotPasswordController@showLinkRequestForm']);
-            Route::get('/password/reset/{token}', ['as' => 'user.get.reset.token', 'uses' => 'UserAuth\ResetPasswordController@showResetForm']);
+        Route::group(['prefix' => 'api'], function(){
+            Route::get('ads', ['as' => 'api.ads', 'uses' => 'AdsApiController@all']);
+            Route::get('ads/status', ['as' => 'api.ads.status', 'uses' => 'AdsApiController@status']);
+            Route::post('ads/{id}', ['as' => 'api.ad.review', 'uses' => 'AdsApiController@review']);
         });
 
 
-        Route::get('/', ['as' => 'home.page', 'uses' => 'PagesController@home']);
+        Route::get('/login', 'AdminAuth\LoginController@showLoginForm');
+        Route::post('/login', 'AdminAuth\LoginController@login');
+        Route::post('/logout', 'AdminAuth\LoginController@logout');
 
-
-        Route::get("ads", ['as' => 'ads.multiple', 'uses' => 'AdsController@multiple']);
-        Route::get("ads/create", ['as' => 'ads.create', 'uses' => 'AdsController@create']);
-        Route::post("ads", ['as' => 'ads.save', 'uses' => 'AdsController@save']);
-        Route::get("ads/{id}", ['as' => 'ads.single', 'uses' => 'AdsController@single']);
-
-
-
-
-
-
-
-        Route::get('/{user_name}', ['as' => 'user.profile', 'uses' => 'UsersController@profile']);
-        Route::get('/{user_name}/settings', ['as' => 'user.profile.settings', 'uses' => 'UsersController@settings']);
-        Route::get('/{user_name}/favorites', ['as' => 'user.profile.favorites', 'uses' => 'UsersController@favorites']);
+        Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminPagesController@dashboardPage']);
+        Route::get('/ads', ['as' => 'admin.ads', 'uses' => 'AdminPagesController@adsPage']);
+        Route::get('/ads/{id}', ['as' => 'admin.ad.action', 'uses' => 'AdminPagesController@adPage']);
+        Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
+        Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminPagesController@usersPage']);
     });
 
-});
 
+
+
+
+
+
+    Route::resource("categories", "CategoriesController");
+    Route::get('/locations', ['as' => 'locations.index', 'uses' => 'LocationsController@index']);
+    Route::get('/locations/{id}', ['as' => 'locations.index', 'uses' => 'LocationsController@cities']);
+
+    Route::get(LaravelLocalization::transRoute('routes.login'), ['as' => 'user.get.login', 'uses' => 'UserAuth\LoginController@showLoginForm']);
+    Route::post(LaravelLocalization::transRoute('routes.login'), ['as' => 'user.post.login', 'uses' => 'UserAuth\LoginController@login']);
+    Route::post(LaravelLocalization::transRoute('routes.logout'), ['as' => 'user.post.logout', 'uses' => 'UserAuth\LoginController@logout']);
+
+    Route::get(LaravelLocalization::transRoute('routes.register'), ['as' => 'user.get.register', 'uses' => 'UserAuth\RegisterController@showRegistrationForm']);
+    Route::post(LaravelLocalization::transRoute('routes.register'), ['as' => 'user.post.register', 'uses' => 'UserAuth\RegisterController@registerUser']);
+    Route::post(LaravelLocalization::transRoute('routes.phone_verify'), ['as' => 'user.post.phone.verify', 'uses' => 'UserAuth\RegisterController@authenticatePhone']);
+
+    Route::post(LaravelLocalization::transRoute('routes.password-email'), ['as' => 'user.post.email', 'uses' => 'UserAuth\ForgotPasswordController@sendResetLinkEmail']);
+    Route::post(LaravelLocalization::transRoute('routes.password-reset'), ['as' => 'user.post.pass.reset', 'uses' => 'UserAuth\ResetPasswordController@reset']);
+    Route::get(LaravelLocalization::transRoute('routes.password-reset'), ['as' => 'user.get.pass.reset', 'uses' => 'UserAuth\ForgotPasswordController@showLinkRequestForm']);
+    Route::get(LaravelLocalization::transRoute('routes.password-reset-token'), ['as' => 'user.get.reset.token', 'uses' => 'UserAuth\ResetPasswordController@showResetForm']);
+
+
+    Route::get('/', ['as' => 'home.page', 'uses' => 'PagesController@home']);
+
+    Route::group(['middleware' => 'user'], function(){
+//        ads/create
+        Route::get(LaravelLocalization::transRoute('routes.ads-create'), ['as' => 'ads.create', 'uses' => 'AdsController@create']);
+
+//        ads/{id}/edit
+        Route::get(LaravelLocalization::transRoute('routes.ads-single-edit'), ['as' => 'ads.single.edit', 'uses' => 'AdsController@edit']);
+
+//        ads/{id}/update
+        Route::post(LaravelLocalization::transRoute('routes.ads-single-update'), ['as' => 'ads.single.update', 'uses' => 'AdsController@update']);
+        Route::post(LaravelLocalization::transRoute('routes.ads-single-update-cancel'), ['as' => 'ads.single.update.cancel', 'uses' => 'AdsController@cancelUpdate']);
+
+//        ads/{id}/report
+        Route::post(LaravelLocalization::transRoute('routes.ads-single-report'), ['as' => 'ads.single.report', 'uses' => 'AdsController@report']);
+
+//        ads/{id}/favorite
+        Route::post(LaravelLocalization::transRoute('routes.ads-single-favorite'), ['as' => 'ads.single.favorite', 'uses' => 'AdsController@favorite']);
+
+//        ads/{id}
+        Route::post(LaravelLocalization::transRoute('routes.ads'), ['as' => 'ads.save', 'uses' => 'AdsController@save']);
+
+//        ads/{id}/delete
+        Route::delete(LaravelLocalization::transRoute('routes.ads-single-delete'), ['as' => 'ads.single.delete', 'uses' => 'AdsController@delete']);
+    });
+
+    Route::get(LaravelLocalization::transRoute('routes.ads'), ['as' => 'ads.multiple', 'uses' => 'AdsController@multiple']);
+
+    Route::get(LaravelLocalization::transRoute('routes.ads-single'), ['as' => 'ads.single', 'uses' => 'AdsController@single']);
+
+
+
+
+
+//        user profile
+    Route::get('/{user_name}/public', ['as' => 'user.profile.public', 'uses' => 'UsersController@publicProfile']);
+
+    Route::group(['middleware' => ['redirectIfNotLogin', 'user', 'redirectIfNotOwner']], function(){
+        Route::get('/{user_name}', ['as' => 'user.profile', 'uses' => 'UsersController@profile']);
+        Route::get(LaravelLocalization::transRoute('routes.user-settings'), ['as' => 'user.profile.settings', 'uses' => 'UsersController@settings']);
+        Route::post('/{user_name}/settings/update-profile', ['as' => 'user.profile.settings.update.profile', 'uses' => 'UsersController@updateProfile']);
+        Route::post('/{user_name}/settings/update-password', ['as' => 'user.profile.settings.update.password', 'uses' => 'UsersController@updatePassword']);
+        Route::get(LaravelLocalization::transRoute('routes.user-favorites'), ['as' => 'user.profile.favorites', 'uses' => 'UsersController@favorites']);
+    });
+});

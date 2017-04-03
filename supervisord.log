@@ -1,0 +1,54 @@
+2017-03-17 22:43:51,664 CRIT Set uid to user 0
+2017-03-17 22:43:51,667 INFO supervisord started with pid 1
+2017-03-17 22:43:52,669 INFO spawned: 'worker_00' with pid 9
+2017-03-17 22:43:52,670 INFO spawned: 'worker_01' with pid 10
+2017-03-17 22:43:52,670 INFO spawned: 'worker_02' with pid 11
+2017-03-17 22:43:52,671 INFO spawned: 'worker_03' with pid 12
+2017-03-17 22:43:52,672 INFO spawned: 'worker_04' with pid 13
+2017-03-17 22:43:52,673 INFO spawned: 'worker_05' with pid 14
+2017-03-17 22:43:52,673 INFO spawned: 'worker_06' with pid 15
+2017-03-17 22:43:52,674 INFO spawned: 'worker_07' with pid 16
+2017-03-17 22:43:53,676 INFO success: worker_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_01 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_02 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_03 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_04 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_05 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_06 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:43:53,676 INFO success: worker_07 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:00,077 CRIT Set uid to user 0
+2017-03-17 22:51:00,080 INFO supervisord started with pid 1
+2017-03-17 22:51:01,082 INFO spawned: 'worker_00' with pid 9
+2017-03-17 22:51:01,083 INFO spawned: 'worker_01' with pid 10
+2017-03-17 22:51:01,084 INFO spawned: 'worker_02' with pid 11
+2017-03-17 22:51:01,084 INFO spawned: 'worker_03' with pid 12
+2017-03-17 22:51:01,085 INFO spawned: 'worker_04' with pid 13
+2017-03-17 22:51:01,086 INFO spawned: 'worker_05' with pid 14
+2017-03-17 22:51:01,087 INFO spawned: 'worker_06' with pid 15
+2017-03-17 22:51:01,088 INFO spawned: 'worker_07' with pid 16
+2017-03-17 22:51:02,090 INFO success: worker_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_01 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_02 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_03 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_04 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_05 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_06 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:51:02,090 INFO success: worker_07 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:15,100 CRIT Set uid to user 0
+2017-03-17 22:53:15,103 INFO supervisord started with pid 1
+2017-03-17 22:53:16,105 INFO spawned: 'worker_00' with pid 9
+2017-03-17 22:53:16,106 INFO spawned: 'worker_01' with pid 10
+2017-03-17 22:53:16,107 INFO spawned: 'worker_02' with pid 11
+2017-03-17 22:53:16,108 INFO spawned: 'worker_03' with pid 12
+2017-03-17 22:53:16,109 INFO spawned: 'worker_04' with pid 13
+2017-03-17 22:53:16,109 INFO spawned: 'worker_05' with pid 14
+2017-03-17 22:53:16,111 INFO spawned: 'worker_06' with pid 15
+2017-03-17 22:53:16,113 INFO spawned: 'worker_07' with pid 16
+2017-03-17 22:53:17,115 INFO success: worker_00 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_01 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_02 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_03 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_04 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_05 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_06 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2017-03-17 22:53:17,115 INFO success: worker_07 entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

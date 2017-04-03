@@ -11,6 +11,11 @@
         .signin.naked{
             background: none;
             color: #1d305d;
+            border-radius: 0;
+        }
+
+        .signin.naked:hover{
+            background: #a4acbe;
         }
 
         .slick-prev, .slick-next{
@@ -44,6 +49,12 @@
         .main-search > .search-input, .main-search > .search-input:focus{
             color: #4a597d;
             border: none;
+        }
+
+        .ui.button.account{
+            border-radius: 0;
+            color: white;
+            background: rgb(96, 110, 141);
         }
 
         a.ui.button.all-ads{
@@ -106,7 +117,7 @@
                     </div>
                 </div>
                 <div class="five wide  column ui container center aligned">
-                    <a href="{{ route('ads.create') }}" class="ui button fluid all-ads" style="color: #1d305d;">{{ trans('general.all_ads') }}</a>
+                    <a href="{{ route('ads.multiple') }}" class="ui button fluid all-ads" style="color: #1d305d;">{{ trans('general.all_ads') }}</a>
                 </div>
             </div>
 
@@ -116,11 +127,13 @@
                     <div class="ui fluid left icon action input main-search">
                         <i class="search icon"></i>
                         <input type="text" placeholder="{{ trans('general.what_are_you_looking_for') }}">
-                        <div class="ui button search-button">{{ trans('general.search') }}</div>
+                        <div style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</div>
                     </div>
+                    <a href="{{ route('ads.multiple') }}" class="ui button" style="margin-top: 1em; background: #f79520; color: #606e8d;">{{ trans('general.all_ads') }}</a>
                 </div>
             </div>
 
+            {{--tablet and computer only--}}
             <div class="ui container computer tablet only grid">
                 <div class="twelve wide column">
                     @include('partials.pages.home._jumbo')
@@ -132,31 +145,19 @@
                             <h3 class="ui dividing header" style="color: rgb(29, 48, 93);">
                                 {{ trans('general.popular_cities') }}
                             </h3>
-                            <div class="ui link items">
-                                <div class="item">
-                                    <div class="ui mini image">
-                                        <img src="/img/city.png">
-                                    </div>
-                                    <div class="middle aligned content">
-                                        Lome
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="ui mini image">
-                                        <img src="/img/city.png">
-                                    </div>
-                                    <div class="middle aligned content">
-                                        Baguida
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="ui mini image">
-                                        <img src="/img/city.png">
-                                    </div>
-                                    <div class="middle aligned content">
-                                        Tokoin
-                                    </div>
-                                </div>
+                            <div class="ui animated link items">
+                                @foreach($cities as $city)
+                                    <a class="item" style="height: 25px;"
+                                       href="{{ qs_url(LaravelLocalization::getLocalizedURL(null, route('ads.multiple')), ['l' => $city->slug]) }}">
+                                        <div class="ui mini image" style="width: 25px; height: 25px;">
+                                            <img src="{{ asset("/img/icons/city.png") }}">
+                                        </div>
+                                        <div class="middle aligned content" style="padding: 0 0 0 1em;">
+                                            {{ $city['name'] }}
+                                        </div>
+                                    </a>
+                                @endforeach
+                                
                             </div>
                         </div>
                     </div>
@@ -169,7 +170,7 @@
 
                     {{--<latest-ads></latest-ads>--}}
 
-                    <div class="ui container">
+                    <div class="ui container" v-cloak>
                         <div class="row" style="border-bottom: 2px solid rgb(209, 213, 222); background: white; padding: .5em; margin-bottom: 1em;">
                             <a href="" style="font-size: 1.5em; color: #1d305d;">
                                 {{ trans('general.latest_ads') }}
@@ -191,7 +192,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -211,7 +212,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -231,7 +232,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -262,7 +263,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -282,7 +283,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -302,7 +303,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -333,7 +334,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -353,7 +354,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -373,7 +374,7 @@
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
                                                             <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/usb_light.jpg') !!}" alt="">
+                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
                                                             </div>
                                                             <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                 <div class="row title" style="font-size: 1.5em;">
@@ -409,16 +410,17 @@
                             <h3 class="ui dividing header" style="color: rgb(29, 48, 93);">
                                 {{ trans('general.categories') }}
                             </h3>
-                            <div class="ui link items">
+                            <div class="ui link animated items">
                                 @foreach($categories as $category)
-                                    <div class="item" style="height: 25px;">
+                                    <a class="item" style="height: 25px;"
+                                       href="{{ qs_url(LaravelLocalization::getLocalizedURL(null, route('ads.multiple')), ['c' => $category['slug']]) }}">
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
-                                            <img src="{{ asset("/img/icons/{$category['slug']}.png") }}">
+                                            <img src="{{ asset("/img/icons/{$category['key']}.png") }}">
                                         </div>
                                         <div class="middle aligned content" style="padding: 0 0 0 1em;">
                                             {{ $category['name'] }}
                                         </div>
-                                    </div>
+                                    </a>
                                 @endforeach
                             </div>
                         </div>
@@ -431,5 +433,15 @@
 @endsection
 
 @section('scripts')
+    <script>
+//        $('.ads-slide').slick({
+//            // infinite: true,
+//            slidesToShow: 2,
+//            slidesToScroll: 1,
+//            variableWidth: true,
+//            autoplay: true,
+//            autoplaySpeed: 5000
+//        });
+    </script>
     <script src="js/home.js"></script>
 @endsection

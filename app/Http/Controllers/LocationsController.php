@@ -2,34 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Location;
 use Illuminate\Http\Request;
 use App\Region;
 use App\City;
 
 class LocationsController extends Controller
 {
-    private $region;
+    /**
+     * @var Location
+     */
+    private $location;
 
-    private $city;
 
-
-    public function __construct(Region $region, City $city){
-        $this->region = $region;
-        $this->city = $city;
+    /**
+     * LocationsController constructor.
+     * @param Location $location
+     */
+    public function __construct(Location $location){
+        $this->location = $location;
     }
 
     public function index()
     {
-        $regions = $this->region->with('cities')->get();
+        $regions = $this->location->with('children')->whereNull('parent_id')->get();
 
         $locations = collect($regions)->map(function($region){
             return [
                 'id' => $region->id,
                 'name' => $region->name,
-                'children' => $region->cities
+                'children' => $region->children,
+                'icon' => "/img/icons/city.png",
             ];
         });
 
         return response()->json($locations);
+    }
+
+    public function cities($id)
+    {
+        $cities = $this->location->with('children')->find($id)->children;
+        return response()->json($cities);
     }
 }

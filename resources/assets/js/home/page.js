@@ -67,6 +67,6 @@ new Vue({
             }
         });
 
-        console.log('mounted');
+        console.log(locationsUrl, categoriesUrl);
     }
 });

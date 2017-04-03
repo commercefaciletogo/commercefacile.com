@@ -3,12 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Dimsav\Translatable\Translatable;
 
 class Category extends Model
 {
+    use Translatable;
+
+    public $translatedAttributes = ['name, slug'];
     protected $table = 'categories';
 
-    protected $fillable = ['name', 'slug', 'parent_id'];
+    protected $fillable = ['parent_id'];
 
     public function parent()
     {

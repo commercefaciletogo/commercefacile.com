@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserAuth;
 
 use App\User;
+use Ramsey\Uuid\Uuid;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/user/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -38,6 +39,45 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('user.guest');
+    }
+
+    public function registerUser()
+    {
+        $data = request()->all();
+        $this->validator($data)->validate();
+
+        if($this->sendCode(request('phone'))){
+            session()->put('user_registration_data', $data);
+            return response()->json(['sent' => true]);
+        }
+        return response()->json(['sent' => false]);
+    }
+
+    private function sendCode($phone)
+    {
+        $code = '1234';
+//        $code = $this->generate_random();
+//        after sending the code to user phone
+//        if(! SMSService.sent($phone, $code)){
+//            return false;
+//        }
+        session()->put('code', $code);
+        return true;
+    }
+
+    public function authenticatePhone()
+    {
+        $submitted_code = request()->get('code');
+        $sent_code = session()->get('code');
+        $matched = $submitted_code == $sent_code;
+
+        if(!$matched){
+            return response()->json(['code' => 'no match'])->setStatusCode(422);
+        }
+
+        $user = $this->add_user(session('user_registration_data'));
+        Auth::guard('user')->login($user);
+        return response()->json(['done' => $matched, 'url' => $this->get_user_profile_url($user->slug)]);
     }
 
     /**
@@ -50,8 +90,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'required|regex:/[0-9]{8}/|unique:users',
             'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|same:password',
         ]);
     }
 
@@ -63,10 +104,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $uuid = Uuid::uuid4();
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'uuid' => $uuid
         ]);
     }
 
@@ -88,5 +131,41 @@ class RegisterController extends Controller
     protected function guard()
     {
         return Auth::guard('user');
+    }
+
+    private function saveUser()
+    {
+        $user_data = session('user');
+
+
+    }
+
+    private function generate_random($digits = 4)
+    {
+        return rand(pow(10, $digits - 1), pow(10, $digits)-1);
+    }
+
+    /**
+     * @param $user_data
+     * @return static
+     */
+    private function add_user($user_data)
+    {
+        $uuid = Uuid::uuid4();
+        $attributes = collect($user_data)
+            ->put('slug', str_slug("{$user_data['name']} {$user_data['phone']}"))
+            ->put('password', bcrypt($user_data['password']))
+            ->put('uuid', $uuid)
+            ->all();
+        return User::create($attributes);
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    private function get_user_profile_url($name)
+    {
+        return session('url.intended') ?: route('user.profile', ['user_name' => $name]);
     }
 }

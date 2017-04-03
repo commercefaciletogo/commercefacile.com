@@ -16,6 +16,16 @@
                 flex: 1;
             }
 
+            [v-cloak] {
+                display: none !important;
+            }
+
+            .account{
+                background: white !important;
+                color: #1D305D !important;
+                border-radius: 0 !important;
+            }
+
             .ui.button.menu-signin{
                 background: none;
                 color: #1d305d;
@@ -39,6 +49,7 @@
                 border-radius: 0;
                 color: #606e8d;
                 background: #F79520;
+                border-bottom: solid 1px transparent;
             }
 
             .ui.button.post-ad:hover{
@@ -64,6 +75,11 @@
         @include('partials._footer')
 
         <script src="{!! elixir('js/vendors.js') !!}"></script>
+        <script>
+            var categoriesUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/categories') !!}";
+            var locationsUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/locations') !!}";
+            var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
+        </script>
         @yield('scripts')
     </body>
 </html>

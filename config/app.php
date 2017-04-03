@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'fr',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,6 +162,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\DropboxServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -170,6 +172,10 @@ return [
         Themsaid\Langman\LangmanServiceProvider::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Hesto\MultiAuth\MultiAuthServiceProvider::class,
+        Dimsav\Translatable\TranslatableServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
+        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +235,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 
