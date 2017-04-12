@@ -11,6 +11,7 @@
         'sign_in_with_face' => 'Connexion avec facebook',
         'no_account' => 'Vous n\'avez pas encore de compte?',
         'forgot_password' => 'Mot de passe oublié',
+        'reset' => 'Recomposer',
 
         'confirm_password' => 'Confirmez le mot de passe',
         'new_password' => 'Nouveau Mot de passe',

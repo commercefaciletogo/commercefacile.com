@@ -47,6 +47,15 @@
             color: #ffffff !important;
         }
 
+        .activated{
+            color: white !important;
+            background-color: #33446d !important;
+        }
+
+        .ui.fluid.button{
+            color: #33446d;
+        }
+
         #Ad_Images, img.ad_image {
             width: 31.5rem !important;
             height: 31.5rem !important;
@@ -95,14 +104,14 @@
                     <a href="{{ route('ads.multiple') }}" class="section inline-link">{{ trans('general.all') }}</a>
                     @unless(is_null($ad['category']['parent']))
                         <i class="right chevron icon divider"></i>
-                        <a href="{{ qs_url(route('ads.multiple'), ['c' => $ad['category']['parent']['slug']]) }}" class="section inline-link">{{ $ad['category']['parent']['name'] }}</a>
+                        <a href="{{ qs_url(route('ads.multiple'), ['c' => $ad['category']['parent']['uuid']]) }}" class="section inline-link">{{ $ad['category']['parent']['name'] }}</a>
                     @endunless
                     <i class="right chevron icon divider"></i>
-                    <a href="{{ qs_url(route('ads.multiple'), ['c' => $ad['category']['slug']]) }}" class="section inline-link">{{ $ad['category']['name'] }}</a>
+                    <a href="{{ qs_url(route('ads.multiple'), ['c' => $ad['category']['uuid']]) }}" class="section inline-link">{{ $ad['category']['name'] }}</a>
                     <i class="right chevron icon divider"></i>
                     <div class="active section">{{ $ad['title'] }}</div>
                     <div class="divider"> / </div>
-                    <div class="section"><strong>Condition</strong>: {{ $ad['condition'] }}</div>
+                    <div class="section"><strong>Condition</strong>: {{ trans("general.{$ad['condition']}") }}</div>
                 </div>
 
                 <div id="addInfo" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
@@ -119,11 +128,9 @@
                                                 @endunless
                                             </a>
                                             <div id="Ad_Images" v-cloak class="siema">
-                                                @foreach($ad['images'] as $path)
-                                                    <div>
-                                                        <img class="ad_image" src="{!! $path !!}">
-                                                    </div>
-                                                @endforeach
+                                                <div v-for="path in paths" >
+                                                    <img class="ad_image" v-lazy="path">
+                                                </div>
                                             </div>
                                             <a class="next" style="display: flex; flex-direction: column; justify-content: center;">
                                                 @unless(count($ad['images']) == 1)
@@ -178,7 +185,7 @@
                                                     <img src="{{ asset('/img/icons/city.png') }}">
                                                 </div>
                                                 <div class="middle aligned content">
-                                                    <a href="{{ qs_url(route('ads.multiple'), ['l' => $ad['owner']['location']['slug']]) }}" class="inline-link">
+                                                    <a href="{{ qs_url(route('ads.multiple'), ['l' => $ad['owner']['location']['uuid']]) }}" class="inline-link">
                                                         {!! title_case($ad['owner']['location']['name']) !!}
                                                     </a>
                                                 </div>
@@ -193,19 +200,21 @@
                                                 </div>
                                             </div>
                                             <div class="item">
-                                                <button class="ui fluid {{ auth('user')->check() ? '' : 'disabled' }} button"
+                                                <button {{ auth('user')->check() ? '' : 'disabled' }}
+                                                        :class="['ui fluid button', {activated: ad.favorite}]"
                                                         v-cloak
-                                                        @click="favoriteAd({{ $ad['id'] }})"
-                                                        style="color: #33446d !important;">
+                                                        @click="favoriteAd"
+                                                        style="">
                                                     <i class="star empty icon"></i>
                                                     {{ trans('general.save_as_favorite') }}
                                                 </button>
                                             </div>
                                             <div class="item">
-                                                <button class="ui fluid {{ auth('user')->check() ? '' : 'disabled' }} button"
+                                                <button {{ auth('user')->check() ? '' : 'disabled' }}
+                                                        :class="['ui fluid button', {activated: ad.reported}]"
                                                         v-cloak
-                                                        @click="reportAd({{ $ad['id'] }})"
-                                                        style="color: #33446d !important;">
+                                                        @click="reportAd"
+                                                        style="">
                                                     <i class="ban icon"></i>
                                                     {{ trans('general.report_ad') }}
                                                 </button>
@@ -285,19 +294,19 @@
                     <div class="row">
                         <div class="column">
                             <div style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
-                                <h4 class="ui horizontal divider header" style="color: #33446d !important;">
-                                    Description
-                                </h4>
                                 <div class="ui stackable tow column grid">
                                     <div class="eight wide column">
+                                        <h4 class="ui horizontal divider header" style="color: #33446d !important;">
+                                            Description
+                                        </h4>
                                         <p class="ui container left aligned">
                                             {{ $ad['description'] }}
                                         </p>
                                     </div>
                                     <div class="eight wide column">
-                                        <p class="ui container center aligned">
-                                            Condition: {{ $ad['condition'] }}
-                                        </p>
+                                        {{--<p class="ui container center aligned">--}}
+                                            {{--Condition: {{ $ad['condition'] }}--}}
+                                        {{--</p>--}}
                                     </div>
                                 </div>
                             </div>
@@ -309,18 +318,20 @@
                         <div class="column">
                             <div style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
                                 <button
+                                        {{ auth('user')->check() ? '' : 'disabled' }}
                                         v-cloak
-                                        @click="favoriteAd({{ $ad['id'] }})"
-                                        style="margin-bottom: 1em; color: #33446d !important;"
-                                        class="ui fluid {{ auth('user')->check() ? '' : 'disabled' }} button">
+                                        @click="favoriteAd"
+                                        style="margin-bottom: 1em;"
+                                        :class="['ui fluid button', {active: ad.favorite}]">
                                     <i class="star empty icon"></i>
                                     {{ trans('general.save_as_favorite') }}
                                 </button>
                                 <button
+                                        {{ auth('user')->check() ? '' : 'disabled' }}
                                         v-cloak
-                                        @click="reportAd({{ $ad['id'] }})"
-                                        class="ui fluid {{ auth('user')->check() ? '' : 'disabled' }} button"
-                                        style="color: #33446d !important;"
+                                        @click="reportAd"
+                                        :class="['ui fluid button', {active: ad.reported}]"
+                                        style=""
                                         >
                                     <i class="ban icon"></i>
                                     {{ trans('general.report_ad') }}
@@ -378,7 +389,10 @@
 @section('scripts')
     <script>
         var favoriteAdUrl = "{!! route('ads.single.favorite', ['id' => $ad['uuid']]) !!}";
+        var unfavoriteAdUrl = "{!! route('ads.single.unfavorite', ['id' => $ad['uuid']]) !!}";
         var reportAdUrl = "{!! route('ads.single.report', ['id' => $ad['uuid']]) !!}";
+        var dereportAdUrl = "{!! route('ads.single.dereport', ['id' => $ad['uuid']]) !!}";
+        var ad = {!! json_encode($ad) !!};
     </script>
     <script src="{{ asset('js/single.js') }}"></script>
 @endsection

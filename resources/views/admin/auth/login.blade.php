@@ -32,7 +32,7 @@
                 <div class="four wide computer fifteen wide tablet sixteen wide mobile column">
 
                     <div style="margin-left: 1em; margin-right: 1em;">
-                        @if(session('error'))
+                        @if($errors->any())
                             <div class="ui negative tiny compact icon message" style="min-width: 100%;">
                                 <i class="warning icon"></i>
                                 <div class="content">
@@ -43,12 +43,12 @@
                                 </div>
                             </div>
                         @endif
-                        <form class="ui form {{ $errors->any() ? ' error' : '' }}" method="POST" action="{{ route('user.post.login') }}">
+                        <form class="ui form {{ $errors->any() ? ' error' : '' }}" method="POST" action="{{ route('admin.post.login') }}">
                             {{ csrf_field() }}
-                            <div class="field {{ $errors->has('username') ? 'error' : '' }}">
+                            <div class="field {{ $errors->has('email') ? 'error' : '' }}">
                                 {{--<label>Username</label>--}}
                                 <div class="ui left icon input">
-                                    <input type="text" name="username" value="{{ old('username') }}">
+                                    <input type="email" name="email" value="{{ old('email') }}">
                                     <i class="mail icon" style="color: #4a597d;"></i>
                                 </div>
                             </div>

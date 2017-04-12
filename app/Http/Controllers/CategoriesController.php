@@ -35,6 +35,7 @@ class CategoriesController extends Controller
            $category = $category->translate(LaravelLocalization::getCurrentLocale());
             return [
                 'id' => $category->category_id,
+                'uuid' => $category->uuid,
                 'name' => $category->name,
                 'icon' => "/img/icons/{$category->key}.png",
                 'slug' => $category->slug,
@@ -53,6 +54,7 @@ class CategoriesController extends Controller
             $category = $category->translate(LaravelLocalization::getCurrentLocale());
             return [
                 'id' => $category->category_id,
+                'uuid' => $category->uuid,
                 'name' => $category->name,
                 'slug' => $category->slug
             ];

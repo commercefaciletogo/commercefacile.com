@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('SCOUT_DRIVER', 'elasticsearch'),
+    'driver' => env('SCOUT_DRIVER', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,6 +64,17 @@ return [
         'config' => [
             'hosts' => [env('ELASTICSEARCH_HOST', 'commercefacile-search')],
         ],
+    ],
+
+    'pgsql' => [
+        // Connection to use. See config/database.php
+        'connection' => env('DB_CONNECTION', 'pgsql'),
+        // You may want to update index documents directly in PostgreSQL (i.e. via triggers).
+        // In this case you can set this value to false.
+        'maintain_index' => true,
+        // You can explicitly specify what PostgreSQL text search config to use by scout.
+        // Use \dF in psql to see all available configurations in your database.
+        'config' => 'english',
     ],
 
 ];

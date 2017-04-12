@@ -56,7 +56,7 @@ new Vue({
 
         this.updatePending();
 
-        this.initSearch();
+        this.updateQuery();
         console.log('top menu mounted');
     }
 });

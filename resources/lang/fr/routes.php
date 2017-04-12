@@ -15,7 +15,9 @@ return [
     "ads-single-update-cancel" => "annonces/{id}/abandoner-mettre-a-jour",
     "ads-single-delete" => "annonces/{id}/effacer",
     "ads-single-favorite" => "annonces/{id}/favorie",
+    "ads-single-unfavorite" => "annonces/{id}/effacer-favorie",
     "ads-single-report" => "annonces/{id}/reporter",
+    "ads-single-dereport" => "annonces/{id}/dereporter",
 
     "user-settings" => "{user_name}/paramètres",
     "user-favorites" => "{user_name}/favoris",

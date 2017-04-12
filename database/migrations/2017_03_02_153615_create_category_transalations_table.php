@@ -15,6 +15,7 @@ class CreateCategoryTransalationsTable extends Migration
     {
         Schema::create('category_translations', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid');
             $table->integer('category_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
 

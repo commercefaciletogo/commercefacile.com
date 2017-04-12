@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class LocationsSeeder extends Seeder
 {
@@ -20,6 +21,7 @@ class LocationsSeeder extends Seeder
     {
         return collect($this->get_locations())->map(function($city){
             return [
+                'uuid' => Uuid::uuid4(),
                 'name' => title_case($city['name']),
                 'slug' => str_slug($city['name']),
                 'parent_id' => $city['parent_id']

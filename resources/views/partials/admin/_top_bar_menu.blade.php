@@ -44,7 +44,7 @@
                 <a class="item" data-remodal-target="change-password">
                     Change Password
                 </a>
-                <a class="item" href="">
+                <a class="item" href="{{ route('admin.get.logout') }}">
                     Sign Out
                 </a>
             </div>

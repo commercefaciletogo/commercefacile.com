@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'slug', 'location_id', 'uuid'
+        'name', 'email', 'password', 'phone', 'slug', 'location_id', 'uuid', 'status'
     ];
 
     /**
@@ -47,5 +47,15 @@ class User extends Authenticatable
     public function ads()
     {
         return $this->hasMany(Ad::class, 'user_id');
+    }
+
+    public function reported_ads()
+    {
+        return $this->belongsToMany(Ad::class, 'reported_ads', 'user_id', 'ad_id')->withTimestamps();
+    }
+
+    public function favorite_ads()
+    {
+        return $this->belongsToMany(Ad::class, 'favorite_ads', 'user_id', 'ad_id')->withTimestamps();
     }
 }

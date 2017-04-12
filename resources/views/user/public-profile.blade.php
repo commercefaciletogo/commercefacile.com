@@ -11,6 +11,30 @@
             border-bottom: 2px solid rgb(209, 213, 222);
         }
 
+        .slick-prev, .slick-next{
+            height: 20px;
+            border-radius: 10px;
+            background: transparent;
+        }
+
+        .slick-prev:before, .slick-next:before{
+            line-height: 0;
+            font-size: 15px;
+            color: #1d305d;
+        }
+
+        .slick-prev:before{
+            content: '←';
+        }
+
+        .slick-next:before{
+            content: '→';
+        }
+
+        .slick-prev:hover, .slick-next:hover{
+            height: 20px;
+        }
+
         @media only screen and (max-width: 767px){
             .ui.tiny.image.Author_Avatar{
                 max-width: 100px !important;
@@ -76,7 +100,7 @@
                                 @forelse($categories as $category => $ads)
                                     <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
                                         <div class="row" style="padding: .5em; background: #606e8d;">
-                                            <a href="{{ qs_url(route('ads.multiple'), ['c' => str_slug($category)]) }}" style="font-size: 1.2em; color: white; ">{{ $category }}</a>
+                                            <a style="font-size: 1.2em; color: white; ">{{ $category }}</a>
                                         </div>
 
                                         <div class="row" style="background: transparent;">

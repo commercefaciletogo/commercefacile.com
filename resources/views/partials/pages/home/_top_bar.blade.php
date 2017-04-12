@@ -7,8 +7,11 @@
 
                         <div class="left menu">
                             @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <div class="item">
-                                    <a style="color: #77829d;" rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
+                                <div class="item {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'active' : '' }}">
+                                    <a style="color: #77829d;"
+                                       rel="alternate"
+                                       hreflang="{{$localeCode}}"
+                                       href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
                                         {{ $properties['native'] }}
                                     </a>
                                 </div>

@@ -1,12 +1,30 @@
 import axios from 'axios';
 import Vue from 'vue';
 import _ from 'lodash';
+import Notify from 'izitoast';
+
 
 import OptionItem from '../components/ads/create/OptionItem.vue';
 
-console.log(window.loginUser);
-console.log(window.updateProfileUrl);
-console.log(window.updatePasswordUrl);
+const VueI18n = require('vue-i18n');
+Vue.use(VueI18n);
+
+const locales = {
+    en: {
+        general: {
+            success: 'Update was successful.',
+            failed: 'Update failed.',
+        }
+    },
+    fr: {
+        general: {
+            success: 'La mise à jour a été réussie.',
+            failed: 'Mise à jour a échoué.'
+        },
+    }
+};
+
+Vue.config.lang = window.locale;
 
 new Vue({
     el: '#main',
@@ -40,6 +58,9 @@ new Vue({
         }
     },
     methods: {
+        notify(message, position, status){
+            Notify[status]({message, position, progressBar: false});
+        },
         updateInfo() {
             let { fullName, email, phoneNumber, location } = this.user;
             if(fullName && email && location.id && phoneNumber){
@@ -54,10 +75,9 @@ new Vue({
                 axios.post(window.updateProfileUrl, data).then(res => {
                     this.updatingProfile = false;
                     if( !res.data.updated){
-                        // info could not be updated
-                        return console.log(res.data.updated)
+                        return this.notify(this.$t('general.failed'), 'topCenter', 'danger');
                     }
-                    console.log('updated')
+                    return this.notify(this.$t('general.success'), 'topCenter', 'success');
                 }).catch(err => {
                     this.updatingProfile = false;
                     Object.keys(err.response.data.error).forEach(key => {
@@ -80,12 +100,9 @@ new Vue({
                 axios.post(window.updatePasswordUrl, data).then(res => {
                     this.updatingPassword = false;
                     if( !res.data.updated){
-                        // info could not be updated
-                        return this.password.error = true;
+                        return this.notify(this.$t('general.failed'), 'topCenter', 'danger');
                     }
-
-                    this.password.updated = true;
-                    window.setTimeout(() => this.password.updated = false, 500);
+                    return this.notify(this.$t('general.success'), 'topCenter', 'success');
                 }).catch(err => {
                     this.updatingPassword = false;
                     this.password.error = true;
@@ -107,6 +124,11 @@ new Vue({
                     console.log(error);
                 });
         }
+    },
+    beforeCreate(){
+        Object.keys(locales).forEach(function (lang) {
+            Vue.locale(lang, locales[lang])
+        })
     },
     mounted() {
         $('#chooseLocation').accordion();

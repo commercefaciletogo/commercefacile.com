@@ -81,22 +81,24 @@
                                     <div class="eight wide column">
                                         <button v-cloak data-remodal-target="choose-location" class="ui fluid right labeled icon button search-modifier-button" style="border: 1px solid #606e8d !important;">
                                             <i class="dropdown icon"></i>
-                                            @{{ search.location.text }}
+                                            @{{ transLocation }}
                                         </button>
                                     </div>
                                     <div class="eight wide column">
                                         <button v-cloak data-remodal-target="choose-category" class="ui fluid right labeled icon button search-modifier-button" style="border: 1px solid #606e8d !important;">
                                             <i class="dropdown icon"></i>
-                                            @{{ search.category.text }}
+                                            @{{ transCategory }}
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="eight wide column search-input">
-                                <div class="ui action small fluid input">
-                                    <input v-model="search.q" style="border-radius: 0; border: 1px solid #606e8d !important; padding: .4em;" type="text" placeholder="Search...">
-                                    <button style="border: 1px solid #606e8d !important; border-radius: 0; background: #606e8d; color: white;" class="ui button">{{ trans('general.search') }}</button>
-                                </div>
+                                <form @submit.prevent="updateSearchQuery" class="ui form" style="margin-bottom: 0 !important;">
+                                    <div class="ui action small fluid input">
+                                        <input v-model="filter.q" style="border-radius: 0; border: 1px solid #606e8d !important; padding: .4em;" type="text" placeholder="Search...">
+                                        <button type="submit" style="border: 1px solid #606e8d !important; border-radius: 0; background: #606e8d; color: white;" class="ui button">{{ trans('general.search') }}</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -117,17 +119,27 @@
                     <div class="ui grid">
                         <div class="four wide computer five wide tablet only column">
                             <div class="ui container" style="padding-right: .5em;border-right: 1px solid #d1d5de;">
+
                                 <div class="row" style="margin-top: 1em; margin-left: 1em;">
-                                    <div class="ui mini form">
-                                        <div class="field">
+                                    <div class="ui form">
+                                        <div class="grouped fields">
                                             <label>{{ trans('general.sort') }}:</label>
-                                            <div class="ui selection dropdown">
-                                                <input type="hidden">
-                                                <i class="dropdown icon"></i>
-                                                <div class="default text">{{ trans('general.sort') }}...</div>
-                                                <div class="menu">
-                                                    <div class="item" data-value="recentAds">{{ trans('general.recent_ads') }}</div>
-                                                    <div class="item" data-value="lowestPrice">{{ trans('general.lowest_price') }}</div>
+                                            <div v-cloak class="field">
+                                                <div class="ui radio checkbox">
+                                                    <input id="recentAds"
+                                                           v-model="filter.sort"
+                                                           value="r"
+                                                           type="radio">
+                                                    <label for="recentAds">{{ trans('general.recent_ads') }}</label>
+                                                </div>
+                                            </div>
+                                            <div v-cloak class="field">
+                                                <div class="ui radio checkbox">
+                                                    <input id="lowestPrice"
+                                                           v-model="filter.sort"
+                                                           value="l"
+                                                           type="radio">
+                                                    <label for="lowestPrice">{{ trans('general.lowest_price') }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +153,7 @@
                                         </div>
                                         <div class="active content" style="padding: 0 0 0 1em;">
                                             <component :items="categories" 
-                                                type="category" 
+                                                type="category"
                                                 @back="goBack" 
                                                 goBackLabel="All Categories" 
                                                 :parent="selectedCategory" 
@@ -172,56 +184,30 @@
                             </div>
                         </div>
                         <div class="twelve wide computer eleven wide tablet sixteen wide mobile column">
-                            <div class="ui two column computer tablet only grid">
-                                <div class="ten wide computer sixteen wide tablet column">
-                                    <div style="margin-top: 1em; padding-top: 1em;">
-                                        1-25 of 13,545 {{ trans('general.ads') }} {{ trans('general.for') }}  <i>iphone</i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ui segment" id="ad-view" style="padding: 0; box-shadow: none; border-radius: 0; border-right: 0; border-left: 0;">
-                                <div style="width: 322px; color: #1d305d;">
-                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                        <div class="ui grid" style="margin: 0;">
-                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                            </div>
-                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                <div class="row title" style="font-size: 1.5em;">
-                                                    <span>USB light</span>
-                                                </div>
-                                                <div class="row description" style="color: #77829d;">
-                                                    <span>usb light description</span>
-                                                </div>
-                                                <div class="row price" style="font-size: 1.2em;">
-                                                    350 FCFA
-                                                </div>
-                                            </div>
+                            <div v-cloak :class="['ui segment', {loading:busy}]" style="box-shadow: none; border: 0; height: 100%;">
+
+                                <div v-if="result" class="ui two column computer tablet only grid">
+                                    <div class="ten wide computer sixteen wide tablet column">
+                                        <div>
+                                            @{{ ads.from }}-@{{ ads.to }} {{ trans('general.of') }} @{{ ads.total }} {{ trans('general.ads') }}
+                                            <span v-show="filter.q">
+                                                {{ trans('general.for') }}  <i v-text="filter.q"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="ui segment" id="ad-view" style="padding: 0; box-shadow: none; border-radius: 0; border-right: 0; border-left: 0;">
-                                <div style="width: 322px; color: #1d305d;">
-                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                        <div class="ui grid" style="margin: 0;">
-                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                <img class="ui image" src="{!! asset('img/icons/hoody_100.jpg') !!}" alt="">
-                                            </div>
-                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                <div class="row title" style="font-size: 1.5em;">
-                                                    <span>USB light</span>
-                                                </div>
-                                                <div class="row description" style="color: #77829d;">
-                                                    <span>usb light description</span>
-                                                </div>
-                                                <div class="row price" style="font-size: 1.2em;">
-                                                    350 FCFA
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                {{-- Ads Display --}}
+
+                                <component :is="currentView" :ads="ads.data"></component>
+
+                                <paginate v-if="paginate"
+                                        :page-count="ads.last_page"
+                                        :click-handler="handlePaginate"
+                                        :prev-text="'Prev'"
+                                        :next-text="'Next'"
+                                        :container-class="'className'">
+                                </paginate>
                             </div>
                         </div>
                     </div>
@@ -257,16 +243,16 @@
             <div class="ui fluid tiny form">
                 <div class="inline fields">
                     <label>{{ trans('general.sort') }}:</label>
-                    <div class="grouped fields">
+                    <div v-cloak class="grouped fields">
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input id="recentAdsMobile" type="radio" value="recentAds" name="sort" v-model="filter.sort">
+                                <input id="recentAdsMobile" type="radio" value="r" v-model="filter.sort">
                                 <label for="recentAdsMobile" >{{ trans('general.recent_ads') }}</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui radio checkbox">
-                                <input id="lowestPriceMobile" type="radio" value="lowestPrice" name="sort" v-model="filter.sort">
+                                <input id="lowestPriceMobile" type="radio" value="l" v-model="filter.sort">
                                 <label for="lowestPriceMobile" >{{ trans('general.lowest_price') }}</label>
                             </div>
                         </div>
@@ -296,8 +282,8 @@
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="ui fluid submit button" @click="performFilter">{{ trans('general.filter') }}</div>
+                {{--<hr>--}}
+                {{--<div class="ui fluid submit button">{{ trans('general.close') }}</div>--}}
         </div>
     </div>
     </div>
@@ -305,5 +291,9 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var baseUrl = "{{ route('ads.multiple.search') }}";
+        var singleAdUrl = "{{ route('ads.multiple') }}";
+    </script>
     <script src="{{ asset('js/multiple.js') }}"></script>
 @endsection

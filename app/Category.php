@@ -12,7 +12,12 @@ class Category extends Model
     public $translatedAttributes = ['name, slug'];
     protected $table = 'categories';
 
-    protected $fillable = ['parent_id'];
+    protected $fillable = ['parent_id', 'uuid'];
+
+    public function ads()
+    {
+        return $this->hasMany(Ad::class, 'category_id');
+    }
 
     public function parent()
     {

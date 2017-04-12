@@ -16,7 +16,9 @@ return [
     "ads-single-update-cancel" => "ads/{id}/cancel-update",
     "ads-single-delete" => "ads/{id}/delete",
     "ads-single-favorite" => "ads/{id}/favorite",
+    "ads-single-unfavorite" => "ads/{id}/unfavorite",
     "ads-single-report" => "ads/{id}/report",
+    "ads-single-dereport" => "ads/{id}/dereport",
 
     "user-settings" => "{user_name}/settings",
     "user-favorites" => "{user_name}/favorites",

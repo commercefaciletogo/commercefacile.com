@@ -1,0 +1,59 @@
+<?php
+return [
+    'header' => 'Terms and Conditions',
+
+    'content' => "
+        <h3 class=\"ui header\">ACCEPTANCE</h3>
+        <p>You are either at least 18 years of age or are accessing the Website under the supervision of a parent or legal guardian. We grant you a non-transferable and revocable license to use commercefacile.com. Any breach of these Terms and Conditions shall result in the immediate revocation of the license granted without notice to you. 
+You agree and understand that commercefacile.com is an internet enabled electronic platform that facilitates communication for the purposes of advertising and distributing information pertaining to goods and/ or services. 
+You further agree and understand that we do not endorse or market any of the listings, postings or information, nor do we at any point in time come into possession of or engage in the distribution of any of the goods and/ or services you have posted, listed or provided information about on our website. While interacting with other users on our site, with respect to any listing, posting or information we strongly encourage you to exercise reasonable diligence as you would in traditional off line channels and practice judgement and common sense before committing to or complete intended sale, purchase of any goods or services or exchange of information. We recommend that you read our Safety tips before doing any activity on our site.</p>
+        <ul class=\"ui list\">
+            <li><strong>\"Your Information\"</strong> is defined as any information you provide to us or other users of the Site during the registration, posting, listing or in the course of using any other feature of the Services. You agree that you are the lawful owner having all rights, title and interest in your information, and further agree that you are solely responsible and accountable for Your Information and that we act as a mere platform for your online distribution and publication of Your Information.</li>
+            <li>You agree that your listing, posting and / or Information:
+                <ul class=\"ui list\">
+                    <li>shall “not be fraudulent, misrepresent, mislead or pertain to the sale of any illegal, counterfeit, stolen goods and / or services.</li>
+                    <li>shall not pertain to goods, services of which you are not the lawful owner or you do not have the authority or consent to 'list' which do not belong to you or you do not have the authority for.</li>
+                    <li>shall not infringe any intellectual property, trade secret, or other proprietary right or rights of publicity or privacy of any third party.</li>
+                    <li>shall not be obscene, contain pornography or contain “indecent representation of women.</li>
+                    <li>shall not distribute or contain spam or pyramid schemes in any of its forms.</li>
+                    <li>shall not distribute viruses or any other technologies that may harm Commercefacile.com or the interests or property of Commercefacile.com users or impose an unreasonable load on the infrastructure or interfere with the proper working of Commercefacile.com</li>
+                    <li>shall not, directly or indirectly, offer, attempt to offer, trade or attempt to trade in any goods and services, the dealing of which is prohibited or restricted in any manner under the provisions of any applicable law, rule, regulation or guideline for the time being in force.</li>
+                    <li>shall not be placed in a wrong category or in an incorrect area of the site.</li>
+                    <li>shall not list or post information that is either prohibited or restricted under the laws of the Republic of Togo and such listing, posting or information shall not violate Commercefacile.com ‘s Listing Policy.</li>
+                    <li>You consent to receive communications by email, call or by such other mode of communication, electronic or otherwise related to the services provided through the website.</li>
+                    <li>You are responsible for maintaining the confidentiality of your User ID, password, and email address and for restricting access to your computer, computer system, computer network and your Commercefacile.com account, and you are responsible for all activities that occur under your User ID and password.</li>
+                    <li>Commercefacile.com and Commercefacile SARL has the right to cooperate with authorities in the case any Content violates the law. The identity of advertisers, users or buyers may be determined, for example by an ISP. IP addresses may also be registered in order to ensure compliance with the terms and conditions</li>
+                </ul>
+            </li>
+        </ul>
+        <h3 class=\"ui header\">TRADEMARK, COPYRIGHT AND RESTRICTION</h3>
+        <p>Advertisers grant Commercefacile.com and Commercefacile SARL a perpetual, royalty-free, irrevocable, non-exclusive right and license to use, reproduce, modify, adapt, publish, translate, create derivative works from and distribute such Content or incorporate such Content into any form, medium, or technology now known or later developed.</p>
+        <p>The material (including the Content, and any other content, software or services) contained on Commercefacile.com are the property of Commercefacile SARL, its subsidiaries, affiliates and/or third party licensors. Any intellectual property rights, such as copyright, trademarks, service marks, trade names and other distinguishing brands on the Website are the property of Commercefacile SARL. To be clear: No material on this site may be copied, reproduced, republished, installed, posted, transmitted, stored or distributed without written permission.</p>
+        <p>We at Commercefacile.com respect the intellectual property of others. In case you feel that your work has been copied in a way that constitutes copyright infringement you can write to us on info@commercefacile.com.</p>
+        <h3 class=\"ui header\">THIRD PARTY CONTENT AND SERVICES</h3>
+        <p>Commercefacile.com may provide, on its site, links to sites operated by other entities. If the user decides to view this website, they shall do so at their own risk, subject to that site’s terms and conditions of use and privacy policy that may be different from those of this site. It is the user’s responsibility to take all protective measures to guard against viruses or other destructive elements they may encounter on these sites. Commercefacile.com makes no warranty or representation regarding, and do not endorse any linked website or the information appearing thereon or any of the products or services described thereon.
+ Users should make whatever investigation they feel necessary or appropriate before proceeding with any offline or online transaction with any of these third parties.</p>
+        <h3 class='ui header'>PAID CONTENT AND SERVICES</h3>
+        <p>Commercefacile.com may charge a fee to post Content in some specific areas of the Service. The fee permits Paid Content to be posted in a designated area of the Website. Each party posting Paid Content to the Service is responsible for the Content and compliance with the Terms. Advertisers and Users may be required to transmit Paid Content information through a third-party service provider, which may be governed by its own terms of use. Linking to any third party service providers is at the Users' and Advertisers' own risk and Commercefacile.com.com disclaims all liability related thereto. Under no circumstances shall Commercefacile.com be obliged to refund any payments made in respect to Paid Content.</p>
+        
+        <h3 class='ui header'>ABUSE OF COMMERCEFACILE.COM</h3>
+        <p>You agree to inform us if you come across any listing or posting that is offensive or violates our listing policy or infringes any intellectual property rights to enable us to keep the website working efficiently and in a safe manner. We reserve the right to take down any posting, listing or information and or limit or terminate our services and further take all reasonable technical and legal steps to prevent the misuse of the website.
+In the event you encounter any problems with the use of our site or services you are requested to report the problem.
+You agree that in the event your listing, posting or your information violates any provision of the listing policy, we shall have the right to terminate and or suspend your membership of the Site and refuse to provide you or any person acting on your behalf, access to the website.</p>
+        
+        <h3 class='ui header'>PRIVACY</h3>
+        <p>Commercefacile.com, its Affiliates and Subsidiaries will collect information from Users and Advertisers. It is a condition that each User and advertiser consents and authorises Commercefacile.com to collect and use this information. Commercefacile.com also reserves the right to disclose it to Company Affiliates and any other person for the purposes of administering, supporting and maintaining Commercefacile.com, as well as for improving Commercefacile.com. For example, by using the information for research, marketing, product development and planning.</p>
+        
+        <h3 class='ui header'>IMAGES</h3>
+        <p>All images (in any format) on this Website are watermarked to prevent the images to be used for other purposes, without the consent of the advertiser. Commercefacile.com reserves the right to change the title of the Content, for editorial purposes. Commercefacile.com and Commercefacile SARL reserves the right not to publish images that are irrelevant or images that violate Commercefacile.com 's rules.</p>
+        
+        <h3 class='ui header'>COOKIES</h3>
+        <p>This site uses cookies, which means that you must have cookies enabled on your computer in order for all functionality on this site to work properly. Cookies are small files which are stored on a user's computer. They are designed to hold a modest amount of data specific to a particular client and website, and can be accessed either by the web server or the client computer.</p>
+        
+        <h3 class='ui header'>DISCLAIMER</h3>
+        <p>Product representations expressed on this Website are those of the vendor and are not made by us. Submissions or opinions expressed on this Website are those of the individual posting such content and may not reflect our opinions. Certain services and related features that may be made available on the Website may require registration or subscription. Should you choose to register or subscribe for any such services or related features, you agree to provide accurate and current information about yourself, and to promptly update such information if there are any changes. Every user of the Website is solely responsible for keeping passwords and other account identifiers safe and secure. The account owner is entirely responsible for all activities that occur under such password or account. Furthermore, you must notify us of any unauthorized use of your password or account. The Website shall not be responsible or liable, directly or indirectly, in any way for any loss or damage of any kind incurred as a result of, or in connection with, your failure to comply with this section. During the registration process you agree to receive promotional emails from the Site. </p>
+        
+        <h3 class='ui header'>INDEMNIFICATION</h3>
+        <p>Advertisers and users agree to indemnify Commercefacile.com, Commercefacile SARL, Subsidiaries, its Affiliates as well as its officers, directors, employees, agents, from and against all losses, expenses, damages and costs, including attorney's fees, resulting from any violation of this Terms and Conditions (including negligent or wrongful conduct).</p>
+    "
+];

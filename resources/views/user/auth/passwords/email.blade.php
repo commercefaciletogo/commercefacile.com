@@ -11,12 +11,12 @@
                     <div class="ui three column middle aligned very relaxed stackable grid">
                         <div class="seven wide column">
                             <div style="margin-left: 1em; margin-right: 1em;">
-                                <form class="ui form" method="POST">
+                                <form class="ui form" method="POST" action="{{ route('user.post.pass.phone') }}">
                                     {{ csrf_field() }}
-                                    <div class="field {!! $errors->has('email') ? 'error' : '' !!}">
+                                    <div class="field {!! $errors->has('phone') ? 'error' : '' !!}">
                                         <div class="ui left icon input">
-                                            <input type="text" placeholder="{!! trans('general.phone_number') !!}" name="phone" value="{{ old('phone') }}">
-                                            <i class="mail icon" style="color: #4a597d;"></i>
+                                            <input type="tel" required placeholder="{!! trans('general.phone_number') !!}" name="phone" value="{{ old('phone') }}">
+                                            <i class="phone icon" style="color: #4a597d;"></i>
                                         </div>
                                     </div>
                                     <button type="submit" class="ui submit button fluid sigin">{{ trans('auth.send_code') }}</button>

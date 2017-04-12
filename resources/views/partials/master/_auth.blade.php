@@ -144,6 +144,7 @@
     var categoriesUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/categories') !!}";
     var locationsUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/locations') !!}";
     var csrf_token = "{!! csrf_token() !!}";
+    var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
 </script>
 @yield('scripts')
 

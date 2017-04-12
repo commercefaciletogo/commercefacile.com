@@ -62,12 +62,15 @@ return [
 
     'ads_count' => ':number Annonces',
     'filter' => 'Filtrer',
-    'sort' => 'Trier',
+    'sort' => 'Trier par',
     'category' => 'Categorie',
     'recent_ads' => 'Annonces récentes',
     'lowest_price' => 'Prix ​​le plus bas',
     'showing' => 'Montrant',
     'for' => 'pour',
+    'close' => 'Fermer',
+    'of' => 'de',
+    'page_not_found' => 'Page Non Trouvée',
 
     'stay_safe' => 'Rester en sécurité',
     'contact_us' => 'Contactez nous',

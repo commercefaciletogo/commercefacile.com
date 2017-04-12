@@ -4,7 +4,9 @@ namespace App\Http\Controllers\UserAuth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Ramsey\Uuid\Uuid;
 
 class ForgotPasswordController extends Controller
 {
@@ -41,6 +43,23 @@ class ForgotPasswordController extends Controller
         return view('user.auth.passwords.email');
     }
 
+    public function sendResetCode(Request $request)
+    {
+        $this->validate($request, [
+            'phone' => 'required|digits:8|exists:users'
+        ]);
+
+        $code = $this->generate_code();
+        $phone = "00228{$request->phone}";
+        session()->put('code', 1234);
+        session()->put('phone', $request->phone);
+        // send code to user
+
+        $token = Uuid::uuid4();
+        session()->put('pass_token', $token);
+        return redirect()->route('user.get.reset.pass', ['token' => $token]);
+    }
+
     /**
      * Get the broker to be used during password reset.
      *
@@ -49,5 +68,14 @@ class ForgotPasswordController extends Controller
     public function broker()
     {
         return Password::broker('users');
+    }
+
+    /**
+     * @return string
+     */
+    private function generate_code()
+    {
+        $digits = 4;
+        return str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
     }
 }

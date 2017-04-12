@@ -175,7 +175,8 @@ return [
         Dimsav\Translatable\TranslatableServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
-        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+//        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
+        ScoutEngines\Postgres\PostgresEngineServiceProvider::class,
 
         /*
          * Application Service Providers...

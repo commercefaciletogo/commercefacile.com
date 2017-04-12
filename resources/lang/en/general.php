@@ -63,12 +63,16 @@
 
         'ads_count' => ':number Ads',
         'filter' => 'Filter',
-        'sort' => 'Sort',
+        'sort' => 'Sort by',
         'category' => 'Category',
         'recent_ads' => 'Recent Ads',
         'lowest_price' => 'Lowest Price',
         'showing' => 'Showing',
         'for' => 'for',
+        'close' => 'Close',
+        'of' => 'of',
+
+        'page_not_found' => 'Page Not Found',
 
         'stay_safe' => 'Stay safe',
         'contact_us' => 'Contact Us',

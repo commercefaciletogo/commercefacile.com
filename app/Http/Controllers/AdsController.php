@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Ad;
 use App\AdImage;
+use App\Category;
+use App\Commerce\Transformers\AdsTransformer;
 use App\Commerce\Transformers\AdTransformer;
 use App\Commerce\Transformers\UserPublicAdsTransformer;
 use App\Events\AdWasSubmitted;
 use App\Jobs\DeleteAdImages;
 use App\Jobs\DownloadAdImages;
 use App\Jobs\ProcessAdImages;
+use App\Location;
 use Carbon\Carbon;
 use Delight\Ids\Id;
 use Illuminate\Http\Request;
@@ -46,9 +49,74 @@ class AdsController extends Controller
         $this->fractal = $fractal;
     }
 
-    public function multiple(Request $request)
+    public function search(Request $request)
     {
-//        dd($request->all());
+        $perPage = 20;
+        $query = null;
+
+        $searchQuery = $request->get('q');
+
+        $perPage = $request->has('p')
+            ? (int) $request->get('p')
+            : $perPage;
+
+        if(is_null($searchQuery)){
+            $query = Ad::where('status', 'online');
+        }else{
+            $query = Ad::search($searchQuery)->where('status', 'online');
+        }
+
+        if($request->has('trier') || $request->has('sort')){
+            $s = $request->get('trier') ?: $request->get('sort');
+            if($s == 'l'){
+                $query = $query->orderBy('price', 'asc');
+            }
+
+            if($s == 'r'){
+                $query = $query->orderBy('start_date', 'desc');
+            }
+        }
+
+        $collection = $query->get();
+        $paginator = $query->paginate($perPage);
+        $transformed = $this->fractal->createData(new Collection($collection, new AdsTransformer))->toArray()['data'];
+        $result = collect($paginator)->toArray();
+        $result['data'] = $transformed;
+
+        if($request->has('c')){
+            $categories = [];
+            $category_uuid = $request->get('c');
+            $category = Category::with('parent', 'children')->where('uuid', $category_uuid)->first();
+
+            if($category->children->isNotEmpty()){
+                $categories = $category->children->map(function($category){
+                    return $category->id;
+                });
+            }
+
+            if($category->children->isEmpty()){
+                array_push($categories, $category->id);
+            }
+
+            $result['data'] = collect($transformed)->filter(function($ad) use ($categories) {
+                return collect($categories)->contains($ad['category_id']);
+            })->toArray();
+        }
+
+        if($request->has('l')){
+            $locationUuid = $request->get('l');
+            $location = Location::with('parent')->where('uuid', $locationUuid)->first();
+
+            $result['data'] = collect($transformed)->filter(function($ad) use ($location) {
+                return $ad['owner']['location']['id'] == $location->id;
+            })->toArray();
+        }
+
+        return $result;
+    }
+
+    public function multiple()
+    {
         return view('pages.ads.multiple');
     }
 
@@ -57,19 +125,19 @@ class AdsController extends Controller
         $ad = Ad::with('images', 'owner', 'category', 'owner.location')
             ->where('uuid', $id)
             ->first();
+        if(! $ad) abort(404);
         $similar = Ad::with('images', 'category')
             ->where('category_id', $ad->category_id)
             ->where('title', 'like', "%{$ad->title}%")
             ->get()
-            ->take(10);
-//            ->reject(function($sad) use ($ad) {
-//                return $ad->id == $sad->id;
-//            });
+            ->take(10)
+            ->reject(function($sad) use ($ad) {
+                return $ad->id == $sad->id;
+            });
 
-        $transformed = $this->fractal->createData(new Item($ad, new AdTransformer))->toArray()['data'];
+        $transformed = $this->fractal->createData(new Item($ad, new AdTransformer(auth('user')->user())))->toArray()['data'];
         $similar_transformed = $this->fractal->createData(new Collection($similar, new UserPublicAdsTransformer))
             ->toArray()['data'];
-//        dd($similar, $similar_transformed);
         return view('pages.ads.single', ['ad' => $transformed, 'similar_ads' => $similar_transformed]);
     }
 
@@ -111,8 +179,7 @@ class AdsController extends Controller
                     'code' => $ad['code'],
                     'title' => $ad['title'],
                     'category' => $this->getTranslatedAdCategory($ad['category']),
-                    'condition' => $ad['condition'],
-//                    'condition' => $ad['condition'] == 'used' ? 0 : 1,
+                    'condition' => $ad['condition'] == 'used' ? 0 : 1,
                     'description' => $ad['description'],
                     'all_images' => $ad['images'],
                     'images' => $this->getAdOriginalImages($ad['images']),
@@ -137,7 +204,7 @@ class AdsController extends Controller
         $ad->update([
             'category_id' => $request->category_id,
             'title' => $request->title,
-            'condition' => $request->condition ? 'new' : 'used',
+            'condition' => $request->condition == 1 ? 'new' : 'used',
             'description' => $request->description,
             'price' => $request->price,
             'negotiable' => $request->negotiable
@@ -173,13 +240,37 @@ class AdsController extends Controller
     public function report($uuid)
     {
         $ad = Ad::where('uuid', $uuid)->first();
-        dd($ad);
+        if(is_null($ad)) return ['done' => false];
+        $ad->reporters()->attach(auth('user')->user()->id);
+        $transformed = $this->fractal->createData(new Item($ad, new AdTransformer(auth('user')->user())))->toArray()['data'];
+        return ['done' => true, 'ad' => $transformed];
+    }
+
+    public function dereport($uuid)
+    {
+        $ad = Ad::where('uuid', $uuid)->first();
+        if(is_null($ad)) return ['done' => false];
+        $ad->reporters()->detach(auth('user')->user()->id);
+        $transformed = $this->fractal->createData(new Item($ad, new AdTransformer(auth('user')->user())))->toArray()['data'];
+        return ['done' => true, 'ad' => $transformed];
     }
 
     public function favorite($uuid)
     {
         $ad = Ad::where('uuid', $uuid)->first();
-        dd($ad);
+        if(is_null($ad)) return ['done' => false];
+        $ad->favoritors()->attach(auth('user')->user()->id);
+        $transformed = $this->fractal->createData(new Item($ad, new AdTransformer(auth('user')->user())))->toArray()['data'];
+        return ['done' => true, 'ad' => $transformed];
+    }
+
+    public function unfavorite($uuid)
+    {
+        $ad = Ad::where('uuid', $uuid)->first();
+        if(is_null($ad)) return ['done' => false];
+        $ad->favoritors()->detach(auth('user')->user()->id);
+        $transformed = $this->fractal->createData(new Item($ad, new AdTransformer(auth('user')->user())))->toArray()['data'];
+        return ['done' => true, 'ad' => $transformed];
     }
 
     public function delete($id)
@@ -207,7 +298,7 @@ class AdsController extends Controller
         return [
             'uuid' => $uuid,
             'title' => $request->title,
-            'condition' => $request->condition,
+            'condition' => $request->condition == 1 ? 'new' : 'used',
             'description' => $request->description,
             'price' => $request->price,
             'category_id' => $request->category_id,

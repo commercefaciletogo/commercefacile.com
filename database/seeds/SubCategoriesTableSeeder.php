@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Category;
+use Ramsey\Uuid\Uuid;
 
 class SubCategoriesTableSeeder extends Seeder
 {
@@ -23,21 +24,25 @@ class SubCategoriesTableSeeder extends Seeder
         return collect($this->get_sub_categories())->map(function($s_c){
             $sub_cat_en = trans("category.{$s_c['key']}", [], "messages", "en");
             $sub_cat_fr = trans("category.{$s_c['key']}", [], "messages", "fr");
+            $uuid = Uuid::uuid4();
 
             return [
                 'parent_id' => $s_c['category_id'],
                 'key' => $s_c['key'],
+                'uuid' => $uuid,
                 'en' => [
                     'name' => title_case($sub_cat_en),
                     'slug' => str_slug($sub_cat_en),
                     'key' => $s_c['key'],
                     'parent_id' => $s_c['category_id'],
+                    'uuid' => $uuid,
                 ],
                 'fr' => [
                     'name' => title_case($sub_cat_fr),
                     'slug' => str_slug($sub_cat_fr),
                     'key' => $s_c['key'],
                     'parent_id' => $s_c['category_id'],
+                    'uuid' => $uuid,
                 ]
             ];
         })->toArray();

@@ -12,6 +12,7 @@ return [
     'sign_in_with_face' => 'Sign in with facebook',
     'no_account' => 'Do Not Have Account Yet?',
     'forgot_password' => 'Forgot password',
+    'reset' => 'Reset',
 
     'register_with_face' => 'Register with facebook',
     'confirm_password' => 'Confirm password',

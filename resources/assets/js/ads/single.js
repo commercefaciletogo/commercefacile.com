@@ -5,6 +5,9 @@ import axios from 'axios';
 const VueI18n = require('vue-i18n');
 Vue.use(VueI18n);
 
+import VueLazyload from 'vue-lazyload';
+Vue.use(VueLazyload);
+
 const locales = {
     en: {
         general: {
@@ -25,24 +28,37 @@ new Vue({
     el: '#main',
     data: {
         shown: false,
-        ad: {}
+        ad: window.ad,
+        paths: window.ad.images
     },
     methods: {
-        reportAd(adId){
-            axios.post(window.reportAdUrl).then(rep => {
-
+        reportAd(){
+            let url = window.reportAdUrl;
+            if(this.ad.reported){
+                url = window.dereportAdUrl;
+            }
+            axios.post(url).then(rep => {
+                if(rep.data.done){
+                    this.ad = rep.data.ad;
+                    console.log('done reporting');
+                }
             }).catch(err => {
-
+                console.log(err.response);
             });
-            console.log(`reporting ad ${adId}`);
         },
-        favoriteAd(adId){
-            axios.post(window.favoriteAdUrl).then(rep => {
-
+        favoriteAd(){
+            let url = window.favoriteAdUrl;
+            if(this.ad.favorited){
+                url = window.unfavoriteAdUrl;
+            }
+            axios.post(url).then(rep => {
+                if(rep.data.done){
+                    this.ad = rep.data.ad;
+                    console.log('done favoriting');
+                }
             }).catch(err => {
-
+                console.log(err.response);
             });
-            console.log(`favorite ad ${adId}`);
         },
         showPhone(){
             this.shown = true;
@@ -97,7 +113,6 @@ new Vue({
 
         this.initClipboard();
 
-        console.log('single ad page mounted');
-        this.notify("single ad page mounted", "topCenter", "success");
+        console.log(window.ad);
     }
 });

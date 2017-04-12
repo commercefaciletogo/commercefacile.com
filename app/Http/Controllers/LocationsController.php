@@ -30,8 +30,10 @@ class LocationsController extends Controller
         $locations = collect($regions)->map(function($region){
             return [
                 'id' => $region->id,
+                'uuid' => $region->uuid,
                 'name' => $region->name,
                 'children' => $region->children,
+                'slug' => $region->slug,
                 'icon' => "/img/icons/city.png",
             ];
         });

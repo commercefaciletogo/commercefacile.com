@@ -95,7 +95,9 @@ class UsersController extends Controller
     public function favorites($user_name)
     {
         $user = $this->user_exist($user_name);
-        return view('user.favorites', ['user' => $user]);
+        $ads = User::find($user['id'])->favorite_ads->unique();
+        $ads = $this->fractal->createData(new Collection($ads, new UserPublicAdsTransformer))->toArray()['data'];
+        return view('user.favorites', ['user' => $user, 'ads' => $ads]);
     }
 
     public function publicProfile($user_name)

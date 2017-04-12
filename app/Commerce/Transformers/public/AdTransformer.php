@@ -11,11 +11,25 @@ namespace App\Commerce\Transformers;
 
 use App\Ad;
 use App\Category;
+use App\User;
 use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
 
 class AdTransformer extends TransformerAbstract
 {
+    /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * AdTransformer constructor.
+     * @param User $user
+     */
+    public function __construct(User $user = null)
+    {
+        $this->user = $user;
+    }
 
     public function transform(Ad $ad)
     {
@@ -24,13 +38,15 @@ class AdTransformer extends TransformerAbstract
             'uuid' => $ad->uuid,
             'title' => ucfirst($ad->title),
             'category' => $this->get_trans_category($ad->category),
-            'condition' => ucfirst($ad->condition),
+            'condition' => $ad->condition,
             'description' => ucfirst($ad->description),
             'images' => $this->getAdBigImages($ad->images),
             'price' => $ad->price,
             'negotiable' => $ad->negotiable == 1 ? true : false,
             'date' => ucfirst(Carbon::parse($ad->start_date)->diffForHumans()),
-            'owner' => $this->get_ad_owner($ad)
+            'owner' => $this->get_ad_owner($ad),
+            'reported' => $this->is_reported($ad),
+            'favorite' => $this->is_favorite($ad)
         ];
     }
 
@@ -39,6 +55,7 @@ class AdTransformer extends TransformerAbstract
         $cat = $category->translate();
         return [
             'id' => $cat->category_id,
+            'uuid' => $cat->uuid,
             'name' => $cat->name,
             'slug' => $cat->slug,
             'parent' => $this->get_trans_category_parent($category)
@@ -61,6 +78,7 @@ class AdTransformer extends TransformerAbstract
         $par = $category->parent->translate();
         return [
             'id' => $par->category_id,
+            'uuid' => $par->uuid,
             'name' => $par->name,
             'slug' => $par->slug
         ];
@@ -75,9 +93,26 @@ class AdTransformer extends TransformerAbstract
             'phone' => $user->phone,
             'location' => [
                 'slug' => $user->location->slug,
+                'uuid' => $user->location->uuid,
                 'name' => $user->location->name
             ]
         ];
+    }
+
+    private function is_reported(Ad $ad)
+    {
+        if(is_null($this->user)) return false;
+        return $ad->reporters->unique()->filter(function($user){
+            return $user->id == $this->user->id;
+        })->isNotEmpty();
+    }
+
+    private function is_favorite(Ad $ad)
+    {
+        if(is_null($this->user)) return false;
+        return $ad->favoritors->unique()->filter(function($user){
+            return $user->id == $this->user->id;
+        })->isNotEmpty();
     }
 
 }

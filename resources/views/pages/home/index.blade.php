@@ -8,15 +8,7 @@
             flex-direction: column;
         }
 
-        .signin.naked{
-            background: none;
-            color: #1d305d;
-            border-radius: 0;
-        }
 
-        .signin.naked:hover{
-            background: #a4acbe;
-        }
 
         .slick-prev, .slick-next{
             height: 20px;
@@ -41,40 +33,6 @@
         .slick-prev:hover, .slick-next:hover{
             height: 20px;
         }
-
-        .main-search{
-            border: 1px solid #1d305d;
-        }
-        
-        .main-search > .search-input, .main-search > .search-input:focus{
-            color: #4a597d;
-            border: none;
-        }
-
-        .ui.button.account{
-            border-radius: 0;
-            color: white;
-            background: rgb(96, 110, 141);
-        }
-
-        a.ui.button.all-ads{
-            background: #d1d5de;
-            border-radius: 0;
-        }
-
-        a.ui.button.all-ads:hover{
-            background: #d1d5de;
-        }
-
-        .main-search > .search-button, .main-search > .search-button:hover{
-            background: #f79520;
-            color: #606e8d;
-            border-radius: 0;
-        }
-
-        .main-search > i.search.icon{
-            color: #1d305d;
-        }
     </style>
 
 @endsection
@@ -94,11 +52,13 @@
                     <img src="{{ asset('/img/logos/logo_w_d.png') }}" alt="" class="ui image">
                 </div>
                 <div class="seven wide tablet eight wide computer column ui container center aligned">
-                    <div class="ui fluid left icon action input main-search">
-                        <i class="search icon"></i>
-                        <input style="border: none;" class="search-input" type="text" placeholder="{{ trans('general.what_are_you_looking_for') }}">
-                        <div style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</div>
-                    </div>
+                    <form action="{{ route('ads.multiple') }}" class="ui form s" method="get">
+                        <div class="ui fluid left icon action input main-search">
+                            <i class="search icon"></i>
+                            <input type="text" required name="q" placeholder="{{ trans('general.what_are_you_looking_for') }}">
+                            <button type="submit" style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="five wide tablet three wide computer column ui container center aligned">
                     <a href="{{ route('ads.multiple') }}" class="ui button fluid all-ads" style="color: #1d305d;">{{ trans('general.all_ads') }}</a>
@@ -106,15 +66,16 @@
             </div>
 
             {{--Tablet--}}
-
             <div class="ui container tablet only grid" style="margin-top: .7em;height: 70px;display: flex; flex-direction: column; justify-content: center; align-content: center;">
 
                 <div class="eleven wide column ui container center aligned">
-                    <div class="ui fluid left icon action input main-search">
-                        <i class="search icon"></i>
-                        <input style="border: none;" class="search-input" type="text" placeholder="{{ trans('general.what_are_you_looking_for') }}">
-                        <div style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</div>
-                    </div>
+                    <form action="{{ route('ads.multiple') }}" class="ui form s" method="get">
+                        <div class="ui fluid left icon action input main-search">
+                            <i class="search icon"></i>
+                            <input type="text" required name="q" placeholder="{{ trans('general.what_are_you_looking_for') }}">
+                            <button type="submit" style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="five wide  column ui container center aligned">
                     <a href="{{ route('ads.multiple') }}" class="ui button fluid all-ads" style="color: #1d305d;">{{ trans('general.all_ads') }}</a>
@@ -124,11 +85,13 @@
             {{--Mobile Devices--}}
             <div class="ui container mobile only grid" style="display: flex; flex-direction: column; justify-content: center; align-content: center;">
                 <div class="sixteen wide column ui container center aligned">
-                    <div class="ui fluid left icon action input main-search">
-                        <i class="search icon"></i>
-                        <input type="text" placeholder="{{ trans('general.what_are_you_looking_for') }}">
-                        <div style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</div>
-                    </div>
+                    <form action="{{ route('ads.multiple') }}" class="ui form s" method="get">
+                        <div class="ui fluid left icon action input main-search">
+                            <i class="search icon"></i>
+                            <input type="text" required name="q" placeholder="{{ trans('general.what_are_you_looking_for') }}">
+                            <button type="submit" style="border-radius: 0;" class="ui button search-button">{{ trans('general.search') }}</button>
+                        </div>
+                    </form>
                     <a href="{{ route('ads.multiple') }}" class="ui button" style="margin-top: 1em; background: #f79520; color: #606e8d;">{{ trans('general.all_ads') }}</a>
                 </div>
             </div>
@@ -147,8 +110,8 @@
                             </h3>
                             <div class="ui animated link items">
                                 @foreach($cities as $city)
-                                    <a class="item" style="height: 25px;"
-                                       href="{{ qs_url(LaravelLocalization::getLocalizedURL(null, route('ads.multiple')), ['l' => $city->slug]) }}">
+                                    <a class="item" style="height: 25px; color: rgb(74, 89, 125);"
+                                       href="{{ qs_url(route('ads.multiple'), ['l' => $city->uuid]) }}">
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
                                             <img src="{{ asset("/img/icons/city.png") }}">
                                         </div>
@@ -412,8 +375,8 @@
                             </h3>
                             <div class="ui link animated items">
                                 @foreach($categories as $category)
-                                    <a class="item" style="height: 25px;"
-                                       href="{{ qs_url(LaravelLocalization::getLocalizedURL(null, route('ads.multiple')), ['c' => $category['slug']]) }}">
+                                    <a class="item" style="height: 25px;  color: rgb(74, 89, 125);"
+                                       href="{{ qs_url(route('ads.multiple'), ['c' => $category['uuid']]) }}">
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
                                             <img src="{{ asset("/img/icons/{$category['key']}.png") }}">
                                         </div>

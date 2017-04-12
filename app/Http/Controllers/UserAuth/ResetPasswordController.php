@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\UserAuth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class ResetPasswordController extends Controller
 {
@@ -28,7 +30,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    public $redirectTo = '/user/home';
+    public $redirectTo = '/';
 
 
     /**
@@ -52,9 +54,30 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        return view('user.auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        if(is_null($token)) return redirect()->back();
+
+        if($token != session('pass_token')) return redirect()->back();
+
+        return view('user.auth.passwords.reset');
+    }
+
+    public function reset(Request $request)
+    {
+        $code = session('code');
+        if($code != $request->code) return redirect()->back()->withErrors(['code' => 'Invalid Code']);
+
+        $this->validate($request, [
+            'password' => 'required|confirmed',
+        ]);
+
+        $user = User::where('phone', session('phone'))->first();
+        if(is_null($user)) return redirect()->back();
+
+        $user->update(['password' => bcrypt($request->password)]);
+
+        session()->flush();
+
+        return redirect()->route('user.get.login');
     }
 
     /**

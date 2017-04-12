@@ -4,32 +4,32 @@
             <div class="three wide column">
                 <h4 class="ui header">{{ trans('general.how_to_sell_fast') }}</h4>
                 <div class="ui link list">
-                    <a href="#" class="item">{{ trans('general.how_to_sell_fast') }}</a>
+                    <a href="{{ route('pages.misc.sell') }}" class="item">{{ trans('general.how_to_sell_fast') }}</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui header">{{ trans('general.help_and_support') }}</h4>
                 <div class="ui link list">
-                    <a href="#" class="item">{{ trans('general.faq') }}</a>
-                    <a href="#" class="item">{{ trans('general.stay_safe') }}</a>
-                    <a href="#" class="item">{{ trans('general.contact_us') }}</a>
+                    <a href="{{ route('pages.misc.faq') }}" class="item">{{ trans('general.faq') }}</a>
+                    <a href="{{ route('pages.misc.safe') }}" class="item">{{ trans('general.stay_safe') }}</a>
+                    <a href="{{ route('pages.misc.contact') }}" class="item">{{ trans('general.contact_us') }}</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui header">{{ trans('general.social') }}</h4>
                 <div class="ui link list">
-                    <a href="#" class="item">Blog</a>
-                    <a href="#" class="item">Facebook</a>
-                    <a href="#" class="item">Twitter</a>
-                    <a href="#" class="item">Youtube</a>
+                    <a href="#" target="_blank" class="item">Blog</a>
+                    <a href="#" target="_blank" class="item">Facebook</a>
+                    <a href="#" target="_blank" class="item">Twitter</a>
+                    <a href="#" target="_blank" class="item">Youtube</a>
                 </div>
             </div>
             <div class="three wide column">
                 <h4 class="ui header">{{ trans('general.about_us') }}</h4>
                 <div class="ui link list">
-                    <a href="#" class="item">{{ trans('general.about_us') }}</a>
-                    <a href="#" class="item">{{ trans('general.term_and_condition') }}</a>
-                    <a href="#" class="item">{{ trans('general.privacy_policy') }}</a>
+                    <a href="{{ route('pages.misc.about') }}" class="item">{{ trans('general.about_us') }}</a>
+                    <a href="{{ route('pages.misc.terms') }}" class="item">{{ trans('general.term_and_condition') }}</a>
+                    <a href="{{ route('pages.misc.privacy') }}" class="item">{{ trans('general.privacy_policy') }}</a>
                 </div>
             </div>
             <div class="four wide column">
