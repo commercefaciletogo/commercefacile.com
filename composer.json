@@ -13,6 +13,7 @@
         "hashids/hashids": "^2.0",
         "hesto/multi-auth": "^1.0",
         "intervention/image": "^2.3",
+        "laravel-notification-channels/messagebird": "^1.0",
         "laravel/framework": "5.3.*",
         "laravel/scout": "2.0.2",
         "league/flysystem-dropbox": "^1.0",

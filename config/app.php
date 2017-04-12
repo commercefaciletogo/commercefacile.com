@@ -177,6 +177,7 @@ return [
         Laravel\Scout\ScoutServiceProvider::class,
 //        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
         ScoutEngines\Postgres\PostgresEngineServiceProvider::class,
+        NotificationChannels\Messagebird\MessagebirdServiceProvider::class,
 
         /*
          * Application Service Providers...

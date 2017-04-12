@@ -306,6 +306,7 @@
 @section('scripts')
     <script>
         var oldAd = {!! json_encode($ad) !!};
+        var profileUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('user.profile', ['user_name' => auth('user')->user()->slug])) !!}";
         var authorId = "{!! auth('user')->user()->id !!}";
         var requireLocation = "{!! is_null(auth('user')->user()->location) !!}";
         var updateAdUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('ads.single.update', ['id' => $ad['id']])) !!}";

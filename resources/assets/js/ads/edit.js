@@ -107,7 +107,9 @@ new Vue({
             axios({url: window.updateAdUrl,
                 method: 'POST',
                 data: data}).then(res => {
-                console.log(res.data);
+                if(res.data.done){
+                    return window.location = window.profileUrl;
+                }
             }).catch(error => {
                 this.submitting = false;
                 console.log(error.response);

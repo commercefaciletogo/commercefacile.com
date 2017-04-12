@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\UserAuth;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\PhoneConfirmation;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Password;
 use Ramsey\Uuid\Uuid;
 
@@ -21,7 +23,7 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
+    use SendsPasswordResetEmails, Notifiable;
 
     /**
      * Create a new controller instance.
@@ -51,6 +53,7 @@ class ForgotPasswordController extends Controller
 
         $code = $this->generate_code();
         $phone = "00228{$request->phone}";
+        $this->notify(new PhoneConfirmation($phone, $code));
         session()->put('code', 1234);
         session()->put('phone', $request->phone);
         // send code to user

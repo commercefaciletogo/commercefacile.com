@@ -11,7 +11,8 @@ Vue.component('v-select', vSelect);
 
 import VueLazyload from 'vue-lazyload';
 Vue.use(VueLazyload, {
-    loading: '/img/icons/loading.gif'
+    loading: '/img/icons/loading.gif',
+    error: '/img/icons/placeholder.png'
 });
 
 import Paginate from 'vuejs-paginate';

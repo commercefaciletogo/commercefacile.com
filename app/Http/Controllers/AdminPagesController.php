@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Ad;
+use App\Admin;
+use App\Role;
+use App\User;
 use Commerce\Transformers\Admin\AdTransformer;
+use Commerce\Transformers\Admin\UsersTransformer;
 use Illuminate\Http\Request;
 use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 
 class AdminPagesController extends Controller
@@ -56,11 +61,19 @@ class AdminPagesController extends Controller
 
     public function employeesPage()
     {
-        return view('admin.pages.employees');
+        $employees = Admin::all()
+            ->reject(function($employee){
+            return $employee->id == auth('admin')->user()->id;
+        })
+        ;
+        $roles = Role::all();
+        return view('admin.pages.employees', ['employees' => $employees, 'roles' => $roles]);
     }
 
     public function usersPage()
     {
-        return view('admin.pages.users');
+        $users = User::with('location', 'ads')->get();
+        $transformed = (new Manager())->createData(new Collection($users, new UsersTransformer()))->toArray()['data'];
+        return view('admin.pages.users', ['users' => $transformed]);
     }
 }

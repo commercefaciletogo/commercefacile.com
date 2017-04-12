@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\UserAuth;
 
+use App\Notifications\PhoneConfirmation;
 use App\User;
+use Illuminate\Notifications\Notifiable;
+use NotificationChannels\Messagebird\MessagebirdMessage;
 use Ramsey\Uuid\Uuid;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -23,6 +26,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use Notifiable;
 
     /**
      * Where to redirect users after login / registration.
@@ -47,7 +51,7 @@ class RegisterController extends Controller
         $this->validator($data)->validate();
 
         if($this->sendCode(request('phone'))){
-            session()->put('user_registration_data', $data);
+            session()->put('user_registration_data', array_add($data, 'status', 'active'));
             return response()->json(['sent' => true]);
         }
         return response()->json(['sent' => false]);
@@ -55,14 +59,14 @@ class RegisterController extends Controller
 
     private function sendCode($phone)
     {
-        $code = '1234';
-//        $code = $this->generate_random();
-//        after sending the code to user phone
-//        if(! SMSService.sent($phone, $code)){
-//            return false;
-//        }
-        session()->put('code', $code);
-        return true;
+        try{
+            $code = $this->generate_random();
+            $this->notify(new PhoneConfirmation("00228{$phone}", $code));
+            session()->put('code', $code);
+            return true;
+        }catch (\Exception $e){
+            return false;
+        }
     }
 
     public function authenticatePhone()
@@ -140,9 +144,10 @@ class RegisterController extends Controller
 
     }
 
-    private function generate_random($digits = 4)
+    private function generate_random()
     {
-        return rand(pow(10, $digits - 1), pow(10, $digits)-1);
+        $digits = 4;
+        return str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
     }
 
     /**

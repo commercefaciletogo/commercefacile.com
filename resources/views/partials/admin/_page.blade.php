@@ -79,6 +79,7 @@
 <script src="{!! elixir('js/vendors.js') !!}"></script>
 <script>
     var adsStatusUrl = "{{ route('api.ads.status') }}";
+    var changePasswordUrl = "{{ route('employee.pass.change') }}";
     var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
 </script>
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>

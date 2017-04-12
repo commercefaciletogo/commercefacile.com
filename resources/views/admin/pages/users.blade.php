@@ -9,7 +9,7 @@
                 <div class="four wide column">
                     <div class="ui mini horizontal statistic">
                         <div class="value">
-                            2,204,456
+                            {{ count($users) }}
                         </div>
                         <div class="label">
                             Users
@@ -24,9 +24,9 @@
                 </div>
                 <div class="six wide right aligned column">
                     <div class="mini ui buttons">
-                        <button class="ui button">All</button>
-                        <button class="ui button">Active</button>
-                        <button class="ui button">Inactive</button>
+                        <button class="ui active button">All</button>
+                        {{--<button class="ui button">Active</button>--}}
+                        {{--<button class="ui button">Inactive</button>--}}
                     </div>
                 </div>
             </div>
@@ -36,7 +36,6 @@
             <table class="ui very basic table">
                 <thead>
                 <tr>
-                    <th>#Code</th>
                     <th>Name</th>
                     <th>Location</th>
                     <th>Phone</th>
@@ -48,53 +47,36 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>45dsf465f</td>
-                    <td>Thomas Dola</td>
-                    <td>Amoutivie</td>
-                    <td>90110735</td>
-                    <td>thomasdolar@mgail.com</td>
-                    <td>20</td>
-                    <td>12/12/12</td>
-                    <td>
-                        <div class="ui mini compact green horizontal label">active</div>
-                    </td>
-                    <td>
-                        <button class="mini compact ui button">
-                            profile
-                        </button>
-                        <button class="mini compact ui button">
-                            deactivate
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>45dsf465f</td>
-                    <td>Thomas Dola</td>
-                    <td>Amoutivie</td>
-                    <td>90110735</td>
-                    <td>thomasdolar@mgail.com</td>
-                    <td>20</td>
-                    <td>12/12/12</td>
-                    <td>
-                        <div class="ui mini compact red horizontal label">inactive</div>
-                    </td>
-                    <td>
-                        <button class="mini compact ui button">
-                            profile
-                        </button>
-                        <button class="mini compact ui button">
-                            activate
-                        </button>
-                    </td>
-                </tr>
+                @foreach($users as $user)
+                    <tr>
+                        <td>{{ $user['name'] }}</td>
+                        <td>{{ $user['location'] }}</td>
+                        <td>{{ $user['phone'] }}</td>
+                        <td>{{ $user['email'] }}</td>
+                        <td>{{ $user['total_ads'] }}</td>
+                        <td>{{ $user['date'] }}</td>
+                        <td>
+                            <div class="ui mini compact {{ $user['status'] == 'active' ? 'green' : 'red' }} horizontal label">{{ $user['status'] }}</div>
+                        </td>
+                        <td>
+                            <a href="{{ route('user.profile.public', ['username' => $user['slug'] ]) }}" class="mini compact ui button">
+                                profile
+                            </a>
+                            @if(auth('admin')->user()->id == 1)
+                                <button class="mini compact ui button">
+                                    {{ $user['status'] == 'active' ? 'deactivate' : 'activate' }}
+                                </button>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 
         </div>
-        <div class="ui bottom attached segment">
-            <p>This segment is on bottom</p>
-        </div>
+        {{--<div class="ui bottom attached segment">--}}
+            {{--<p>This segment is on bottom</p>--}}
+        {{--</div>--}}
 
     </div>
 

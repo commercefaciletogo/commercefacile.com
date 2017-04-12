@@ -32,11 +32,12 @@ class ProfileAdsTransformer extends TransformerAbstract
             'category' => $this->getTranslatedAdCategory($ad->category),
             'condition' => ucfirst($ad->condition),
             'description' => ucfirst(str_limit($ad->description, 25)),
-            'image' => $this->getAdSmallMainImage($ad->images),
+            'image' => $ad->images->isNotEmpty() ? $this->getAdSmallMainImage($ad->images) : '/img/icons/loading.gif',
             'price' => $ad->price,
             'start_date' => $this->get_start_date($ad),
             'end_date' => $this->get_end_date($ad),
-            'rejected_fields' => $this->get_rejected_fields($ad)
+            'rejected_fields' => $this->get_rejected_fields($ad),
+            'editable' => $ad->images->isNotEmpty()
         ];
     }
 

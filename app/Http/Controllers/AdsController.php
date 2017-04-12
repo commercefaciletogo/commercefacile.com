@@ -160,7 +160,7 @@ class AdsController extends Controller
         //save images
         $images_paths = $this->saveAdImagesForFurtherProcessing($request, $ad);
         $this->dispatch(new ProcessAdImages($ad, $images_paths, $request->image_length, auth('user')->user()));
-        return $request->all();
+        return ['done' => true];
     }
 
     public function edit($id)
@@ -210,12 +210,10 @@ class AdsController extends Controller
             'negotiable' => $request->negotiable
         ]);
 
-//        delete old original images
-//        $this->deleteOldOriginalImages($ad);
         $images_paths = $this->saveAdImagesForFurtherProcessing($request, $ad);
         $this->dispatch(new ProcessAdImages($ad, $images_paths, $request->image_length, auth('user')->user()));
 
-        dd($ad);
+        return ['done' => true];
     }
 
     public function cancelUpdate($id)

@@ -74,7 +74,7 @@
                                                 </p>
                                             </div>
                                             <div class="right aligned column">
-                                                <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic {{ $ad['editable'] ? '' : 'disabled' }} compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
                                                     <i class="icon pencil"></i>
                                                 </a>
                                                 <form method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
@@ -206,7 +206,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="right aligned column">
-                                                        <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                        <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic {{ $ad['editable'] ? '' : 'disabled' }} compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
                                                             <i class="icon pencil"></i>
                                                         </a>
                                                         <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
@@ -312,9 +312,9 @@
 @endsection
 
 @section('scripts')
-    {{--<script>--}}
-        {{--var deleteAdUrl = "{!! route('', ['user_name' => $user['slug']]) !!}";--}}
-        {{--var editAdUrl = "{!! route('', ['user_name' => $user['slug']]) !!}";--}}
-    {{--</script>--}}
-    {{--<script src="{{ asset('js/user-settings.js') }}"></script>--}}
+    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+    <script>
+        var authorId = "{!! auth('user')->user()->id !!}";
+    </script>
+    <script src="{{ asset('js/user-profile.js') }}"></script>
 @endsection

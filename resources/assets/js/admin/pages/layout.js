@@ -22,6 +22,15 @@ new Vue({
     methods: {
         changePassword(){
             this.changing = true;
+            if(this.currentPassword && this.newPassword && this.newPasswordConfirm){
+                axios.post(window.changePasswordUrl)
+                    .then(rep => {
+
+                    })
+                    .catch(error => {
+
+                    })
+            }
             window.setTimeout(() => {
                 this.changing = false;
             }, 5000);

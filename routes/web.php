@@ -51,8 +51,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
             Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminPagesController@dashboardPage']);
             Route::get('/ads', ['as' => 'admin.ads', 'uses' => 'AdminPagesController@adsPage']);
             Route::get('/ads/{id}', ['as' => 'admin.ad.action', 'uses' => 'AdminPagesController@adPage']);
-            Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
             Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminPagesController@usersPage']);
+
+            Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
+            Route::delete('/employees', ['as' => 'employee.delete', 'uses' => 'AdminEmployeesController@delete']);
+            Route::post('/employees/new', ['as' => 'employee.save', 'uses' => 'AdminEmployeesController@save']);
+            Route::post('/employees', ['as' => 'employee.pass.change', 'uses' => 'AdminEmployeesController@changePassword']);
         });
     });
 

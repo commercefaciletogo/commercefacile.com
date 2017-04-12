@@ -2,6 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import Vue from 'vue';
 import Echo from 'laravel-echo';
+import Notify from 'izitoast';
 
 import Categories from '../components/ads/create/Categories.vue';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
@@ -102,7 +103,9 @@ new Vue({
             _.forEach(this.newAd.photos, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios.post(window.postAdUrl, data).then(res => {
-                console.log(res.data);
+                if(res.data.done){
+                    window.location = window.profileUrl;
+                }
             }).catch(error => {
                 this.submitting = false;
                 console.log(error.response);

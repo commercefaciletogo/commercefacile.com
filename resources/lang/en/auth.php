@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'sms' => 'Your verification code is :code',
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'sign_in' => 'Sign In',

@@ -3,9 +3,15 @@
  services:
 
     nginx:
-        build:
-            context: .
-            dockerfile: .docker/nginx.dev.dockerfile
+        image: bringnow/nginx-letsencrypt
+        volumes:
+            - ./nginx.conf:./.docker/conf/nginx.conf
+            - /etc/letsencrypt:/etc/letsencrypt
+            - /var/acme-webroot:/var/acme-webroot
+            - /srv/docker/nginx/dhparam:/etc/nginx/dhparam
+#        build:
+#            context: .
+#            dockerfile: .docker/nginx.dev.dockerfile
         container_name: commercefacile-ngnix
         volumes:
             - ./:/var/www/
@@ -16,6 +22,8 @@
             - "443:443"
         networks:
             - commercefacileapp-network
+        dns_search:
+            - "cf.dev"
 
     commercefacile-server:
         build:
