@@ -38,6 +38,10 @@ WORKDIR     /var/www
 
 RUN         /usr/local/bin/php /usr/local/bin/composer install
 
+#RUN         /usr/local/bin/php artisan db:migrate
+#
+#RUN         /usr/local/bin/php artisan db:seed
+
 # set container entrypoints
 ENTRYPOINT ["/bin/bash","-c"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

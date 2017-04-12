@@ -1,0 +1,58 @@
+
+nginx:
+  image: thomasdolar/commercefacile_nginx
+  volumes:
+    - ./:/var/www/
+  links:
+    - commercefacile-server
+  ports:
+    - "80:80"
+    - "443:443"
+
+commercefacile-server:
+  image: thomasdolar/commercefacile
+  privileged: true
+  depends_on:
+    - commercefacile-db
+    - commercefacile-queue
+    - commercefacile-redis
+    - commercefacile-socket
+  links:
+    - commercefacile-db
+    - commercefacile-queue
+    - commercefacile-redis
+
+commercefacile-db:
+  image: postgres:latest
+  ports:
+    - "5432:5432"
+  environment:
+    - POSTGRES_DB=commercefacile
+    - POSTGRES_USER=commercefacile
+    - POSTGRES_PASSWORD=commercefacile
+
+commercefacile-queue:
+  image: thomasdolar/beanstalkd
+  container_name: commercefacile-queue
+  ports:
+    - "11300:11300"
+    - "8080:8080"
+
+commercefacile-redis:
+  image: sameersbn/redis
+  volumes:
+    - ./storage/docker/redis:/var/lib/redis
+  ports:
+    - "6379:6379"
+
+commercefacile-socket:
+  build:
+    image: thomasdolar/commercefacile_socket
+  links:
+    - commercefacile-redis:redis
+  depends_on:
+    - commercefacile-redis
+  volumes:
+    - ./socket:/var/www/socket
+  ports:
+    - "6001:6001"
