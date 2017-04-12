@@ -7,6 +7,6 @@
 .local.env
 .production.env
 /socket/node_modules
-/.docker
-/.docker-compose
+#/.docker
+#/.docker-compose
 /semantic
