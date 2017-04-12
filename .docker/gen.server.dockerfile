@@ -17,9 +17,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable bcmath
 
-#install letsencrypt
-RUN apt-get install -y letsencrypt
-
 # install supervisor
 RUN apt-get install -y supervisor && \
     mkdir -p /var/log/supervisor

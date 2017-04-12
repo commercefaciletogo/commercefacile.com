@@ -36,7 +36,7 @@ COPY        . /var/www
 
 WORKDIR     /var/www
 
-RUN         /usr/local/bin/php composer install
+RUN         /usr/local/bin/php /usr/local/bin/composer install
 
 # set container entrypoints
 ENTRYPOINT ["/bin/bash","-c"]
