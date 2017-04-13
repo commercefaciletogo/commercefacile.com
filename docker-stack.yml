@@ -1,9 +1,8 @@
-
 nginx:
   image: thomasdolar/commercefacile_nginx
-  volumes:
-    - ./:/var/www/
   links:
+    - commercefacile-server
+  volumes_from:
     - commercefacile-server
   ports:
     - "80:80"
@@ -12,11 +11,8 @@ nginx:
 commercefacile-server:
   image: thomasdolar/commercefacile
   privileged: true
-  depends_on:
-    - commercefacile-db
-    - commercefacile-queue
-    - commercefacile-redis
-    - commercefacile-socket
+  volumes:
+    - /var/www
   links:
     - commercefacile-db
     - commercefacile-queue
@@ -33,7 +29,6 @@ commercefacile-db:
 
 commercefacile-queue:
   image: thomasdolar/beanstalkd
-  container_name: commercefacile-queue
   ports:
     - "11300:11300"
     - "8080:8080"
@@ -41,18 +36,13 @@ commercefacile-queue:
 commercefacile-redis:
   image: sameersbn/redis
   volumes:
-    - ./storage/docker/redis:/var/lib/redis
+    - /srv/docker/redis:/var/lib/redis
   ports:
     - "6379:6379"
 
 commercefacile-socket:
-  build:
-    image: thomasdolar/commercefacile_socket
+  image: thomasdolar/commercefacile_socket
   links:
     - commercefacile-redis:redis
-  depends_on:
-    - commercefacile-redis
-  volumes:
-    - ./socket:/var/www/socket
   ports:
     - "6001:6001"

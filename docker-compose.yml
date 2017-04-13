@@ -3,13 +3,11 @@
  services:
 
     nginx:
-        build:
-            context: .
-            dockerfile: .docker/nginx.dev.dockerfile
+        image: commercefacile/nginx
         container_name: commercefacile-ngnix
-        volumes:
-            - ./:/var/www/
         links:
+            - commercefacile-server
+        volumes_from:
             - commercefacile-server
         ports:
             - "80:80"
@@ -18,11 +16,11 @@
             - commercefacileapp-network
 
     commercefacile-server:
-        image: thomasdolar/commercefacile
+        image: commercefacile/server
         container_name: commercefacile-server
         privileged: true
-#        volumes:
-#            - ./:/var/www/
+        volumes:
+            - /var/www
         depends_on:
             - commercefacile-db
             - commercefacile-queue
@@ -80,16 +78,12 @@
             - commercefacileapp-network
 
     commercefacile-socket:
-        build:
-            context: .
-            dockerfile: .docker/socket.dockerfile
+        image: commercefacile/socket
         container_name: commercefacile-socket
         links:
             - commercefacile-redis:redis
         depends_on:
             - commercefacile-redis
-        volumes:
-            - ./socket:/var/www/socket
         ports:
             - "6001:6001"
         networks:
