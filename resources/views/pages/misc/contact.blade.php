@@ -1,4 +1,4 @@
-@extends('partials.master._pages')
+@extends('partials.master._auth')
 
 @section('styles')
     <style>
@@ -12,8 +12,6 @@
 
 @section('main')
     <div id="main" style="margin-bottom: 5em;">
-
-        @include('partials.pages.home._top_bar')
 
         <div class="ui container" style="background: #fff; padding-bottom: 5em; border-bottom: 4px solid #d1d5de; margin-top: 2em;">
 

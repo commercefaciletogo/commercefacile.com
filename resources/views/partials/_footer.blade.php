@@ -18,10 +18,10 @@
             <div class="three wide column">
                 <h4 class="ui header">{{ trans('general.social') }}</h4>
                 <div class="ui link list">
-                    <a href="#" target="_blank" class="item">Blog</a>
-                    <a href="#" target="_blank" class="item">Facebook</a>
-                    <a href="#" target="_blank" class="item">Twitter</a>
-                    <a href="#" target="_blank" class="item">Youtube</a>
+                    <a href="https://medium.com/commercefacile" target="_blank" class="item">Blog</a>
+                    <a href="https://www.facebook.com/Commercefacilecom-415355405469713/" target="_blank" class="item">Facebook</a>
+                    <a href="https://twitter.com/commercefacile" target="_blank" class="item">Twitter</a>
+                    <a href="https://www.instagram.com/commercefacile_togo/" target="_blank" class="item">Instagram</a>
                 </div>
             </div>
             <div class="three wide column">
