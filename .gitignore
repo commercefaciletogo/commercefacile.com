@@ -3,6 +3,9 @@
 /storage/*.key
 /vendor
 /.idea
+/.queue
+/.nginx
+/.socket
 #.env
 .local.env
 .production.env
