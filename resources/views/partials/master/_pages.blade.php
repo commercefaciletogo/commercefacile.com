@@ -3,6 +3,7 @@
         <title>Commercefacile.com</title>
         <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        @include('partials.favico')
         <style>
             html{
                 height: 100%;
