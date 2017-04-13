@@ -48,7 +48,7 @@ class PagesController extends Controller
         });
         $cities = $this->location->whereNotNull('parent_id')->take(7)->get();
         $latest_ads = $this->get_latest_ads();
-        return view('pages.home.index', ['categories' => $categories, 'cities' => $cities, 'ads' => $latest_ads]);
+        return view('pages.home.index', ['categories' => $categories, 'cities' => $cities, 'latest' => $latest_ads]);
     }
 
     public function sell()
@@ -99,7 +99,11 @@ class PagesController extends Controller
                 return [
                     $trans_category['name'] => $this->get_category_latest_ads($category)
                 ];
-            })->all();
+            })
+            ->flatMap(function($c){
+                return $c;
+            })
+            ->all();
     }
 
     /**

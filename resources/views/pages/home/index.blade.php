@@ -144,218 +144,42 @@
                             <div class="ui segments" style="border: 0; box-shadow: none; border-radius: 0;">
                                 <div class="ui segment" style="background: transparent; padding: 0; border: 0; box-shadow: none; border-radius: 0; margin-bottom: 2em;">
 
-                                    <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
-                                        <div class="row" style="padding: .5em; background: #606e8d;">
-                                            <a href="" style="font-size: 1.2em; color: white; ">Phones & Tablets</a>
-                                        </div>
+                                    @foreach($latest as $cat => $ads)
 
-                                        <div class="row" style="background: transparent;">
-                                            <div class="ads-slide" style="height: 100px;">
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
+                                        <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
+                                            <div class="row" style="padding: .5em; background: #606e8d;">
+                                                <a href="" style="font-size: 1.2em; color: white; ">{{ $cat }}</a>
+                                            </div>
+
+                                            <div class="row" style="background: transparent;">
+                                                <div class="ads-slide" style="height: 100px;">
+
+                                                    @foreach($ads as $ad)
+                                                        <div style="width: 322px; color: #1d305d; margin-right: .5em;">
+                                                            <div class="ui container" style="background-color: #fcfcfd;">
+                                                                <div class="ui grid" style="margin: 0;">
+                                                                    <div class="column" style="padding: 0; width: 100px !important;">
+                                                                        <img class="ui image" src="{!! $ad['image'] !!}" alt="">
+                                                                    </div>
+                                                                    <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
+                                                                        <div class="row title" style="font-size: 1.5em;">
+                                                                            <span>{{ $ad['title'] }}</span>
+                                                                        </div>
+                                                                        <div class="row price" style="font-size: 1.2em;">{{ $ad['price'] }} FCFA</div>
+                                                                        <div class="row description" style="color: #77829d; font-size: .9em;">
+                                                                            <img style="width: 15px;" class="ui mini spaced image" src="/img/icons/user_outline.png"><span>{{ $ad['owner']['name'] }}</span>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @endforeach
+
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
-                                        <div class="row" style="padding: .5em; background: #606e8d;">
-                                            <a href="" style="font-size: 1.2em; color: white; ">Electronics</a>
-                                        </div>
-
-                                        <div class="row" style="background: #f5f6f8;">
-                                            <div class="ads-slide" style="height: 100px;">
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
-                                        <div class="row" style="padding: .5em; background: #606e8d;">
-                                            <a href="" style="font-size: 1.2em; color: white; ">Clothing</a>
-                                        </div>
-
-                                        <div class="row" style="background: #f5f6f8;">
-                                            <div class="ads-slide" style="height: 100px;">
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div style="width: 322px; color: #1d305d; margin-right: .5em;">
-                                                    <div class="ui container" style="background-color: #fcfcfd;">
-                                                        <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image" src="{!! asset('img/icons/usb_light.jpg') !!}" alt="">
-                                                            </div>
-                                                            <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                <div class="row title" style="font-size: 1.5em;">
-                                                                    <span>USB light</span>
-                                                                </div>
-                                                                <div class="row description" style="color: #77829d;">
-                                                                    <span>usb light description</span>
-                                                                </div>
-                                                                <div class="row price" style="font-size: 1.2em;">
-                                                                    350 FCFA
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
 
                                 </div>
 
