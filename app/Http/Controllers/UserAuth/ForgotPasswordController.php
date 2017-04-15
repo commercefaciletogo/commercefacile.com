@@ -54,7 +54,7 @@ class ForgotPasswordController extends Controller
         $code = $this->generate_code();
         $phone = "00228{$request->phone}";
         $this->notify(new PhoneConfirmation($phone, $code));
-        session()->put('code', 1234);
+        session()->put('code', $code);
         session()->put('phone', $request->phone);
         // send code to user
 

@@ -91,7 +91,7 @@
         depends_on:
             - commercefacile-redis
         volumes:
-            - ./socket:/var/www/socket
+            - ./.socket:/var/www/socket
         ports:
             - "6001:6001"
         networks:

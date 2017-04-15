@@ -104,10 +104,13 @@
                     </div>
                 </div>
 
-                <div id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
+                <div v-cloak v-if="result" id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
                     <div class="ui two column mobile only grid">
                         <div class="column" style="display: flex; flex-direction: column; justify-content: center;">
-                            <span style="color: rgb(96, 110, 141); ">{{ trans('general.ads_count', ['number' => '12,045']) }}</span>
+                            @{{ ads.total }} {{ trans('general.ads') }}
+                            <span v-show="filter.q">
+                                {{ trans('general.for') }}  <i v-text="filter.q"></i>
+                            </span>
                         </div>
                         <div class="column right aligned">
                             <div class="ui mini basic button" data-remodal-target="filter" style="border-color: rgb(96, 110, 141); color: rgb(96, 110, 141); border-radius: 0;"> <i class="filter icon"></i> {{ trans('general.filter') }}</div>

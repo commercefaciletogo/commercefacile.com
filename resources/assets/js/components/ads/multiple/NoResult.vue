@@ -16,10 +16,10 @@
         },
         locales: {
             en: {
-                no: 'No Result'
+                no: 'No Ads.'
             },
             fr: {
-                no: 'Aucun résultat'
+                no: 'Pas D\' Annonces.'
             }
         },
     }

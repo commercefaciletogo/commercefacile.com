@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 # install supervisor
 RUN apt-get install -y supervisor && \
     mkdir -p /var/log/supervisor
-COPY .docker/conf/supervisord.dev.conf /etc/supervisor/conf.d/supervisord.conf
+COPY .docker/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | /usr/local/bin/php -- --install-dir=/usr/local/bin --filename=composer
@@ -30,7 +30,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # add entry to crontab
-# RUN (crontab -l 2>/dev/null; echo "* * * * * php /var/www/commercefacile/artisan schedule:run >> /dev/null 2>&1")| crontab -
+RUN         (crontab -l 2>/dev/null; echo "* * * * * php /var/www/commercefacile/artisan schedule:run >> /dev/null 2>&1")| crontab -
 
 COPY        . /var/www
 
@@ -38,9 +38,8 @@ WORKDIR     /var/www
 
 RUN         /usr/local/bin/php /usr/local/bin/composer install
 
-#RUN         /usr/local/bin/php artisan db:migrate
-#
-#RUN         /usr/local/bin/php artisan db:seed
+RUN         chown -R www-data ./storage && chmod -R 0770 ./storage
+
 
 # set container entrypoints
 ENTRYPOINT ["/bin/bash","-c"]

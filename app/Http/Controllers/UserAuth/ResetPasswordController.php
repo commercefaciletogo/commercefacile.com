@@ -64,14 +64,14 @@ class ResetPasswordController extends Controller
     public function reset(Request $request)
     {
         $code = session('code');
-        if($code != $request->code) return redirect()->back()->withErrors(['code' => 'Invalid Code']);
+        if($code != $request->code) return redirect()->back()->with('error', trans('auth.invalid_code'));
 
         $this->validate($request, [
             'password' => 'required|confirmed',
         ]);
 
         $user = User::where('phone', session('phone'))->first();
-        if(is_null($user)) return redirect()->back();
+        if(is_null($user)) return redirect()->back()->with('error', trans('auth.invalid_phone'));
 
         $user->update(['password' => bcrypt($request->password)]);
 

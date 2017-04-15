@@ -11,6 +11,14 @@
                     <div class="ui three column middle aligned very relaxed stackable grid">
                         <div class="seven wide column">
                             <div style="margin-left: 1em; margin-right: 1em;">
+                                @if(session('error'))
+                                <div class="ui negative tiny compact icon message" style="min-width: 100%;">
+                                    <i class="warning icon"></i>
+                                    <div class="content">
+                                        <p>{!! session('error') !!}</p>
+                                    </div>
+                                </div>
+                                @endif
                                 <form class="ui form" method="POST" action="{{ route('user.post.pass.phone') }}">
                                     {{ csrf_field() }}
                                     <div class="field {!! $errors->has('phone') ? 'error' : '' !!}">

@@ -22,6 +22,10 @@ Route::resource("regions", "RegionsController");
 Route::group(['prefix' => LaravelLocalization::setLocale(),
     'middleware' => [ 'localize', 'localeSessionRedirect', 'localizationRedirect' ]], function(){
 
+    Route::get('/', function(){
+        return redirect('/fr');
+    });
+    Route::get('/', ['as' => 'home.page', 'uses' => 'PagesController@home']);
 
     Route::get('sell-fast', ['as' => 'pages.misc.sell', 'uses' => 'PagesController@sell']);
     Route::get('about-us', ['as' => 'pages.misc.about', 'uses' => 'PagesController@about']);
@@ -84,7 +88,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
     Route::get(LaravelLocalization::transRoute('routes.password-reset-token'), ['as' => 'user.get.reset.pass', 'uses' => 'UserAuth\ResetPasswordController@showResetForm']);
 
 
-    Route::get('/', ['as' => 'home.page', 'uses' => 'PagesController@home']);
 
     Route::group(['middleware' => 'user'], function(){
 //        ads/create

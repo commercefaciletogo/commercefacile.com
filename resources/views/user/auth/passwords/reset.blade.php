@@ -10,6 +10,14 @@
                 <div class="twelve wide computer fifteen wide tablet sixteen wide mobile column" style="background: #e8eaee;">
                     <div class="ui three column middle aligned very relaxed stackable grid">
                         <div class="seven wide column">
+                            @if(session('error'))
+                                <div class="ui negative tiny compact icon message" style="min-width: 100%;">
+                                    <i class="warning icon"></i>
+                                    <div class="content">
+                                        <p>{{ session('error') }}</p>
+                                    </div>
+                                </div>
+                            @endif
                             <div style="margin-left: 1em; margin-right: 1em;">
                                 <form class="ui form" method="POST" action="{{ route('user.post.pass.reset') }}">
                                     {{ csrf_field() }}

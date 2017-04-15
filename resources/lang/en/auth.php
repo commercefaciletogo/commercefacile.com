@@ -35,5 +35,7 @@ return [
 
     'send_code' => 'Send the code',
     'verify' => 'Verify',
-    'enter_code' => 'Please enter the 4 digits code received by sms.'
+    'enter_code' => 'Please enter the 4 digits code received by sms.',
+    'invalid_code' => 'Invalid Code',
+    'invalid_phone' => 'Invalid Phone Number'
 ];

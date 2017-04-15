@@ -35,5 +35,7 @@
 
         'send_code' => 'Envoyer le code',
         'verify' => 'Verifier',
-        'enter_code' => 'Entrez le code de 4 chiffres reçu par sms.'
+        'enter_code' => 'Entrez le code de 4 chiffres reçu par sms.',
+        'invalid_code' => 'Code invalide',
+        'invalid_phone' => 'Numéro de téléphone invalide'
     ];

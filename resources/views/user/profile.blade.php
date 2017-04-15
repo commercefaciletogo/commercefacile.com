@@ -312,7 +312,7 @@
 @endsection
 
 @section('scripts')
-    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+    {{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>--}}
     <script>
         var authorId = "{!! auth('user')->user()->id !!}";
     </script>
