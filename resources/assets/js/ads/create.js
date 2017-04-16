@@ -74,7 +74,7 @@ new Vue({
             this.submitting = true;
             this.errors.title = _.trim(this.newAd.title).length < 5;
             this.errors.category = !_.isNumber(this.newAd.category.id);
-            this.errors.description = _.trim(this.newAd.description).length < 50;
+            this.errors.description = _.trim(this.newAd.description).length < 20;
             let imagesSize = _.reduce(this.newAd.photos, (totalSize, photo) => {
                 return totalSize + photo.size;
             }, 0);

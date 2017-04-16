@@ -74,12 +74,12 @@
 
 @section('main')
 
-    <div id="main" v-cloak>
+    <div id="main">
         <div class="ui container center aligned" style="padding-top: 1.5em; padding-bottom: 5em; background: #fff; border-left: 1px solid #a4acbe; border-right: 1px solid #a4acbe;">
 
             <h2 class="header" style="margin-bottom: 1em; color: #33446d;">{{ trans('general.edit_ad') }}</h2>
 
-            <div :class="['ui ', {loading:busy}, ' segment']" style="padding: 0; border: none; box-shadow: none;">
+            <div v-cloak :class="['ui ', {loading:busy}, ' segment']" style="padding: 0; border: none; box-shadow: none;">
                 <div class="ui two column centered grid">
                     <div class="twelve wide computer fourteen wide tablet fourteen wide mobile column" style="color: #33446d;">
 
@@ -151,7 +151,7 @@
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_description') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                                 <div class="ui small fluid input">
-                                    <textarea :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="50" cols="50" rows="10"></textarea>
+                                    <textarea :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="20" cols="50" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="five wide computer tablet only column">

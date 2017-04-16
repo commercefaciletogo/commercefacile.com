@@ -74,7 +74,7 @@
 
 @section('main')
 
-    <div id="main"  v-cloak>
+    <div id="main">
         <div class="ui container center aligned" style="padding-top: 1.5em; padding-bottom: 5em; background: #fff; border-left: 1px solid #a4acbe; border-right: 1px solid #a4acbe;">
 
             <h2 class="header" style="margin-bottom: 1em; color: #33446d;">{{ trans('general.submit_ad') }}</h2>
@@ -88,7 +88,7 @@
                         <div class="ui grid row">
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_title') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
-                                <div :class="['ui small fluid', {error: errors.title}, 'input']">
+                                <div  v-cloak :class="['ui small fluid', {error: errors.title}, 'input']">
                                     <input type="text" v-model="newAd.title" placeholder="{{ trans('general.ad_title') }}">
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                         <div class="ui grid row">
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_category') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
-                                <div :class="['ui right action fluid small', {error: errors.category} , 'input']">
+                                <div  v-cloak :class="['ui right action fluid small', {error: errors.category} , 'input']">
                                     <input type="text" v-model="newAd.category.text" readonly placeholder="{{ trans('general.ad_category') }}">
                                     <div class="ui basic floating button" data-remodal-target="choose-category">
                                         <i class="dropdown icon"></i>
@@ -126,13 +126,13 @@
                                 <div class="ui grid">
                                     <div class="eight wide column">
                                         <div class="ui radio checkbox">
-                                            <input id="new" type="radio" value="1" v-model="newAd.condition">
+                                            <input  v-cloak id="new" type="radio" value="1" v-model="newAd.condition">
                                             <label for="new" >{{ trans('general.new') }}</label>
                                         </div>
                                     </div>
                                     <div class="eight wide column">
                                         <div class="ui radio checkbox">
-                                            <input id="used" type="radio" value="0" v-model="newAd.condition">
+                                            <input  v-cloak id="used" type="radio" value="0" v-model="newAd.condition">
                                             <label for="used">{{ trans('general.used') }}</label>
                                         </div>
                                     </div>
@@ -151,7 +151,7 @@
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_description') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                                 <div class="ui small fluid input">
-                                    <textarea :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="50" cols="50" rows="10"></textarea>
+                                    <textarea  v-cloak :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="50" cols="20" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="five wide computer tablet only column">
@@ -170,7 +170,7 @@
                                     <div class="six wide computer tablet column">
                                         <div style="position: relative;overflow: hidden;">
                                             <input id="fileInput" accept="image/*" type="file" class="custom" @change="addImage" style="position: absolute; top: 0;bottom: 0;left: 0;right: 0;opacity: 0.001; display: none;">
-                                            <label for="fileInput" :class="[moreImageDefaultStyle, errors.images ? 'error' : '', moreImage ? '' : 'disabled']" style="cursor: pointer;">
+                                            <label  v-cloak for="fileInput" :class="[moreImageDefaultStyle, errors.images ? 'error' : '', moreImage ? '' : 'disabled']" style="cursor: pointer;">
                                                 + Image
                                             </label>
                                         </div>
@@ -196,14 +196,14 @@
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                                 <div class="ui grid">
                                     <div class="ten wide column">
-                                        <div :class="['ui right small labeled fluid', {error: errors.price}, 'input']">
+                                        <div  v-cloak :class="['ui right small labeled fluid', {error: errors.price}, 'input']">
                                             <input v-model="newAd.price.amount" type="number" placeholder="{{ trans('general.ad_price') }}">
                                             <div class="ui basic label" style="font-weight: 100; color: #4a597d;">FCFA</div>
                                         </div>
                                     </div>
                                     <div class="six wide column" style="display: flex; flex-direction: column; justify-content: center;">
                                         <div class="ui checkbox">
-                                            <input id="negotiable" v-model="newAd.price.negotiable" type="checkbox">
+                                            <input  v-cloak id="negotiable" v-model="newAd.price.negotiable" type="checkbox">
                                             <label for="negotiable">{{ trans('general.negotiable') }}</label>
                                         </div>
                                     </div>
