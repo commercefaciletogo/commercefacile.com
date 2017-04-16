@@ -32,6 +32,8 @@ RUN apt-get update \
 # add entry to crontab
 # RUN (crontab -l 2>/dev/null; echo "* * * * * php /var/www/commercefacile/artisan schedule:run >> /dev/null 2>&1")| crontab -
 
+
+
 WORKDIR /var/www
 
 # set container entrypoints
