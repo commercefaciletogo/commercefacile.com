@@ -63,13 +63,13 @@ new Vue({
         },
         updateInfo() {
             let { fullName, email, phoneNumber, location } = this.user;
-            if(fullName && email && location.id && phoneNumber){
+            if(fullName && email){
                 this.updatingProfile = true;
                 let data = new FormData;
                 data.append('name', fullName);
                 data.append('email', email);
-                data.append('phone', phoneNumber);
-                data.append('location_id', location.id);
+                if(phoneNumber) data.append('phone', phoneNumber);
+                if(location.id) data.append('location_id', location.id);
                 data.append('_token', window.csrf_token);
                 console.log('updating information');
                 axios.post(window.updateProfileUrl, data).then(res => {
