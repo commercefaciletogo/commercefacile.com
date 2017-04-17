@@ -18,9 +18,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable bcmath
 
 # install letsencrypt
-RUN         echo 'deb http://ftp.debian.org/debian jessie-backports main' | tee /etc/apt/sources.list.d/backports.list && \
-            apt-get update && \
-            apt-get install certbot letsencrypt -y -t jessie-backports
+#RUN         echo 'deb http://ftp.debian.org/debian jessie-backports main' | tee /etc/apt/sources.list.d/backports.list && \
+#            apt-get update && \
+#            apt-get install certbot letsencrypt -y -t jessie-backports
 
 
 # install supervisor
@@ -43,9 +43,9 @@ RUN         (crontab -l 2>/dev/null; echo "* * * * * php /var/www/commercefacile
 
 COPY        . /var/www
 
-RUN         certbot --quiet certonly --webroot -w /var/www/public  \
-            -d www.commercefacile.com -d commercefacile.com \
-            --email commercefaciletogo@gmail.com --agree-tos
+#RUN         certbot --quiet certonly --webroot -w /var/www/public  \
+#            -d www.commercefacile.com -d commercefacile.com \
+#            --email commercefaciletogo@gmail.com --agree-tos
 
 WORKDIR     /var/www
 
