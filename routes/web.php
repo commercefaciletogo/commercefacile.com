@@ -14,6 +14,11 @@
 
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
+Route::get('/', function(){
+    dd('here');
+    return redirect('/fr');
+});
+
 Route::resource("sub-categories", "SubCategoriesController");
 
 Route::resource("cities", "CitiesController");
@@ -21,10 +26,6 @@ Route::resource("regions", "RegionsController");
 
 Route::group(['prefix' => LaravelLocalization::setLocale(),
     'middleware' => [ 'localize', 'localeSessionRedirect', 'localizationRedirect' ]], function(){
-
-    Route::get('/', function(){
-        return redirect('/fr');
-    });
     Route::get('/', ['as' => 'home.page', 'uses' => 'PagesController@home']);
 
     Route::get('sell-fast', ['as' => 'pages.misc.sell', 'uses' => 'PagesController@sell']);

@@ -132,7 +132,7 @@
                                     </div>
 
                                 @empty
-                                    <p>No Ads</p>
+                                    <p>{{ trans('general.no_ad') }}</p>
                                 @endforelse
 
                             </div>

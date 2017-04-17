@@ -23,6 +23,15 @@
             color: #33446d;
         }
 
+        textarea:focus{
+            border-color: #4a597d !important;
+            color: #4a597d !important;
+        }
+
+        /*textarea::-moz-placeholder, textarea:-ms-input-placeholder, textarea::-webkit-input-placeholder{*/
+            /**/
+        /*}*/
+
         textarea.error, label.inp.act.error {
             background-color: #FFF6F6;
             border-color: #E0B4B4;
@@ -47,7 +56,7 @@
         }
 
         textarea::placeholder{
-            color: blue;
+            color: #8e97ae;
         }
 
         textarea:focus, input:focus{
@@ -151,7 +160,10 @@
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_description') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                                 <div class="ui small fluid input">
-                                    <textarea  v-cloak :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="50" cols="20" rows="10"></textarea>
+                                    <textarea placeholder="{{ trans('general.ad_desc_place') }}"
+                                              v-cloak :class="[{error: errors.description}]"
+                                              v-model="newAd.description"
+                                              maxlength="500" minlength="20" cols="50" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="five wide computer tablet only column">
@@ -243,17 +255,6 @@
                             </div>
                         </div>
 
-                        {{--<div class="ui grid row">--}}
-                        {{--<div class="three wide computer three wide tablet only column"><label>{{ trans('general.email') }}</label></div>--}}
-                        {{--<div class="eight wide computer eight wide tablet sixteen wide mobile column">--}}
-                        {{--<div class="ui fluid small input">--}}
-                        {{--<input type="text" v-model="user.email" readonly placeholder="{{ trans('general.email') }}">--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<div class="five wide computer tablet only column">--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-
                         <div class="ui grid row">
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.location') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
@@ -311,11 +312,11 @@
 
 @section('scripts')
     <script>
-        var postAdUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('ads.save')) !!}";
-        var profileUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('user.profile', ['user_name' => auth('user')->user()->slug])) !!}";
+        var postAdUrl = "{!! route('ads.save') !!}";
+        var profileUrl = "{!! route('user.profile', ['user_name' => auth('user')->user()->slug]) !!}";
         var requireLocation = "{!! is_null(auth('user')->user()->location) !!}";
         var authorId = "{!! auth('user')->user()->id !!}";
     </script>
-    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script src="{{ asset('js/create.js') }}"></script>
 @endsection

@@ -39,7 +39,7 @@
                             </div>
                         </a>
                     @empty
-                        <p>No Favorites</p>
+                        <p>{{ trans('general.no_favorite') }}</p>
                     @endforelse
                 </div>
             </div>

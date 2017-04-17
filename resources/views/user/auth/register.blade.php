@@ -135,8 +135,8 @@
 
 @section('scripts')
     <script>
-        var postUserInfoUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('user.post.register')) !!}";
-        var postCodeUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('user.post.phone.verify')) !!}";
+        var postUserInfoUrl = "{!! route('user.post.register') !!}";
+        var postCodeUrl = "{!! route('user.post.phone.verify') !!}";
         var crsf_token = "{!! csrf_token() !!}";
     </script>
     <script src="{{ asset('js/register.js') }}"></script>

@@ -40,6 +40,4 @@ elixir((mix) => {
     mix.webpack('admin/pages/layout.js', 'public/js/admin-page-layout.js');
     mix.webpack('admin/pages/ads.js', 'public/js/admin-page-ads.js');
     mix.webpack('admin/pages/review-ad.js', 'public/js/admin-page-review-ad.js');
-
-    // mix.version(['css/vendors.css', 'js/vendors.js']);
 });

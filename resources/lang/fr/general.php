@@ -1,5 +1,6 @@
 <?php
 return [
+    "ad_desc_place" => 'La description de l\'annonce doit être d\'au moins 20 caractères',
     "message" => "Bienvenue sur Commercefacile.com.",
     "search" => "Chercher",
     "p_f_a" => 'Publier Annonce',
@@ -108,4 +109,6 @@ return [
     'edit_ad' => 'Modifier Annonce',
     'cancel' => 'Annuler',
     'sure?' => 'Êtes-vous sûr?',
+    'no_ad' => 'Pas d\' annonces.',
+    'no_favorite' => 'Pas de favoris'
 ];

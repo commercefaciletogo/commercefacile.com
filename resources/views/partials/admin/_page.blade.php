@@ -83,7 +83,7 @@
     var changePasswordUrl = "{{ route('employee.pass.change') }}";
     var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
 </script>
-<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 <script src="{{ asset('js/admin-page-layout.js') }}"></script>
 @yield('scripts')
 </body>

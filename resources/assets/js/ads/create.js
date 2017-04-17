@@ -33,7 +33,7 @@ new Vue({
                 id: '',
                 text: ''
             },
-            description: 'Description...',
+            description: '',
             condition: 1,
             photos: [],
             price: {

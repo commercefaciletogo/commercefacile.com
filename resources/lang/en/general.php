@@ -1,5 +1,6 @@
 <?php
     return [
+        "ad_desc_place" => 'Ad\' description should be at least 20 characters',
         "message" => "Welcome to Commercefacile.com.",
         "search" => "Search",
         "p_f_a" => 'Post Free Ad',
@@ -110,4 +111,6 @@
         'edit_ad' => 'Edit Ad',
         'cancel' => 'Cancel',
         'sure?' => 'Are you sure?',
+        'no_ad' => 'No Ads.',
+        'no_favorite' => 'No Favorites'
     ];

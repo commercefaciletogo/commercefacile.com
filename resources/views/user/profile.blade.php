@@ -299,7 +299,7 @@
                         </div>
 
                     @empty
-                        <p>No Ads</p>
+                        <p>{{ trans('general.no_ad') }}</p>
                     @endforelse
 
 
@@ -312,7 +312,7 @@
 @endsection
 
 @section('scripts')
-    {{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script>
         var authorId = "{!! auth('user')->user()->id !!}";
     </script>

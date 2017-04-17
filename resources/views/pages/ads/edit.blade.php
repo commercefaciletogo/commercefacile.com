@@ -306,12 +306,12 @@
 @section('scripts')
     <script>
         var oldAd = {!! json_encode($ad) !!};
-        var profileUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('user.profile', ['user_name' => auth('user')->user()->slug])) !!}";
+        var profileUrl = "{!! route('user.profile', ['user_name' => auth('user')->user()->slug]) !!}";
         var authorId = "{!! auth('user')->user()->id !!}";
         var requireLocation = "{!! is_null(auth('user')->user()->location) !!}";
-        var updateAdUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('ads.single.update', ['id' => $ad['id']])) !!}";
-        var cancelUpdateAdUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('ads.single.update.cancel', ['id' => $ad['id']])) !!}";
+        var updateAdUrl = "{!! route('ads.single.update', ['id' => $ad['id']]) !!}";
+        var cancelUpdateAdUrl = "{!! route('ads.single.update.cancel', ['id' => $ad['id']]) !!}";
     </script>
-    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script src="{{ asset('js/edit.js') }}"></script>
 @endsection
