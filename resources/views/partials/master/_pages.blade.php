@@ -6,15 +6,16 @@
         @include('partials.favico')
         <style>
             html{
-                height: 100%;
+                background: #e8eaee;
+                /*height: 100%;*/
             }
             body{
-                display: flex;
-                min-height: 100vh;
-                flex-direction: column;
+                /*display: flex;*/
+                /*min-height: 100vh;*/
+                /*flex-direction: column;*/
             }
             body > div{
-                flex: 1;
+                /*flex: 1;*/
             }
 
             [v-cloak] {

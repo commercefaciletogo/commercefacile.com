@@ -7,15 +7,16 @@
     <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
     <style>
         html{
-            height: 100%;
+            /*height: 100%;*/
+            background: #e8eaee;
         }
         body{
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
+            /*display: flex;*/
+            /*min-height: 100vh;*/
+            /*flex-direction: column;*/
         }
         body > div.ui.container.fluid{
-            flex: 1;
+            /*flex: 1;*/
         }
 
         [v-cloak] {

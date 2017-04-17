@@ -69,7 +69,8 @@
 
         @include('partials.pages._top_bar')
 
-        <div class="ui container fluid" style="padding-top: .5em; margin-bottom: 10em;">
+
+        <div class="ui container fluid" style="padding-top: .5em; padding-bottom: 10em;">
 
             <div class="ui container">
 
@@ -79,15 +80,15 @@
                             <div class="eight wide column search-modifier">
                                 <div class="ui grid">
                                     <div class="eight wide column">
-                                        <button v-cloak data-remodal-target="choose-location" class="ui fluid right labeled icon button search-modifier-button" style="border: 1px solid #606e8d !important;">
+                                        <button data-remodal-target="choose-location" class="ui fluid right labeled icon button search-modifier-button" style="border: 1px solid #606e8d !important;">
                                             <i class="dropdown icon"></i>
-                                            @{{ transLocation }}
+                                            <span v-cloak>@{{ transLocation }}</span>
                                         </button>
                                     </div>
                                     <div class="eight wide column">
-                                        <button v-cloak data-remodal-target="choose-category" class="ui fluid right labeled icon button search-modifier-button" style="border: 1px solid #606e8d !important;">
+                                        <button data-remodal-target="choose-category" class="ui fluid right labeled icon button search-modifier-button" style="border: 1px solid #606e8d !important;">
                                             <i class="dropdown icon"></i>
-                                            @{{ transCategory }}
+                                            <span v-cloak>@{{ transCategory }}</span>
                                         </button>
                                     </div>
                                 </div>
@@ -104,12 +105,13 @@
                     </div>
                 </div>
 
-                <div v-cloak v-if="result" id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
+                <div v-cloak id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
                     <div class="ui two column mobile only grid">
                         <div class="column" style="display: flex; flex-direction: column; justify-content: center;">
-                            @{{ ads.total }} {{ trans('general.ads') }}
+                            {{--@{{ ads.total }} {{ trans('general.ads') }}--}}
                             <span v-show="filter.q">
-                                {{ trans('general.for') }}  <i v-text="filter.q"></i>
+                                {{--{{ trans('general.for') }}  --}}
+                                <i v-text="filter.q"></i>
                             </span>
                         </div>
                         <div class="column right aligned">
@@ -221,6 +223,10 @@
         </div>
     </div>
 
+
+
+
+
     <div class="remodal" data-remodal-id="choose-category" id="chooseCategory" data-remodal-options="closeOnOutsideClick: false">
         <button data-remodal-action="close" class="remodal-close"></button>
         <div class="ui container left aligned">
@@ -287,9 +293,11 @@
                 </div>
                 {{--<hr>--}}
                 {{--<div class="ui fluid submit button">{{ trans('general.close') }}</div>--}}
+            </div>
         </div>
     </div>
-    </div>
+
+
 
 @endsection
 
@@ -297,6 +305,13 @@
     <script>
         var baseUrl = "{{ route('ads.multiple.search') }}";
         var singleAdUrl = "{{ route('ads.multiple') }}";
+        $(function(){
+            $('#chooseCategory').accordion();
+            $('#chooseLocation').accordion();
+            $('#lgCategoryFilter').accordion();
+            $('#lgLocationFilter').accordion();
+            $('.ui.accordion.field').accordion();
+        });
     </script>
     <script src="{{ asset('js/multiple.js') }}"></script>
 @endsection

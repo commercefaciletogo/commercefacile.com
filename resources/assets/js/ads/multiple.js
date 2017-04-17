@@ -334,10 +334,5 @@ new Vue({
     mounted(){
         this.initUrlListener();
         this.updateQuery();
-        $('#chooseCategory').accordion();
-        $('#chooseLocation').accordion();
-        $('#lgCategoryFilter').accordion();
-        $('#lgLocationFilter').accordion();
-        $('.ui.accordion.field').accordion();
     }
 });
