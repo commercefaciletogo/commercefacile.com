@@ -3,7 +3,11 @@
     <title>Commercefacile.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="csrf-token" content="{!! csrf_token() !!}">
-    <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
+    @if(App::environment('production'))
+        <link rel="stylesheet" href="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.css">
+    @else
+        <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
+    @endif
     <style>
         html{
             height: 100%;
@@ -135,7 +139,11 @@
 <div class="ui container fluid" style="background: #e8eaee;">
     @yield('main')
 </div>
-<script src="{!! elixir('js/vendors.js') !!}"></script>
+@if(App::environment('production'))
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.js"></script>
+@else
+    <script src="{!! elixir('js/vendors.js') !!}"></script>
+@endif
 @yield('scripts')
 
 </body>

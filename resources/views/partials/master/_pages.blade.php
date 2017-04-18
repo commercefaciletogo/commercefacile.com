@@ -1,7 +1,11 @@
 <html>
     <head>
         <title>Commercefacile.com</title>
-        <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
+        @if(App::environment('production'))
+            <link rel="stylesheet" href="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.css">
+        @else
+            <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
+        @endif
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         @include('partials.favico')
         <style>
@@ -124,7 +128,11 @@
 
         @include('partials._footer')
 
-        <script src="{!! elixir('js/vendors.js') !!}"></script>
+        @if(App::environment('production'))
+            <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.js"></script>
+        @else
+            <script src="{!! elixir('js/vendors.js') !!}"></script>
+        @endif
         <script>
             var categoriesUrl = "{!! url('/categories') !!}";
             var locationsUrl = "{!! url('/locations') !!}";

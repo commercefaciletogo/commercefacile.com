@@ -26,7 +26,7 @@ commercefacile-server:
     - commercefacile-redis
   privileged: true
   volumes:
-    - /var/www
+    - /var/www/public
 commercefacile-socket:
   image: 'thomasdolar/commercefacile_socket:latest'
   links:
