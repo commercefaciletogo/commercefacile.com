@@ -13,6 +13,7 @@ use App\Jobs\DeleteAdImages;
 use App\Jobs\DownloadAdImages;
 use App\Jobs\ProcessAdImages;
 use App\Location;
+use Arcanedev\Localization\Facades\Localization;
 use Carbon\Carbon;
 use Delight\Ids\Id;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class AdsController extends Controller
     public function __construct(Ad $ad, Manager $fractal)
     {
         $this->ad = $ad;
-        Carbon::setLocale(LaravelLocalization::getCurrentLocale());
+        Carbon::setLocale(Localization::getCurrentLocale());
         $this->fractal = $fractal;
     }
 

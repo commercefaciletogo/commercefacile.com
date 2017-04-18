@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.6.4",
         "algolia/algoliasearch-client-php": "^1.17",
-        "arcanedev/localization": "^1.0",
+        "arcanedev/localization": "~0.8",
         "delight-im/ids": "^1.0",
         "elasticsearch/elasticsearch": "^5.1",
         "geoip2/geoip2": "^2.4",

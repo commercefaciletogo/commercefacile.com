@@ -2,10 +2,13 @@
 
 namespace App\Http;
 
+use Arcanedev\Localization\Traits\LocalizationKernelTrait;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+    use LocalizationKernelTrait;
+
     /**
      * The application's global HTTP middleware stack.
      *

@@ -168,7 +168,9 @@ return [
         /*
          * Package Service Providers...
          */
-        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+//        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        Arcanedev\Localization\LocalizationServiceProvider::class,
+
         Themsaid\Langman\LangmanServiceProvider::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Hesto\MultiAuth\MultiAuthServiceProvider::class,

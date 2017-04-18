@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c99b4db6ac2634990e64286f48fb52a",
+    "content-hash": "c18232a2f5d1a9b2b3d20b1b50d8b3ad",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -59,25 +59,25 @@
         },
         {
             "name": "arcanedev/localization",
-            "version": "1.0.2",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ARCANEDEV/Localization.git",
-                "reference": "fe9181f23c94644d6a2ac7fb4001d48ea85ce725"
+                "reference": "bb58d092090d5b7ad65167cfc04a53bf5076adfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ARCANEDEV/Localization/zipball/fe9181f23c94644d6a2ac7fb4001d48ea85ce725",
-                "reference": "fe9181f23c94644d6a2ac7fb4001d48ea85ce725",
+                "url": "https://api.github.com/repos/ARCANEDEV/Localization/zipball/bb58d092090d5b7ad65167cfc04a53bf5076adfb",
+                "reference": "bb58d092090d5b7ad65167cfc04a53bf5076adfb",
                 "shasum": ""
             },
             "require": {
-                "arcanedev/support": "~3.20",
-                "php": ">=5.6.4"
+                "arcanedev/support": "~3.6",
+                "php": ">=5.6"
             },
             "require-dev": {
-                "phpunit/phpcov": "~3.0",
-                "phpunit/phpunit": "~5.0"
+                "phpunit/phpcov": "~2.0|~3.0",
+                "phpunit/phpunit": "~4.0|~5.0"
             },
             "suggest": {
                 "ext-intl": "Use Intl extension for 'Locale' class (an identifier used to get language)."
@@ -117,7 +117,7 @@
                 "localisation",
                 "localization"
             ],
-            "time": "2017-03-20T19:16:05+00:00"
+            "time": "2016-08-28T19:24:36+00:00"
         },
         {
             "name": "arcanedev/support",
@@ -3974,12 +3974,12 @@
             "version": "0.9.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/padraic/mockery.git",
+                "url": "https://github.com/mockery/mockery.git",
                 "reference": "4de7969f4664da3cef1ccd83866c9f59378c3371"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/4de7969f4664da3cef1ccd83866c9f59378c3371",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/4de7969f4664da3cef1ccd83866c9f59378c3371",
                 "reference": "4de7969f4664da3cef1ccd83866c9f59378c3371",
                 "shasum": ""
             },
