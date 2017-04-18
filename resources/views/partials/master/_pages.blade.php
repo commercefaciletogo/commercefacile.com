@@ -126,9 +126,9 @@
 
         <script src="{!! elixir('js/vendors.js') !!}"></script>
         <script>
-            var categoriesUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/categories') !!}";
-            var locationsUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/locations') !!}";
-            var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
+            var categoriesUrl = "{!! url('/categories') !!}";
+            var locationsUrl = "{!! url('/locations') !!}";
+            var locale = "{!! Localization::getCurrentLocale() !!}";
         </script>
         @yield('scripts')
     </body>

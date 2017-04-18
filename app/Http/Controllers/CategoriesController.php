@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Arcanedev\Localization\Facades\Localization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -32,7 +33,7 @@ class CategoriesController extends Controller
     {
         $categories = $this->category->with('children')->whereNull('parent_id')->get();
         $categories = collect($categories)->map(function($category){
-           $category = $category->translate(LaravelLocalization::getCurrentLocale());
+           $category = $category->translate(Localization::getCurrentLocale());
             return [
                 'id' => $category->category_id,
                 'uuid' => $category->uuid,
@@ -51,7 +52,7 @@ class CategoriesController extends Controller
     {
         $categories = $this->category->where('parent_id', $parent_id)->get();
         return $categories->map(function($category){
-            $category = $category->translate(LaravelLocalization::getCurrentLocale());
+            $category = $category->translate(Localization::getCurrentLocale());
             return [
                 'id' => $category->category_id,
                 'uuid' => $category->uuid,

@@ -143,10 +143,10 @@
 
 <script src="{!! elixir('js/vendors.js') !!}"></script>
 <script>
-    var categoriesUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/categories') !!}";
-    var locationsUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/locations') !!}";
+    var categoriesUrl = "{!! url('/categories') !!}";
+    var locationsUrl = "{!! url('/locations') !!}";
     var csrf_token = "{!! csrf_token() !!}";
-    var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
+    var locale = "{!! Localization::getCurrentLocale() !!}";
 </script>
 @yield('scripts')
 

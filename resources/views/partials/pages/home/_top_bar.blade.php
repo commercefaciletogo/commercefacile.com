@@ -6,13 +6,13 @@
                     <div class="ui borderless mini menu" style="border-radius: 0; border: 0; box-shadow: none;">
 
                         <div class="left menu">
-                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <div class="item {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'active' : '' }}">
+                            @foreach(Localization::getSupportedLocales() as $key => $locale)
+                                <div class="item {{ localization()->getCurrentLocale() == $key ? 'active' : '' }}">
                                     <a style="color: #77829d;"
                                        rel="alternate"
-                                       hreflang="{{$localeCode}}"
-                                       href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
-                                        {{ $properties['native'] }}
+                                       hreflang="{{ $key }}"
+                                       href="{{ localization()->getLocalizedURL($key)  }}">
+                                        {{ $locale->native() }}
                                     </a>
                                 </div>
                             @endforeach

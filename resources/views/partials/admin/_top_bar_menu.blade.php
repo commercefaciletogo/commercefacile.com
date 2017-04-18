@@ -33,9 +33,10 @@
         <div class="ui simple dropdown item">
             {{ trans('general.languages') }} <i class="dropdown icon"></i>
             <div class="menu">
-                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                    <a class="item {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'active' : ''  }}" rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
-                        {{ $properties['native'] }}
+                @foreach(Localization::getSupportedLocales() as $key => $locale)
+                    <a class="item {{ localization()->getCurrentLocale() == $key ? 'active' : '' }}" rel="alternate" hreflang="{{ $key }}"
+                       href="{{ localization()->getLocalizedURL($key) }}">
+                        {{ $locale->native() }}
                     </a>
                 @endforeach
             </div>

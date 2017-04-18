@@ -35,9 +35,10 @@
             <div class="four wide column">
                 <h4 class="ui header">{{ trans('general.languages') }}</h4>
                 <div class="ui link list">
-                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                        <a class="item" rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
-                            {{ $properties['native'] }}
+                    @foreach(Localization::getSupportedLocales() as $key => $locale)
+                        <a class="item {{ localization()->getCurrentLocale() == $key ? 'active' : '' }}" rel="alternate" hreflang="{{ $key }}"
+                           href="{{ localization()->getLocalizedURL($key) }}">
+                            {{ $locale->native() }}
                         </a>
                     @endforeach
                 </div>
