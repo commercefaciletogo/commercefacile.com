@@ -1,6 +1,6 @@
 <template>
     <div class="ui middle aligned animated relaxed divided list link">
-        <div v-for="category in categories" class="item" @click="select(category)">
+        <div v-for="category in categories" :key="cateory.id" class="item" @click="select(category)">
             <img class="ui avatar image" src="/img/placeholder.png">
             <div class="content">
                 <a class="header" v-text="category.name"></a>

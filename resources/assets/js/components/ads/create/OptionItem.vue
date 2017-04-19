@@ -25,7 +25,7 @@
             </div>
             <div class="content">
                 <div class="ui link celled relaxed selection list">
-                    <a v-for="sub in item.children" class="item" @click="select(sub)" v-text="sub.name"/>
+                    <a v-for="sub in item.children" :key="sub.id" class="item" @click="select(sub)" v-text="sub.name"/>
                 </div>
             </div>
         </template>

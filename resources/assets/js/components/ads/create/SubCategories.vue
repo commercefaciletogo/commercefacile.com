@@ -1,6 +1,6 @@
 <template>
     <div class="ui middle aligned animated relaxed divided list link" style="padding: .4em;">
-        <div v-for="category in categories" class="item" @click="select(category)" style="padding: .5em;">
+        <div v-for="category in categories" :key="category.id" class="item" @click="select(category)" style="padding: .5em;">
             <div class="content">
                 <a class="header" v-text="category.name"></a>
             </div>
