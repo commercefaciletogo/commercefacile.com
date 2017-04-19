@@ -2,7 +2,7 @@
 <head>
     <title>Commercefacile.com</title>
     @if(App::environment('production'))
-        <link rel="stylesheet" href="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.css">
+        @include('partials.production.css')
     @else
         <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
     @endif
@@ -82,7 +82,7 @@
 </div>
 
 @if(App::environment('production'))
-    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.js"></script>
+    @include('partials.production.js')
 @else
     <script src="{!! elixir('js/vendors.js') !!}"></script>
 @endif
