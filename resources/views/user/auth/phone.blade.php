@@ -49,10 +49,3 @@
         </div>
     </div>
 @endsection
-
-@section('scripts')
-    <script>
-        var postPhoneUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/locations') !!}";
-        var postCodeUrl = "{!! LaravelLocalization::getLocalizedURL(null, '/locations') !!}";
-    </script>
-@endsection

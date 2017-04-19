@@ -52,8 +52,8 @@
 
 @section('scripts')
     <script>
-        var adsApiUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('api.ads')) !!}";
-        var adsUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('admin.ads')) !!}";
+        var adsApiUrl = "{!! route('api.ads') !!}";
+        var adsUrl = "{!! route('admin.ads') !!}";
     </script>
-    <script src="{{ asset('js/admin-page-ads.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-ads.js"></script>
 @endsection

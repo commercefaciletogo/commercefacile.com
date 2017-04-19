@@ -394,5 +394,5 @@
         var dereportAdUrl = "{!! route('ads.single.dereport', ['id' => $ad['uuid']]) !!}";
         var ad = {!! json_encode($ad) !!};
     </script>
-    <script src="{{ asset('js/single.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/single.js"></script>
 @endsection
