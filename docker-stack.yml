@@ -1,8 +1,8 @@
 commercefacile-db:
   environment:
     - POSTGRES_DB=commercefacile_prod
-    - POSTGRES_PASSWORD=commercefacile_prod
-    - POSTGRES_USER=Ls4XYlaxIcCyNsp
+    - POSTGRES_USER=commercefacile_prod
+    - POSTGRES_PASSWORD=Ls4XYlaxIcCyNspsk6j2PlRKEA6FZ1Rl1o0=
   image: 'postgres:latest'
   ports:
     - '5432:5432'
