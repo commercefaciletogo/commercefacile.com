@@ -105,12 +105,12 @@
                     </div>
                 </div>
 
-                <div v-cloak id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
+                <div v-cloak v-if="result" id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
                     <div class="ui two column mobile only grid">
                         <div class="column" style="display: flex; flex-direction: column; justify-content: center;">
-                            {{--@{{ ads.total }} {{ trans('general.ads') }}--}}
+                            @{{ ads.total }} {{ trans('general.ads') }}
                             <span v-show="filter.q">
-                                {{--{{ trans('general.for') }}  --}}
+                                {{ trans('general.for') }}
                                 <i v-text="filter.q"></i>
                             </span>
                         </div>
