@@ -230,5 +230,9 @@
 //            autoplaySpeed: 5000
 //        });
     </script>
-    <script src="js/home.js"></script>
+    @if(App::environment('production'))
+        <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/home.js"></script>
+    @else
+        <script src="{{ asset('js/js/home.js') }}"></script>
+    @endif
 @endsection

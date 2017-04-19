@@ -144,5 +144,9 @@
         var updateProfileUrl = "{!! route('user.profile.settings.update.profile', ['user_name' => $user['slug']]) !!}";
         var updatePasswordUrl = "{!! route('user.profile.settings.update.password', ['user_name' => $user['slug']]) !!}";
     </script>
-    <script src="{{ asset('js/user-settings.js') }}"></script>
+    @if(App::environment('production'))
+        <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/user-settings.js"></script>
+    @else
+        <script src="{{ asset('js/user-settings.js') }}"></script>
+    @endif
 @endsection

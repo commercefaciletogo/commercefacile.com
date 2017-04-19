@@ -316,5 +316,9 @@
     <script>
         var authorId = "{!! auth('user')->user()->id !!}";
     </script>
-    <script src="{{ asset('js/user-profile.js') }}"></script>
+    @if(App::environment('production'))
+        <script src=""></script>
+    @else
+        <script src="{{ asset('js/user-profile.js') }}"></script>
+    @endif
 @endsection
