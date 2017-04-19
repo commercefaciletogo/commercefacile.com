@@ -40,10 +40,8 @@ new Vue({
             axios.post(url).then(rep => {
                 if(rep.data.done){
                     this.ad = rep.data.ad;
-                    console.log('done reporting');
                 }
             }).catch(err => {
-                console.log(err.response);
             });
         },
         favoriteAd(){
@@ -54,10 +52,8 @@ new Vue({
             axios.post(url).then(rep => {
                 if(rep.data.done){
                     this.ad = rep.data.ad;
-                    console.log('done favoriting');
                 }
             }).catch(err => {
-                console.log(err.response);
             });
         },
         showPhone(){
@@ -67,17 +63,12 @@ new Vue({
             var clipboard = new Clipboard('.copy');
 
             clipboard.on('success', function(e) {
-                console.info('Action:', e.action);
-                console.info('Text:', e.text);
-                console.info('Trigger:', e.trigger);
                 this.notify(this.$t('general.copied'), "topCenter", "success");
 
                 e.clearSelection();
             }.bind(this));
 
             clipboard.on('error', function(e) {
-                console.error('Action:', e.action);
-                console.error('Trigger:', e.trigger);
             }.bind(this));
         },
         notify(message, position, status){
@@ -112,7 +103,5 @@ new Vue({
         });
 
         this.initClipboard();
-
-        console.log(window.ad);
     }
 });

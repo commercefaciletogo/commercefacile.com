@@ -28,7 +28,6 @@
                             this.$emit('selected', this.selectedCategory);
                         })
                         .catch(error => {
-                            console.log(error);
                         });
             },
             select(category){

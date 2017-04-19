@@ -163,7 +163,6 @@ new Vue({
             } else {
                 this.filter.location = item;
             }
-            return console.log(`load ads for ${this.query} -> child`);
         },
         handleParentSelection({item, type}) {
             if (type === "category") {
@@ -178,7 +177,6 @@ new Vue({
                 } else {
                     this.filter.location = item;
                 }
-                return console.log(`load ads for ${this.query} -> parent`);
             } else {
                 if(type === 'category') {
                     this.subCategories = item.children;
@@ -205,7 +203,6 @@ new Vue({
                     }
                 })
                 .catch(error => {
-                    console.log(error);
                 });
         },
         goBack(type){
@@ -240,8 +237,6 @@ new Vue({
                 if(action === 'PUSH'){
                     return this.performSearch(location.search);
                 }
-                console.log('perform search -> ', location.search);
-                console.log('hash -> ', location.hash, action);
             })
         },
         updateQuery(){
@@ -269,22 +264,18 @@ new Vue({
                     });
                 }
                 if(cat !== undefined) this.$set(this.filter, 'category', cat);
-                console.log('category ', cat);
 
                 let loc = _.find(this.locations[0].children, location => {
                     let uuid = _.get(currentParams, 'l');
                     return location.uuid === uuid;
                 });
                 if(loc !== undefined) this.$set(this.filter, 'location', loc);
-                console.log('location ', loc);
 
                 var sort = _.get(currentParams, this.$t('filter.sort'));
                 if(sort !== undefined) this.$set(this.filter, 'sort', sort);
-                console.log('sort ', sort);
 
                 let q = _.get(currentParams, 'q');
                 if(q !== undefined) {this.$set(this.filter, 'q', q); this.$set(this.search, 'q', q);}
-                console.log('query ', q);
 
                 if(cat === undefined && loc === undefined && q === undefined){
                     let queryParams = queryString.stringify(currentParams);
@@ -292,19 +283,16 @@ new Vue({
                 }
 
             }).catch(error => {
-                console.log(error)
             });
         },
         updateUrl(s){
             let params = queryString.parse(s);
             let search = `?${queryString.stringify(params)}`;
-            console.log('update url -> ', params);
             history.push(search);
         },
         updateSearchQuery(){
             if(_.isEmpty(this.filter.q)) return ;
             this.$set(this.search, 'q', this.filter.q);
-            console.log(this.filter.q);
         },
         performSearch(queryParams){
             this.busy = true;
@@ -318,10 +306,8 @@ new Vue({
                 if(!_.isEmpty(this.ads.data)){
                     this.currentView = 'results';
                 }
-                console.log(rep.data);
                 this.busy = false;
             }).catch(error => {
-                console.log(error);
                 this.busy = false;
             });
         }

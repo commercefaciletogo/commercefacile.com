@@ -27,9 +27,7 @@
             'sub-categories': SubCategories,
         },
         mounted(){
-            this.$on('open', () => {
-                console.log('opening');
-            })
+            this.$on('open', () => {})
         }
     }
 </script>

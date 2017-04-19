@@ -13,7 +13,6 @@ new Vue({
     mounted(){
         window.Echo.channel(`author.${window.authorId}`)
             .listen('.AdWasSubmitted', e => {
-                console.log(e);
                 window.location.reload(true);
             });
     }

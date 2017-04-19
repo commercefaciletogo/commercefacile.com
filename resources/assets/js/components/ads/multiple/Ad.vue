@@ -56,8 +56,6 @@
                 window.location = url;
             }
         },
-        mounted(){
-            console.log('~')
-        }
+        mounted(){}
     }
 </script>

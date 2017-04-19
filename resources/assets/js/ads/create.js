@@ -10,9 +10,6 @@ import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
 
 let csrf = document.querySelector("meta[name=csrf-token]").content;
-// let authorUuid = document.querySelector("meta[name=author-uuid]").content;
-console.log(`require location -> ${!!window.requireLocation}`);
-console.log(`author id -> ${window.authorId}`);
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
@@ -78,7 +75,6 @@ new Vue({
             let imagesSize = _.reduce(this.newAd.photos, (totalSize, photo) => {
                 return totalSize + photo.size;
             }, 0);
-            console.log(`total size -> ${imagesSize} && ${this.newAd.photos.length < 1 || imagesSize > 5000000}`);
             this.errors.images = this.newAd.photos.length < 1 || imagesSize > 5000000;
             this.errors.price = !_.isNumber(this.newAd.price.amount);
 
@@ -108,10 +104,8 @@ new Vue({
                 }
             }).catch(error => {
                 this.submitting = false;
-                console.log(error.response);
             });
 
-            console.log(data);
         },
         ReorderImages(event){
             this.newAd.photos.splice(event.newIndex, 0, this.newAd.photos.splice(event.oldIndex, 1)[0])
@@ -142,7 +136,6 @@ new Vue({
                     this.categories = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
                 });
         },
         fetchLocations(){
@@ -151,7 +144,6 @@ new Vue({
                     this.locations = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
                 });
         },
         closeCategoryModal({id, name}){
@@ -170,7 +162,6 @@ new Vue({
 
         window.Echo.channel(`author.${window.authorId}`)
             .listen('.AdWasSubmitted', e => {
-                console.log(e);
                 this.submitting = false;
                 window.location = window.profileUrl;
             });

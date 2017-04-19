@@ -120,7 +120,6 @@ new Vue({
                     this.locations = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
                 });
         }
     },
@@ -132,6 +131,5 @@ new Vue({
     mounted() {
         $('#chooseLocation').accordion();
         this.fetchLocations();
-        console.log('profile.settings mounted')
     }
 });

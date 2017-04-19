@@ -117,7 +117,6 @@
         },
         watch: {
             status(val){
-                console.log(val);
                 this.setFilter(val);
             }
         },
@@ -134,7 +133,6 @@
                 this.$refs.vuetable.changePage(page)
             },
             onCellClicked (data, field, event) {
-                console.log('cellClicked: ', field.name)
                 // this.$refs.vuetable.toggleDetailRow(data.id)
             },
             formatStatus (value) {
@@ -169,7 +167,6 @@
         mounted(){
             this.$events.$on('reload', () => {
                 this.setFilter(this.status);
-                console.log('reloading table');
             })
         }
     }

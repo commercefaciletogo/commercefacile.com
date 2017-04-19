@@ -18,7 +18,6 @@
         props: ['items', 'type'],
         methods: {
             handleClick(item){
-                console.log('clicking');
                 this.$emit('selected', {item: item, type: this.type, parent: true});
             }
         },

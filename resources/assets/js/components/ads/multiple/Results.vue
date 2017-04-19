@@ -1,13 +1,8 @@
 <template>
     <div>
-        <ad-item v-for="ad in ads" :ad="ad"></ad-item>
+        <ad-item v-for="ad in ads" :ad="ad" :key="ad.id"></ad-item>
     </div>
 </template>
-<style>
-    body{
-        background-color:#ff0000;
-    }
-</style>
 <script type="text/babel">
     import Ad from './Ad.vue';
 

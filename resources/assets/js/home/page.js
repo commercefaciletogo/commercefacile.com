@@ -24,7 +24,6 @@ new Vue({
     computed: {},
     methods: {
         performSearch(){
-            console.log(`search details -> ${this.search}`);
         }
     },
     mounted(){
@@ -56,17 +55,14 @@ new Vue({
         $('.city-select').dropdown({
             action: 'hide',
             onChange: function(value, text){
-                console.log(value);
             }
         }); 
 
         $('.category-select').dropdown({
             action: 'hide',
             onChange: function(value, text){
-                console.log(value);
             }
         });
 
-        console.log(locationsUrl, categoriesUrl);
     }
 });
