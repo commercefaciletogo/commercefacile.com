@@ -7,7 +7,7 @@ commercefacile-db:
   ports:
     - '5432:5432'
 commercefacile-queue:
-  image: 'thomasdolar/beanstalkd:latest'
+  image: 'commercefacile/queue:latest'
   ports:
     - '8080:8080'
     - '11300:11300'
@@ -19,7 +19,7 @@ commercefacile-redis:
     - '/srv/docker/redis:/var/lib/redis'
 commercefacile-server:
   autoredeploy: true
-  image: 'thomasdolar/commercefacile:latest'
+  image: 'commercefacile/server:latest'
   links:
     - commercefacile-db
     - commercefacile-queue
@@ -28,14 +28,14 @@ commercefacile-server:
   volumes:
     - /var/www/public
 commercefacile-socket:
-  image: 'thomasdolar/commercefacile_socket:latest'
+  image: 'commercefacile/socket:latest'
   links:
     - 'commercefacile-redis:redis'
   ports:
     - '6001:6001'
 nginx:
   autoredeploy: true
-  image: 'thomasdolar/commercefacile_nginx:latest'
+  image: 'commercefacile/nginx:latest'
   links:
     - commercefacile-server
   ports:
