@@ -76,7 +76,7 @@ new Vue({
                 return totalSize + photo.size;
             }, 0);
             this.errors.images = this.newAd.photos.length < 1 || imagesSize > 5000000;
-            this.errors.price = !_.isNumber(this.newAd.price.amount);
+            this.errors.price = _.isNaN(Number.parseInt(this.newAd.price.amount));
 
             if(window.requireLocation){
                 this.errors.location = !_.isNumber(this.user.location.id);

@@ -15,11 +15,11 @@
 		},
 		"sqlite": {}
 	},
-	"devMode": true,
-	"host": null,
+	"devMode": false,
+	"host": "commercefacile.com",
 	"port": "6001",
-	"protocol": "http",
+	"protocol": "https",
 	"socketio": {},
-	"sslCertPath": "",
-	"sslKeyPath": ""
+	"sslCertPath": "./.nginx/.cert/certificate.pem",
+	"sslKeyPath": "./.nginx/.cert/private.key"
 }
