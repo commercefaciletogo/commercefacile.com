@@ -62,16 +62,16 @@ class RegisterController extends Controller
 
     private function sendCode($phone)
     {
-        try{
-            $code = $this->generate_random();
-            $message = trans('auth.sms', ['code' => $code]);
-            $recipients = ["00228{$phone}"];
-            Messagebird::createMessage(self::C_FACILE, $recipients, $message);
-            session()->put('code', $code);
-            return true;
-        }catch (\Exception $e){
-            return false;
-        }
+//        try{
+//            $code = $this->generate_random();
+//            $message = trans('auth.sms', ['code' => $code]);
+//            $recipients = ["00228{$phone}"];
+//            Messagebird::createMessage(self::C_FACILE, $recipients, $message);
+//            session()->put('code', $code);
+//            return true;
+//        }catch (\Exception $e){
+//            return false;
+//        }
     }
 
     public function authenticatePhone()
