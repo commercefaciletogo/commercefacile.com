@@ -19,7 +19,7 @@ commercefacile-redis:
     - '/srv/docker/redis:/var/lib/redis'
 commercefacile-server:
   autoredeploy: true
-  image: 'commercefacile/server:latest'
+  image: 'thomasdolar/commercefacile:staging'
   links:
     - commercefacile-db
     - commercefacile-queue
@@ -28,14 +28,14 @@ commercefacile-server:
   volumes:
     - /var/www/public
 commercefacile-socket:
-  image: 'commercefacile/socket:latest'
+  image: 'thomasdolar/commercefacile_socket:staging'
   links:
     - 'commercefacile-redis:redis'
   ports:
     - '6001:6001'
 nginx:
   autoredeploy: true
-  image: 'commercefacile/nginx:latest'
+  image: 'thomasdolar/commercefacile_nginx:staging'
   links:
     - commercefacile-server
   ports:
