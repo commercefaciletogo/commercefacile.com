@@ -50,13 +50,12 @@ class RegisterController extends Controller
         $data = request()->all();
         $this->validator($data)->validate();
 
-        $sent = $this->sendCode(request('phone'));
-        if($sent){
+        $sendCode = $this->sendCode(request('phone'));
+        if($sendCode == true){
             session()->put('user_registration_data', array_add($data, 'status', 'active'));
             return response()->json(['sent' => true]);
-        }else{
-            return response()->json(['sent' => false, 'reason' => $sent]);
         }
+        return response()->json(['sent' => false, 'error' => $sendCode]);
     }
 
     private function sendCode($phone)
@@ -67,7 +66,7 @@ class RegisterController extends Controller
             session()->put('code', $code);
             return true;
         }catch (\Exception $e){
-            return $e->getMessage();
+            return $e;
         }
     }
 
