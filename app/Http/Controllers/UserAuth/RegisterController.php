@@ -50,19 +50,24 @@ class RegisterController extends Controller
         $data = request()->all();
         $this->validator($data)->validate();
 
-        if($this->sendCode(request('phone'))){
+        $sent = $this->sendCode(request('phone'));
+        if($sent){
             session()->put('user_registration_data', array_add($data, 'status', 'active'));
             return response()->json(['sent' => true]);
         }
-        return response()->json(['sent' => false]);
+        return response()->json(['sent' => false, 'cause' => $sent]);
     }
 
     private function sendCode($phone)
     {
-        $code = $this->generate_random();
-        $this->notify(new PhoneConfirmation("00228{$phone}", $code));
-        session()->put('code', $code);
-        return true;
+        try{
+            $code = $this->generate_random();
+            $this->notify(new PhoneConfirmation("00228{$phone}", $code));
+            session()->put('code', $code);
+            return true;
+        }catch (\Exception $e){
+            return $e;
+        }
     }
 
     public function authenticatePhone()
