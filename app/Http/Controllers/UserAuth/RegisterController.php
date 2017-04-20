@@ -59,14 +59,10 @@ class RegisterController extends Controller
 
     private function sendCode($phone)
     {
-        try{
-            $code = $this->generate_random();
-            $this->notify(new PhoneConfirmation("00228{$phone}", $code));
-            session()->put('code', $code);
-            return true;
-        }catch (\Exception $e){
-            return false;
-        }
+        $code = $this->generate_random();
+        $this->notify(new PhoneConfirmation("00228{$phone}", $code));
+        session()->put('code', $code);
+        return true;
     }
 
     public function authenticatePhone()
