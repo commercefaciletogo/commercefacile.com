@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UserAuth;
 
 use App\Notifications\PhoneConfirmation;
 use App\User;
+use Bjrnblm\Messagebird\Facades\Messagebird;
 use Illuminate\Notifications\Notifiable;
 use NotificationChannels\Messagebird\MessagebirdMessage;
 use Ramsey\Uuid\Uuid;
@@ -25,6 +26,7 @@ class RegisterController extends Controller
     |
     */
 
+    const C_FACILE = "C FACILE";
     use RegistersUsers;
     use Notifiable;
 
@@ -50,7 +52,12 @@ class RegisterController extends Controller
         $data = request()->all();
         $this->validator($data)->validate();
 
+<<<<<<< HEAD
         if(!$this->sendCode(request('phone'))){
+=======
+        $sendCode = $this->sendCode(request('phone'));
+        if($sendCode == true){
+>>>>>>> production
             session()->put('user_registration_data', array_add($data, 'status', 'active'));
             return response()->json(['sent' => true]);
         }
@@ -61,7 +68,9 @@ class RegisterController extends Controller
     {
         try{
             $code = $this->generate_random();
-            $this->notify(new PhoneConfirmation("00228{$phone}", $code));
+            $message = trans('auth.sms', ['code' => $code]);
+            $recipients = ["00228{$phone}"];
+            Messagebird::createMessage(self::C_FACILE, $recipients, $message);
             session()->put('code', $code);
             return true;
         }catch (\Exception $e){

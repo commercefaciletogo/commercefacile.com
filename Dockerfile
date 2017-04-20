@@ -17,11 +17,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-enable bcmath
 
-# install letsencrypt
-#RUN         echo 'deb http://ftp.debian.org/debian jessie-backports main' | tee /etc/apt/sources.list.d/backports.list && \
-#            apt-get update && \
-#            apt-get install certbot letsencrypt -y -t jessie-backports
-
 
 # install supervisor
 RUN         apt-get install -y supervisor && \
@@ -35,17 +30,10 @@ RUN         apt-get update \
             && apt-get -y autoremove && apt-get clean \
             && rm -rf /var/lib/apt/lists/*
 
-RUN         mkdir -p /var/www/public/letsencrypt/.well-known/acme-challenge
-
-
 # add entry to crontab
-RUN         (crontab -l 2>/dev/null; echo "* * * * * php /var/www/commercefacile/artisan schedule:run >> /dev/null 2>&1")| crontab -
+RUN         (crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1")| crontab -
 
 COPY        . /var/www
-
-#RUN         certbot --quiet certonly --webroot -w /var/www/public  \
-#            -d www.commercefacile.com -d commercefacile.com \
-#            --email commercefaciletogo@gmail.com --agree-tos
 
 WORKDIR     /var/www
 
