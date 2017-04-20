@@ -180,7 +180,7 @@ return [
 //        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
         ScoutEngines\Postgres\PostgresEngineServiceProvider::class,
         NotificationChannels\Messagebird\MessagebirdServiceProvider::class,
-//        Bjrnblm\Messagebird\MessagebirdServiceProvider::class,
+        Bjrnblm\Messagebird\MessagebirdServiceProvider::class,
 
         /*
          * Application Service Providers...
