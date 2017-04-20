@@ -180,6 +180,7 @@ return [
 //        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
         ScoutEngines\Postgres\PostgresEngineServiceProvider::class,
         NotificationChannels\Messagebird\MessagebirdServiceProvider::class,
+        Bjrnblm\Messagebird\MessagebirdServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -240,6 +241,7 @@ return [
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Messagebird' => Bjrnblm\Messagebird\Facades\Messagebird::class,
 
     ],
 

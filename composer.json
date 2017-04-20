@@ -26,7 +26,8 @@
         "predis/predis": "^1.1",
         "ramsey/uuid": "^3.5",
         "tamayo/laravel-scout-elastic": "2.0.0",
-        "torann/geoip": "^1.0"
+        "torann/geoip": "^1.0",
+        "bjrnblm/messagebird": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
