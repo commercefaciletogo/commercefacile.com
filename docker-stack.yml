@@ -6,33 +6,31 @@ commercefacile-db:
   image: 'postgres:latest'
   ports:
     - '5432:5432'
-commercefacile-queue:
-  image: 'commercefacile/queue:latest'
-  ports:
-    - '8080:8080'
-    - '11300:11300'
+
 commercefacile-redis:
   image: 'sameersbn/redis:latest'
   ports:
     - '6379:6379'
   volumes:
     - '/srv/docker/redis:/var/lib/redis'
+
 commercefacile-server:
   autoredeploy: true
   image: 'commercefacile/server:latest'
   links:
     - commercefacile-db
-    - commercefacile-queue
     - commercefacile-redis
   privileged: true
   volumes:
     - /var/www/public
+
 commercefacile-socket:
   image: 'commercefacile/socket:latest'
   links:
     - 'commercefacile-redis:redis'
   ports:
     - '6001:6001'
+
 nginx:
   autoredeploy: true
   image: 'commercefacile/nginx:latest'
