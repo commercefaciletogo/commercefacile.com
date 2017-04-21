@@ -128,9 +128,18 @@
                                                 @endunless
                                             </a>
                                             <div id="Ad_Images" v-cloak class="siema">
-                                                <div v-for="path in paths" >
-                                                    <img class="ad_image" v-lazy="path">
-                                                </div>
+                                                @foreach($ad['images'] as $image)
+                                                    <div style="
+                                                        background-image: url({!! $image !!});
+                                                        background-position: center;
+                                                        background-repeat: no-repeat;
+                                                        padding: 0;
+                                                        width: 100px;
+                                                        height: 100px;
+                                                        background-size: contain;
+                                                        ">
+                                                    </div>
+                                                @endforeach
                                             </div>
                                             <a class="next" style="display: flex; flex-direction: column; justify-content: center;">
                                                 @unless(count($ad['images']) == 1)
