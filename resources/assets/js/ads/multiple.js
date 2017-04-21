@@ -39,7 +39,7 @@ const locales = {
             lowestPrice: "prix-le-plus-bas",
             recentAds: "annonces-recentes",
             sort: 'trier',
-            location: 'Location',
+            location: 'Lieu',
             category: 'Categorie'
         }
     }

@@ -134,8 +134,8 @@
                                                         background-position: center;
                                                         background-repeat: no-repeat;
                                                         padding: 0;
-                                                        width: 100px;
-                                                        height: 100px;
+                                                        width: 500px;
+                                                        height: 500px;
                                                         background-size: contain;
                                                         ">
                                                     </div>
