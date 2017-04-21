@@ -22,7 +22,7 @@ class LocationsSeeder extends Seeder
         return collect($this->get_locations())->map(function($city){
             return [
                 'uuid' => Uuid::uuid4(),
-                'name' => title_case($city['name']),
+                'name' => ucfirst($city['name']),
                 'slug' => str_slug($city['name']),
                 'parent_id' => $city['parent_id']
             ];
