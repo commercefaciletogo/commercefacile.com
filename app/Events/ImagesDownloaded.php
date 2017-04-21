@@ -41,7 +41,7 @@ class ImagesDownloaded implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'ad.'.$this->ad->id;
+        return 'Ad.'.$this->ad->id;
     }
 
     /**

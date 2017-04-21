@@ -12,10 +12,8 @@ import SubCategories from '../components/ads/create/SubCategories.vue';
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 let oldAd = window.oldAd;
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':6001');
 
 new Vue({
     el: 'div#main',
@@ -183,16 +181,11 @@ new Vue({
     },
     mounted(){
 
-        window.Echo.channel(`author.${window.authorId}`)
-            .listen('.AdWasSubmitted', () => {
-                this.submitting = false;
-                window.location = window.profileUrl;
-            });
-        window.Echo.channel(`ad.${oldAd.id}`)
-            .listen('.ImagesDownloaded', () => {
-                this.downloadImages(oldAd.images);
-                this.busy = false;
-            });
+        const channel = `Ad.${oldAd.id}`;
+        socket.on(`${channel}:ImagesDownloaded`, () => {
+            this.downloadImages(oldAd.images);
+            this.busy = false;
+        });
 
         $('#chooseCategory').accordion();
 

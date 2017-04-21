@@ -35,7 +35,7 @@ class AdWasSubmitted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return "author.{$this->author->id}";
+        return "Author.{$this->author->uuid}";
     }
 
     /**

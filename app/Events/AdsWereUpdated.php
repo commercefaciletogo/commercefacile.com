@@ -32,7 +32,7 @@ class AdsWereUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'admin';
+        return 'Admin';
     }
 
     /**

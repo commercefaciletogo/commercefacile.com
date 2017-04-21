@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import axios from 'axios';
 import Vue from 'vue';
-import Echo from 'laravel-echo';
 import Notify from 'izitoast';
 
 import Categories from '../components/ads/create/Categories.vue';
@@ -10,11 +9,6 @@ import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
 
 let csrf = document.querySelector("meta[name=csrf-token]").content;
-
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
 
 new Vue({
     el: 'div#main',
@@ -159,12 +153,6 @@ new Vue({
         }
     },
     mounted(){
-
-        window.Echo.channel(`author.${window.authorId}`)
-            .listen('.AdWasSubmitted', e => {
-                this.submitting = false;
-                window.location = window.profileUrl;
-            });
 
         $('#chooseCategory').accordion();
 
