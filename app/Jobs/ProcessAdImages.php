@@ -101,13 +101,14 @@ class ProcessAdImages implements ShouldQueue
         if($preSize == 'original')
             return $img->save("{$path}/{$ad->uuid}_{$index}_{$stringSize}.jpg");
 
-        $watermark = Image::make(public_path().'/watermark.png');
+        $watermark = Image::make(storage_path('/watermark.png'));
 
         $size = $preSize ?: $this->get_resize_size($img);
-        $img->resize((int) $size, null, function($c){
-            $c->aspectRatio();
-            $c->upsize();
-        })->insert($watermark, 'bottom-left');
+        $img->insert($watermark, 'bottom-left')
+            ->resize((int) $size, null, function($c){
+                $c->aspectRatio();
+                $c->upsize();
+            });
         return $img->save("{$path}/{$ad->uuid}_{$index}_{$stringSize}.jpg");
     }
 
