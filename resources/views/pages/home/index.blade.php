@@ -155,7 +155,7 @@
                                                 <div class="ads-slide" style="height: 100px;">
 
                                                     @foreach($ads as $ad)
-                                                        <div style="width: 322px; color: #1d305d; margin-right: .5em;">
+                                                        <a href="{{ route('ads.single', ['id' => $ad['uuid']]) }}" style="width: 322px; color: #1d305d; margin-right: .5em;">
                                                             <div class="ui container" style="background-color: #fcfcfd;">
                                                                 <div class="ui grid" style="margin: 0;">
                                                                     <div class="column" style="
@@ -179,7 +179,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     @endforeach
 
                                                 </div>

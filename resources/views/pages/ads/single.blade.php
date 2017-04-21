@@ -56,13 +56,13 @@
             color: #33446d;
         }
 
-        #Ad_Images, img.ad_image {
+        #Ad_Images, #Ad_Images div.ad_image {
             width: 31.5rem !important;
             height: 31.5rem !important;
         }
 
         @media only screen and (max-width: 991px) and (min-width: 768px) {
-            #Ad_Images, img.ad_image {
+            #Ad_Images, #Ad_Images div.ad_image {
                 width: 25rem !important;
                 height: 25rem !important;
             }
@@ -74,7 +74,7 @@
         }
 
         @media only screen and (max-width: 767px) {
-            #Ad_Images, img.ad_image {
+            #Ad_Images, #Ad_Images div.ad_image {
                 width: 25rem !important;
                 height: 25rem !important;
             }
@@ -129,13 +129,11 @@
                                             </a>
                                             <div id="Ad_Images" v-cloak class="siema">
                                                 @foreach($ad['images'] as $image)
-                                                    <div style="
+                                                    <div class="" style="
                                                         background-image: url({!! $image !!});
                                                         background-position: center;
                                                         background-repeat: no-repeat;
                                                         padding: 0;
-                                                        width: 500px;
-                                                        height: 500px;
                                                         background-size: contain;
                                                         ">
                                                     </div>

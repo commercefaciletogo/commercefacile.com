@@ -109,8 +109,15 @@
                                                     <a href="{{ route('ads.single', ['id' => $ad['uuid']]) }}" style="width: 322px; color: #1d305d; margin-right: .5em;">
                                                         <div class="ui container" style="background-color: #fcfcfd;">
                                                             <div class="ui grid" style="margin: 0;">
-                                                                <div class="column" style="padding: 0; width: 100px !important;">
-                                                                    <img class="ui image" src="{!! $ad['image'] !!}" alt="">
+                                                                <div class="column" style="
+                                                                    background-image: url({!! $ad['image'] !!});
+                                                                    background-position: center;
+                                                                    background-repeat: no-repeat;
+                                                                    padding: 0;
+                                                                    width: 100px;
+                                                                    height: 100px;
+                                                                    background-size: contain;
+                                                                    ">
                                                                 </div>
                                                                 <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                                                                     <div class="row title" style="font-size: 1.5em;">
