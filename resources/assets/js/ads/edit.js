@@ -13,7 +13,7 @@ let csrf = document.querySelector("meta[name=csrf-token]").content;
 let oldAd = window.oldAd;
 
 const host = window.location.host;
-const socket = io.connect('http://' + host + ':6001');
+const socket = io.connect('http://' + host + ':8443');
 
 new Vue({
     el: 'div#main',

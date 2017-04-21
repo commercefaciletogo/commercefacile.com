@@ -1,41 +1,40 @@
 commercefacile-db:
   environment:
     - POSTGRES_DB=commercefacile_prod
-    - POSTGRES_USER=commercefacile_prod
     - POSTGRES_PASSWORD=Ls4XYlaxIcCyNspsk6j2PlRKEA6FZ1Rl1o0=
+    - POSTGRES_USER=commercefacile_prod
   image: 'postgres:latest'
   ports:
     - '5432:5432'
-
 commercefacile-redis:
   image: 'sameersbn/redis:latest'
   ports:
     - '6379:6379'
   volumes:
     - '/srv/docker/redis:/var/lib/redis'
-
 commercefacile-server:
   autoredeploy: true
   image: 'commercefacile/server:latest'
   links:
     - commercefacile-db
+    - commercefacile-queue
     - commercefacile-redis
   privileged: true
   volumes:
     - /var/www/public
-
 commercefacile-socket:
+  autoredeploy: true
   image: 'commercefacile/socket:latest'
   links:
     - 'commercefacile-redis:redis'
   ports:
-    - '6001:6001'
-
+    - '8443:8443'
 nginx:
   autoredeploy: true
   image: 'commercefacile/nginx:latest'
   links:
     - commercefacile-server
+    - commercefacile-socket
   ports:
     - '80:80'
     - '443:443'
