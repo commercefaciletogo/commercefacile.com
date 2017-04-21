@@ -42,7 +42,7 @@
         </div>
         <div class="ui bottom attached segment">
 
-            <ads-table :status="currentStatus" api-url="{!! LaravelLocalization::getLocalizedURL(null, route('api.ads')) !!}"></ads-table>
+            <ads-table :status="currentStatus" api-url="{!! route('api.ads') !!}"></ads-table>
 
         </div>
 

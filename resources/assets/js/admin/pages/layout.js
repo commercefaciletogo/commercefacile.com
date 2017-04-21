@@ -1,11 +1,8 @@
 import Vue from 'vue';
-import Echo from 'laravel-echo';
 import axios from 'axios';
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
 
 new Vue({
     el: '#topMenu',
@@ -38,7 +35,6 @@ new Vue({
         updatePending(){
             axios.get(window.adsStatusUrl).then(rep => {
             }).catch(er => {
-                console.log(er);
             })
         },
         initSearch(){
@@ -57,15 +53,14 @@ new Vue({
         }
     },
     mounted(){
-        window.Echo.channel(`admin`)
-            .listen('.AdsWereUpdated', e => {
-                console.log(e);
-                this.pending = !e.pending.empty;
-            });
+
+        const channel = `Admin`;
+        socket.on(`${channel}:AdsWereUpdated`, e => {
+            this.pending = !e.pending.empty;
+        });
 
         this.updatePending();
 
         this.updateQuery();
-        console.log('top menu mounted');
     }
 });

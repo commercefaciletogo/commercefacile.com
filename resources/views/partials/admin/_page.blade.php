@@ -8,7 +8,7 @@
     @endif
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="csrf-token" content="{!! csrf_token() !!}">
-    <meta name="locale" content="{!! LaravelLocalization::getCurrentLocale() !!}">
+    <meta name="locale" content="{!! Localization::getCurrentLocale() !!}">
     @include('partials.favico')
     <style>
         html{
@@ -89,7 +89,7 @@
 <script>
     var adsStatusUrl = "{{ route('api.ads.status') }}";
     var changePasswordUrl = "{{ route('employee.pass.change') }}";
-    var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
+    var locale = "{!! Localization::getCurrentLocale() !!}";
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 <script src="{{ asset('js/admin-page-layout.js') }}"></script>
