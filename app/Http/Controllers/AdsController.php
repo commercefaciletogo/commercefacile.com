@@ -93,13 +93,13 @@ class AdsController extends Controller
             $category = Category::with('parent', 'children')->where('uuid', $category_uuid)->first();
 
             if($category){
-                if($category->children){
+                if($category->children->isNotEmpty()){
                     $categories = $category->children->map(function($category){
                         return $category->id;
                     });
                 }
 
-                if($category->children){
+                if($category->children->isEmpty()){
                     array_push($categories, $category->id);
                 }
             }
@@ -356,7 +356,8 @@ class AdsController extends Controller
             ->filter(function($img){
                 return $img['size'] == 'original';
             })->map(function($img){
-                return $img['path'];
+                $path = $img['path'];
+                return ''
             })->unique()->toArray();
     }
 
