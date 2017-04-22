@@ -50,15 +50,18 @@ class AdsController extends Controller
         $this->fractal = $fractal;
     }
 
-    public function search(Request $request)
+    /**
+     * @return array
+     */
+    public function search()
     {
         $perPage = 20;
         $query = null;
 
-        $searchQuery = $request->get('q');
+        $searchQuery = request()->get('q');
 
-        $perPage = $request->has('p')
-            ? (int) $request->get('p')
+        $perPage = request()->has('p')
+            ? (int) request()->get('p')
             : $perPage;
 
         if(is_null($searchQuery)){
@@ -67,8 +70,8 @@ class AdsController extends Controller
             $query = Ad::search($searchQuery)->where('status', 'online');
         }
 
-        if($request->has('trier') || $request->has('sort')){
-            $s = $request->get('trier') ?: $request->get('sort');
+        if(request()->has('trier') || request()->has('sort')){
+            $s = request()->get('trier') ?: request()->get('sort');
             if($s == 'l'){
                 $query = $query->orderBy('price', 'asc');
             }
@@ -84,9 +87,9 @@ class AdsController extends Controller
         $result = collect($paginator)->toArray();
         $result['data'] = $transformed;
 
-        if($request->has('c')){
+        if(request()->has('c')){
             $categories = [];
-            $category_uuid = $request->get('c');
+            $category_uuid = request()->get('c');
             $category = Category::with('parent', 'children')->where('uuid', $category_uuid)->first();
 
             if(collect($category->children)->isNotEmpty()){
@@ -104,8 +107,8 @@ class AdsController extends Controller
             })->toArray();
         }
 
-        if($request->has('l')){
-            $locationUuid = $request->get('l');
+        if(request()->has('l')){
+            $locationUuid = request()->get('l');
             $location = Location::with('parent')->where('uuid', $locationUuid)->first();
 
             $result['data'] = collect($transformed)->filter(function($ad) use ($location) {
@@ -147,20 +150,20 @@ class AdsController extends Controller
         return view('pages.ads.create');
     }
 
-    public function save(Request $request)
+    public function save()
     {
-        if($request->get('location_id')){
-            $this->updateUserLocation($request);
+        if(request()->get('location_id')){
+            $this->updateUserLocation(request());
         }
-        $data = $this->prepareData($request);
+        $data = $this->prepareData(request());
         //save ad
         $ad = Ad::create($data);
         //update ad with code
         $code = (new Id())->encode($ad->id);
         $ad->update(['code' => $code]);
         //save images
-        $images_paths = $this->saveAdImagesForFurtherProcessing($request, $ad);
-        $this->dispatch(new ProcessAdImages($ad, $images_paths, $request->image_length, auth('user')->user()));
+        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $ad);
+        $this->dispatch(new ProcessAdImages($ad, $images_paths, request()->image_length, auth('user')->user()));
         return ['done' => true];
     }
 
@@ -196,23 +199,23 @@ class AdsController extends Controller
         return view('pages.ads.edit', ['ad' => $ad]);
     }
 
-    public function update($id, Request $request)
+    public function update($id)
     {
         $ad = Ad::find((int) $id);
 
         if(!$ad) abort(404);
 
         $ad->update([
-            'category_id' => $request->category_id,
-            'title' => $request->title,
-            'condition' => $request->condition == 1 ? 'new' : 'used',
-            'description' => $request->description,
-            'price' => $request->price,
-            'negotiable' => $request->negotiable
+            'category_id' => request()->category_id,
+            'title' => request()->title,
+            'condition' => request()->condition == 1 ? 'new' : 'used',
+            'description' => request()->description,
+            'price' => request()->price,
+            'negotiable' => request()->negotiable
         ]);
 
-        $images_paths = $this->saveAdImagesForFurtherProcessing($request, $ad);
-        $this->dispatch(new ProcessAdImages($ad, $images_paths, $request->image_length, auth('user')->user()));
+        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $ad);
+        $this->dispatch(new ProcessAdImages($ad, $images_paths, request()->image_length, auth('user')->user()));
 
         return ['done' => true];
     }
@@ -291,7 +294,7 @@ class AdsController extends Controller
         return redirect()->route('user.profile', ['user_name' => auth('user')->user()->slug]);
     }
 
-    private function prepareData(Request $request)
+    private function prepareData($request)
     {
         $uuid = Uuid::uuid4();
         return [
@@ -307,11 +310,10 @@ class AdsController extends Controller
     }
 
     /**
-     * @param Request $request
      * @param $ad
      * @return array|null
      */
-    private function saveAdImagesForFurtherProcessing(Request $request, $ad)
+    private function saveAdImagesForFurtherProcessing($request, $ad)
     {
         $img_paths = [];
         $total_images = (int)$request->image_length;
@@ -328,9 +330,9 @@ class AdsController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param $request
      */
-    private function updateUserLocation(Request $request)
+    private function updateUserLocation($request)
     {
         auth('user')->user()->update(['location_id' => $request->get('location_id')]);
     }
