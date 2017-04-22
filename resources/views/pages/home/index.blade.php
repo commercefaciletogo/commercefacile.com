@@ -228,14 +228,14 @@
 
 @section('scripts')
     <script>
-//        $('.ads-slide').slick({
-//            // infinite: true,
-//            slidesToShow: 2,
-//            slidesToScroll: 1,
-//            variableWidth: true,
-//            autoplay: true,
+        $('.jumbotron-slide').slick({
+             infinite: true,
+             slidesToShow: 2,
+            slidesToScroll: 1,
+            variableWidth: true,
+            autoplay: true,
 //            autoplaySpeed: 5000
-//        });
+        });
     </script>
     <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/home.js"></script>
 @endsection
