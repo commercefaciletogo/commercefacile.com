@@ -129,7 +129,7 @@
                                             </a>
                                             <div id="Ad_Images" v-cloak class="siema">
                                                 @foreach($ad['images'] as $image)
-                                                    <div class="" style="
+                                                    <div class="ad_image" style="
                                                         background-image: url({!! $image !!});
                                                         background-position: center;
                                                         background-repeat: no-repeat;

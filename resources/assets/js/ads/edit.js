@@ -175,6 +175,7 @@ new Vue({
                     });
                     this.newAdBuffer = _.cloneDeep(this.newAd);
                 }).catch(error => {
+                    window.history.back();
                 });
             })
         }

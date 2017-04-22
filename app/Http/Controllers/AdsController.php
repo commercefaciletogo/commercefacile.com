@@ -356,10 +356,8 @@ class AdsController extends Controller
             ->filter(function($img){
                 return $img['size'] == 'original';
             })->map(function($img){
-                $path = $img['path'];
-                $name = $this->extractImageName($path);
-                return ['path' => "/storage/ads/{$name}", 'name'=>$name];
-            })->flatten()->toArray();
+                return $img['path'];
+            })->unique()->toArray();
     }
 
     private function deleteAdExistingImages($ad)
