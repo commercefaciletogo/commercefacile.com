@@ -11,6 +11,12 @@
             border-bottom: 2px solid rgb(209, 213, 222);
         }
 
+        .elsipzise{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
+
         .slick-prev, .slick-next{
             height: 20px;
             border-radius: 10px;
@@ -120,10 +126,12 @@
                                                                     ">
                                                                 </div>
                                                                 <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                    <div class="row title" style="font-size: 1.5em;">
+                                                                    <div class="row title elsipzise"
+                                                                         style="font-size: 1.5em;">
                                                                         <span>{{ $ad['title'] }}</span>
                                                                     </div>
-                                                                    <div class="row description" style="color: #77829d;">
+                                                                    <div class="row description elsipzise"
+                                                                         style="color: #77829d;">
                                                                         <span>{{ $ad['description'] }}</span>
                                                                     </div>
                                                                     <div class="row price" style="font-size: 1.2em;">

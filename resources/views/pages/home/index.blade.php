@@ -33,6 +33,12 @@
         .slick-prev:hover, .slick-next:hover{
             height: 20px;
         }
+
+        .elsipzise{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
     </style>
 
     <script>
@@ -181,7 +187,7 @@
                                                                         ">
                                                                     </div>
                                                                     <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                        <div class="row title" style="font-size: 1.5em;">
+                                                                        <div class="row title elsipzise" style="font-size: 1.5em;">
                                                                             <span>{{ $ad['title'] }}</span>
                                                                         </div>
                                                                         <div class="row price" style="font-size: 1.2em;">{{ $ad['price'] }} FCFA</div>

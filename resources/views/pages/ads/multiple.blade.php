@@ -8,6 +8,12 @@
             max-width: 500px;
         }
 
+        .elsipzise{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
+
         #ad-view:hover{
             cursor: pointer;
         }
