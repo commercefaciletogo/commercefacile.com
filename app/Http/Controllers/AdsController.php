@@ -357,7 +357,8 @@ class AdsController extends Controller
                 return $img['size'] == 'original';
             })->map(function($img){
                 $path = $img['path'];
-                return ''
+                $name = $this->extractImageName($path);
+                return "/storage/ads/{$name}";
             })->unique()->toArray();
     }
 
