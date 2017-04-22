@@ -35,6 +35,18 @@
         }
     </style>
 
+    <script>
+        $('.jumbotron-slide').slick({
+            dots: false,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 1,
+            autoplay: true,
+            centerMode: true,
+            variableWidth: true
+        });
+    </script>
+
 @endsection
 
 
@@ -227,16 +239,5 @@
 @endsection
 
 @section('scripts')
-    <script>
-        $('.jumbotron-slide').slick({
-            dots: false,
-            infinite: true,
-            speed: 300,
-            slidesToShow: 1,
-            autoplay: true,
-            centerMode: true,
-            variableWidth: true
-        });
-    </script>
     <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/home.js"></script>
 @endsection
