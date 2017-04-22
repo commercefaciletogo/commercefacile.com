@@ -51,6 +51,14 @@
                 padding-right: 0 !important;
             }
 
+            div.mobile-ads-box{
+                padding: 0 !important;
+            }
+
+            div.column.ad_info{
+                width: 185px !important;
+            }
+
             div.search-modifier{
             }
 

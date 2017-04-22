@@ -114,6 +114,7 @@
                 .ui.container{
                     margin-right: 0 !important;
                     margin-left: 0 !important;
+                    overflow-x: hidden !important;
                 }
             }
         </style>

@@ -129,6 +129,7 @@
             .ui.container{
                 margin-left: 0 !important;
                 margin-right: 0 !important;
+                overflow-x: hidden !important;
             }
         }
 
