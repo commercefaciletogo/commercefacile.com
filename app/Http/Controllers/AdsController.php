@@ -92,14 +92,16 @@ class AdsController extends Controller
             $category_uuid = request()->get('c');
             $category = Category::with('parent', 'children')->where('uuid', $category_uuid)->first();
 
-            if(collect($category->children)->isNotEmpty()){
-                $categories = $category->children->map(function($category){
-                    return $category->id;
-                });
-            }
+            if($category){
+                if($category->children){
+                    $categories = $category->children->map(function($category){
+                        return $category->id;
+                    });
+                }
 
-            if(collect($category->children)->isEmpty()){
-                array_push($categories, $category->id);
+                if($category->children){
+                    array_push($categories, $category->id);
+                }
             }
 
             $result['data'] = collect($transformed)->filter(function($ad) use ($categories) {
@@ -111,9 +113,11 @@ class AdsController extends Controller
             $locationUuid = request()->get('l');
             $location = Location::with('parent')->where('uuid', $locationUuid)->first();
 
-            $result['data'] = collect($transformed)->filter(function($ad) use ($location) {
-                return $ad['owner']['location']['id'] == $location->id;
-            })->toArray();
+            if($location){
+                $result['data'] = collect($transformed)->filter(function($ad) use ($location) {
+                    return $ad['owner']['location']['id'] == $location->id;
+                })->toArray();
+            }
         }
 
         return $result;
