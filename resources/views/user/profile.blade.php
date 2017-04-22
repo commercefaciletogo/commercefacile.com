@@ -321,7 +321,7 @@
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script>
-        var authorId = "{!! auth('user')->user()->id !!}";
+        var authorId = "{!! auth('user')->user()->uuid !!}";
     </script>
     <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/user-profile.js"></script>
 @endsection
