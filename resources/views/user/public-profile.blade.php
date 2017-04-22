@@ -14,7 +14,14 @@
         .elsipzise{
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        .two{
             -webkit-line-clamp: 2;
+        }
+
+        .one{
+            -webkit-line-clamp: 1;
         }
 
         .slick-prev, .slick-next{
@@ -126,11 +133,11 @@
                                                                     ">
                                                                 </div>
                                                                 <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                    <div class="row title elsipzise"
+                                                                    <div class="row title elsipzise two"
                                                                          style="font-size: 1.5em;">
                                                                         <span>{{ $ad['title'] }}</span>
                                                                     </div>
-                                                                    <div class="row description elsipzise"
+                                                                    <div class="row description elsipzise one"
                                                                          style="color: #77829d;">
                                                                         <span>{{ $ad['description'] }}</span>
                                                                     </div>

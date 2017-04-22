@@ -282,7 +282,7 @@
                                         <p class="ui container center aligned">
                                             <img class="ui mini spaced image" style="width: 1.25rem;"
                                                  src="{{ asset('/img/icons/city.png') }}">
-                                            <a href="" style="color: #33446d !important; text-decoration: underline;">
+                                            <a href="{{ qs_url(route('ads.multiple'), ['l' => $ad['owner']['location']['uuid']]) }}" style="color: #33446d !important; text-decoration: underline;">
                                                 {{ $ad['owner']['location']['name'] }}
                                             </a>
                                         </p>
