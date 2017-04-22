@@ -54,8 +54,7 @@ new Vue({
     },
     mounted(){
 
-        const channel = `Admin`;
-        socket.on(`${channel}:AdsWereUpdated`, e => {
+        socket.on('Admin:AdsWereUpdated', e => {
             this.pending = !e.pending.empty;
         });
 
