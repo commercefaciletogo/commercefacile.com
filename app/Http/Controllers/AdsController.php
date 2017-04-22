@@ -89,13 +89,13 @@ class AdsController extends Controller
             $category_uuid = $request->get('c');
             $category = Category::with('parent', 'children')->where('uuid', $category_uuid)->first();
 
-            if($category->children->isNotEmpty()){
+            if(collect($category->children)->isNotEmpty()){
                 $categories = $category->children->map(function($category){
                     return $category->id;
                 });
             }
 
-            if($category->children->isEmpty()){
+            if(collect($category->children)->isEmpty()){
                 array_push($categories, $category->id);
             }
 
