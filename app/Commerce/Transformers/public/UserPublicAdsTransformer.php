@@ -20,7 +20,7 @@ class UserPublicAdsTransformer extends TransformerAbstract
     {
         return [
             'uuid' => $ad->uuid,
-            'title' => ucfirst($ad->title),
+            'title' => str_limit($ad->title, 30),
             'category' => $this->get_trans_category($ad->category),
             'condition' => ucfirst($ad->condition),
             'description' => ucfirst(str_limit($ad->description, 25)),
