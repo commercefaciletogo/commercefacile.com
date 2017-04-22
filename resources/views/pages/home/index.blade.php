@@ -115,7 +115,7 @@
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
                                             <img src="{{ asset("/img/icons/city.png") }}">
                                         </div>
-                                        <div class="middle aligned content" style="padding: 0 0 0 1em;">
+                                        <div class="middle aligned content" style="padding: 0 0 0 1em; margin-bottom: 5px;">
                                             {{ $city['name'] }}
                                         </div>
                                     </a>
@@ -211,7 +211,7 @@
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
                                             <img src="{{ asset("/img/icons/{$category['key']}.png") }}">
                                         </div>
-                                        <div class="middle aligned content" style="padding: 0 0 0 1em;">
+                                        <div class="middle aligned content" style="padding: 0 0 0 1em; margin-bottom: 5px;">
                                             {{ $category['name'] }}
                                         </div>
                                     </a>

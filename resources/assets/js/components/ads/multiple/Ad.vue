@@ -9,7 +9,7 @@
             <div class="ui container" style="background-color: #fcfcfd;">
                 <div class="ui grid" style="margin: 0;">
                     <div class="column" style="padding: 0; width: 100px !important; display: table-cell; vertical-align: middle">
-                        <img class="ui image" v-lazy="path" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">
+                        <img v-lazy="path" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">
                     </div>
                     <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
                         <div class="row title" style="font-size: 1.5em;">
