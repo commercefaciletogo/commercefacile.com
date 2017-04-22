@@ -2,13 +2,13 @@
     <a :href="link" class="ui segment" style="padding: 0; box-shadow: none; border-radius: 0; border-right: 0; border-left: 0;">
         <div style="
             /*width: 322px; */
-            border-bottom: 1px solid rgb(119, 130, 157);
+            border-bottom: 1px solid rgb(209, 213, 222);
             padding: 5px 0 5px 0;
             margin-bottom: 10px;
             color: #1d305d;">
             <div class="ui container" style="background-color: #fcfcfd;">
                 <div class="ui grid" style="margin: 0;">
-                    <div class="column" style="padding: 0; width: 100px !important; display: table-cell; vertical-align: middle">
+                    <div class="column" style="padding: 0; width: 120px !important; height: 120px !important; vertical-align: middle">
                         <img v-lazy="path" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">
                     </div>
                     <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
