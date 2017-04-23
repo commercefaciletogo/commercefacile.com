@@ -17,6 +17,7 @@ use Arcanedev\Localization\Facades\Localization;
 use Carbon\Carbon;
 use Delight\Ids\Id;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -82,10 +83,7 @@ class AdsController extends Controller
         }
 
         $collection = $query->get();
-        $paginator = $query->paginate($perPage);
         $transformed = $this->fractal->createData(new Collection($collection, new AdsTransformer))->toArray()['data'];
-        $result = collect($paginator)->toArray();
-        $result['data'] = $transformed;
 
         if(request()->has('c')){
             $categories = [];
@@ -104,7 +102,7 @@ class AdsController extends Controller
                 }
             }
 
-            $result['data'] = collect($result['data'])->filter(function($ad) use ($categories) {
+            $transformed = collect($transformed)->filter(function($ad) use ($categories) {
                 return collect($categories)->contains($ad['category_id']);
             })->toArray();
         }
@@ -114,17 +112,19 @@ class AdsController extends Controller
             $location = Location::with('parent')->where('uuid', $locationUuid)->first();
 
             if($location){
-                $result['data'] = collect($result['data'])->filter(function($ad) use ($location) {
+                $transformed = collect($transformed)->filter(function($ad) use ($location) {
                     return $ad['owner']['location']['id'] == $location->id;
                 })->toArray();
             }
         }
 
         if(request()->has('page')){
-            $result['data'] = collect($result['data'])->forPage(request()->get('page'), $perPage)->toArray();
+            $transformed = collect($transformed)->forPage(request()->get('page'), $perPage)->toArray();
         }
 
-        return $result;
+        $transformed = new LengthAwarePaginator($transformed, collect($transformed)->count(), $perPage, request()->has('page'));
+
+        return $transformed->toArray();
     }
 
     public function multiple()
