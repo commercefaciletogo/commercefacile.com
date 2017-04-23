@@ -93,7 +93,11 @@ new Vue({
             total: '',
             from: '',
             to: '',
-            data: ''
+            data: '',
+            per_page: 15,
+            next_page_url: null,
+            prev_page_url: null,
+            current_page: ''
         }
     },
     components: {
@@ -132,6 +136,12 @@ new Vue({
             if(this.ads.last_page){
                 return this.ads.last_page > 1;
             }
+        },
+        nextPage(){
+            return this.ads.next_page_url !== null;
+        },
+        prevPage(){
+            return this.ads.prev_page_url !== null;
         }
     },
     watch: {
@@ -310,6 +320,12 @@ new Vue({
             }).catch(error => {
                 this.busy = false;
             });
+        },
+        handlePrev(){
+            alert(this.ads.prev_page_url);
+        },
+        handleNext(){
+            alert(this.ads.next_page_url);
         }
     },
     beforeCreate(){
