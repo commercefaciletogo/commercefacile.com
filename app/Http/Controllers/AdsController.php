@@ -120,6 +120,10 @@ class AdsController extends Controller
             }
         }
 
+        if(request()->has('page')){
+            $result['data'] = collect($result['data'])->forPage(request()->get('page'), $perPage)->toArray();
+        }
+
         return $result;
     }
 

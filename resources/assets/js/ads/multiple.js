@@ -152,9 +152,6 @@ new Vue({
         }
     },
     methods: {
-        handlePaginate(currentPage){
-            console.log(currentPage);
-        },
         performFilter() {
             $('#performFilterModal').remodal().close();
         },
