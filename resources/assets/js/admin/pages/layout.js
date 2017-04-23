@@ -54,8 +54,9 @@ new Vue({
     },
     mounted(){
 
-        // socket.on('Admin:AdsWereUpdated', e => this.pending = !e.pending.empty);
-        socket.on('Admin:AdsWereUpdated', e => console.log(e));
+        socket.on('Admin:AdsWereUpdated', ({ data }) => {
+            this.pending = !data.pending.empty;
+        });
 
         this.updatePending();
 

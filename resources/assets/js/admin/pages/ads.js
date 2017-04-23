@@ -35,11 +35,6 @@ Object.keys(locales).forEach(function (lang) {
     Vue.locale(lang, locales[lang])
 });
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
-
 new Vue({
     el: '#main',
     components: {
