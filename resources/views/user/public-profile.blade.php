@@ -172,12 +172,27 @@
 @section('scripts')
     <script>
         $('.ads-slide').slick({
-            // infinite: true,
+             infinite: true,
             slidesToShow: 2,
             slidesToScroll: 1,
             variableWidth: true,
             autoplay: true,
-            autoplaySpeed: 5000
+            autoplaySpeed: 5000,
+
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
         });
 
         $('.show.phone').popup({

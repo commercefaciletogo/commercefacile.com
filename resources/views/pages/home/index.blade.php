@@ -104,11 +104,11 @@
 
             {{--tablet and computer only--}}
             <div class="ui container computer tablet only grid">
-                <div class="twelve wide column">
+                <div class="twelve wide computer eleven wide tablet column">
                     @include('partials.pages.home._jumbo')
                 </div>
 
-                <div class="four wide column">
+                <div class="four wide computer five wide tablet column">
                     <div class="ui container" style="border-bottom: 2px solid rgb(209, 213, 222); background-color: white; color: rgb(74, 89, 125); padding: 1em; height: 350px;">
                         <div class="row" style="margin-bottom: 2em;">
                             <h3 class="ui dividing header" style="color: rgb(29, 48, 93);">
@@ -135,7 +135,7 @@
             </div>
 
             <div class="ui container grid">
-                <div class="sixteen wide mobile twelve wide computer twelve wide tablet column">
+                <div class="sixteen wide mobile twelve wide computer eleven wide tablet column">
 
                     {{--<latest-ads></latest-ads>--}}
 
@@ -202,9 +202,7 @@
                     </div>
                 </div>
 
-                {{--<div class="one wide column"></div>--}}
-
-                <div class="four wide computer four wide tablet only column">
+                <div class="four wide computer five wide tablet only column">
                     <div class="ui container" style="background-color: white; color: rgb(74, 89, 125); padding: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
                         <div class="row">
                             <h3 class="ui dividing header" style="color: rgb(29, 48, 93);">
