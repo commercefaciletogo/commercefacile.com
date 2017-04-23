@@ -203,7 +203,7 @@
                             </div>
                         </div>
                         <div class="eight wide computer eleven wide tablet sixteen wide mobile column">
-                            <div v-cloak :class="['ui segment mobile-ads-box', {loading:busy}]" style="box-shadow: none; border: 0; height: 100%;">
+                            <div v-cloak :class="['ui segment mobile-ads-box', {loading:busy}]" style="box-shadow: none; border: 0;">
 
                                 <div v-if="result" class="ui two column computer tablet only grid" style="height: 10%;">
                                     <div class="ten wide computer sixteen wide tablet column"
@@ -229,7 +229,7 @@
 
                                 {{-- Ads Display --}}
 
-                                <div class="row" style="height: 90%;">
+                                <div class="row">
                                     <component :is="currentView" :ads="ads.data"></component>
                                 </div>
 
