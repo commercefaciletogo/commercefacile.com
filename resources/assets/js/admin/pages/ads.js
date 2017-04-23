@@ -1,8 +1,10 @@
 import Vue from 'vue';
-import Echo from 'laravel-echo';
 import AdsTable from '../../components/admin/AdsTable.vue';
 import VueEvents from 'vue-events';
 const VueI18n = require('vue-i18n');
+
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
 
 Vue.use(VueI18n);
 Vue.use(VueEvents);
@@ -52,10 +54,6 @@ new Vue({
         }
     },
     mounted(){
-        window.Echo.channel('admin')
-            .listen('.AdsWereUpdated', () => {
-                this.$events.$emit('reload');
-            });
-        console.log('ads page mounted');
+        socket.on('Admin:AdsWereUpdated', () => this.$events.$emit('reload'));
     }
 });

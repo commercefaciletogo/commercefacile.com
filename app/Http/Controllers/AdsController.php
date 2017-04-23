@@ -136,7 +136,7 @@ class AdsController extends Controller
         if(! $ad) abort(404);
         $similar = Ad::with('images', 'category')
             ->where('category_id', $ad->category_id)
-            ->where('title', 'like', "%{$ad->title}%")
+            ->orWhere('title', 'like', "%{$ad->title}%")
             ->get()
             ->take(10)
             ->reject(function($sad) use ($ad) {
