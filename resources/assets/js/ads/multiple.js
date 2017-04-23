@@ -85,7 +85,8 @@ new Vue({
                 id: '',
                 text: 'Lieu'
             },
-            q: ''
+            q: '',
+            page: null
         },
         filteredCategory: '',
         filteredLocation: '',
@@ -112,6 +113,7 @@ new Vue({
             let base = `&${this.$t('filter.sort')}=${this.filter.sort}`;
             if(this.filter.category.id !== null) base = `${base}&c=${this.filter.category.uuid}`;
             if(this.filter.location.id !== null) base = `${base}&l=${this.filter.location.uuid}`;
+            if(this.filter.page !== null) base = `${base}&page=${this.filter.page}`;
             if( !_.isEmpty(this.search.q) ) base = `${base}&q=${this.search.q}`;
             return base;
         },
@@ -284,7 +286,11 @@ new Vue({
                 let q = _.get(currentParams, 'q');
                 if(q !== undefined) {this.$set(this.filter, 'q', q); this.$set(this.search, 'q', q);}
 
-                if(cat === undefined && loc === undefined && q === undefined){
+                let page = _.get(currentParams, 'page');
+                if(page !== undefined) this.$set(this.filter, 'page', page);
+                console.log('page ', page);
+
+                if(cat === undefined && loc === undefined && q === undefined && page === undefined){
                     let queryParams = queryString.stringify(currentParams);
                     this.updateUrl(queryParams);
                 }
@@ -319,10 +325,12 @@ new Vue({
             });
         },
         handlePrev(){
-            alert(this.ads.prev_page_url);
+            let prevPage = this.ads.current_page - 1;
+            this.$set(this.filter, 'page', prevPage);
         },
         handleNext(){
-            alert(this.ads.next_page_url);
+            let nextPage = this.ads.current_page + 1;
+            this.$set(this.filter, 'page', nextPage);
         }
     },
     beforeCreate(){
