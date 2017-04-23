@@ -92,7 +92,7 @@
 @endsection
 
 @section('main')
-    <div class="ui container fluid" id="main">
+    <div class="ui container fluid" id="main" style="height: 100%;">
 
         @include('partials.pages._top_bar')
 
