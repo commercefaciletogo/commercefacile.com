@@ -55,7 +55,7 @@ class AdsController extends Controller
      */
     public function search()
     {
-        $perPage = 20;
+        $perPage = 15;
         $query = null;
 
         $searchQuery = request()->get('q');
@@ -104,7 +104,7 @@ class AdsController extends Controller
                 }
             }
 
-            $result['data'] = collect($transformed)->filter(function($ad) use ($categories) {
+            $result['data'] = collect($result['data'])->filter(function($ad) use ($categories) {
                 return collect($categories)->contains($ad['category_id']);
             })->toArray();
         }
@@ -114,7 +114,7 @@ class AdsController extends Controller
             $location = Location::with('parent')->where('uuid', $locationUuid)->first();
 
             if($location){
-                $result['data'] = collect($transformed)->filter(function($ad) use ($location) {
+                $result['data'] = collect($result['data'])->filter(function($ad) use ($location) {
                     return $ad['owner']['location']['id'] == $location->id;
                 })->toArray();
             }
