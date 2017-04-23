@@ -118,11 +118,17 @@ class AdsController extends Controller
             }
         }
 
-        $page = request()->get('page') ?: 1;
-        
-        $transformed = new LengthAwarePaginator($transformed, collect($transformed)->count(), $perPage, $page);
+        $paged = collect($transformed)->forPage(request()->get('page') ?: 1, $perPage)->toArray();
 
-        return $transformed->toArray();
+        $paginator = new LengthAwarePaginator(
+            $paged,
+            collect($transformed)->count(),
+            $perPage,
+            request()->get('page'),
+            ['path'  => request()->url(), 'query' => request()->query()]
+        );
+
+        return $paginator->toArray();
     }
 
     public function multiple()
