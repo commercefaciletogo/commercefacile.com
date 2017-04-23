@@ -62,7 +62,8 @@ new Vue({
                 id: null,
                 name: ''
             },
-            q: ''
+            q: '',
+            page: null
         },
         categories: [],
         locations: [],
@@ -85,8 +86,7 @@ new Vue({
                 id: '',
                 text: 'Lieu'
             },
-            q: '',
-            page: null
+            q: ''
         },
         filteredCategory: '',
         filteredLocation: '',
@@ -288,7 +288,6 @@ new Vue({
 
                 let page = _.get(currentParams, 'page');
                 if(page !== undefined) this.$set(this.filter, 'page', page);
-                console.log('page ', page);
 
                 if(cat === undefined && loc === undefined && q === undefined && page === undefined){
                     let queryParams = queryString.stringify(currentParams);

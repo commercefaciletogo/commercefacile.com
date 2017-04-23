@@ -118,11 +118,9 @@ class AdsController extends Controller
             }
         }
 
-        if(request()->has('page')){
-            $transformed = collect($transformed)->forPage(request()->get('page'), $perPage)->toArray();
-        }
-
-        $transformed = new LengthAwarePaginator($transformed, collect($transformed)->count(), $perPage, request()->has('page'));
+        $page = request()->get('page') ?: 1;
+        
+        $transformed = new LengthAwarePaginator($transformed, collect($transformed)->count(), $perPage, $page);
 
         return $transformed->toArray();
     }
