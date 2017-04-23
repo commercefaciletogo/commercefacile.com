@@ -23,7 +23,7 @@ class AdsTransformer extends TransformerAbstract
             'id' => $ad->id,
             'uuid' => $ad->uuid,
             'category_id' => $ad->category_id,
-            'title' => str_limit($ad->title, 30),
+            'title' => str_limit($ad->title, 15),
             'image' => $this->getAdSmallMainImage($ad->images),
             'price' => $ad->price,
             'owner' => $this->get_ad_owner($ad)
