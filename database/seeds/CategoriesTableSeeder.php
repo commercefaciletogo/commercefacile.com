@@ -15,6 +15,8 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         DB::table('categories')->truncate();
+        DB::table('category_translations')->truncate();
+
         foreach ($this->get_data() as $data) {
             Category::create($data);
         }
