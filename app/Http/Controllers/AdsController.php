@@ -143,6 +143,7 @@ class AdsController extends Controller
             ->first();
         if(! $ad) abort(404);
         $similar = Ad::with('images', 'category')
+            ->where('status', 'online')
             ->where('category_id', $ad->category_id)
             ->orWhere('title', 'like', "%{$ad->title}%")
             ->get()
