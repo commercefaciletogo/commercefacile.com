@@ -31,14 +31,14 @@ class SubCategoriesTableSeeder extends Seeder
                 'key' => $s_c['key'],
                 'uuid' => $uuid,
                 'en' => [
-                    'name' => title_case($sub_cat_en),
+                    'name' => $sub_cat_en,
                     'slug' => str_slug($sub_cat_en),
                     'key' => $s_c['key'],
                     'parent_id' => $s_c['category_id'],
                     'uuid' => $uuid,
                 ],
                 'fr' => [
-                    'name' => title_case($sub_cat_fr),
+                    'name' => $sub_cat_fr,
                     'slug' => str_slug($sub_cat_fr),
                     'key' => $s_c['key'],
                     'parent_id' => $s_c['category_id'],

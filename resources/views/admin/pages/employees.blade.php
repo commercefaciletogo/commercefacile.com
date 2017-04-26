@@ -9,7 +9,7 @@
                 <div class="four wide column">
                     <div class="ui mini horizontal statistic">
                         <div class="value">
-                            56
+                            {{--56--}}
                         </div>
                         <div class="label">
                             Employees

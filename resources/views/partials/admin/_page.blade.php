@@ -2,13 +2,13 @@
 <head>
     <title>Commercefacile.com</title>
     @if(App::environment('production'))
-        <link rel="stylesheet" href="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.css">
+        @include('partials.production.css')
     @else
         <link rel="stylesheet" href="{!! elixir('css/vendors.css') !!}">
     @endif
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="csrf-token" content="{!! csrf_token() !!}">
-    <meta name="locale" content="{!! LaravelLocalization::getCurrentLocale() !!}">
+    <meta name="locale" content="{!! Localization::getCurrentLocale() !!}">
     @include('partials.favico')
     <style>
         html{
@@ -82,17 +82,17 @@
 </div>
 
 @if(App::environment('production'))
-    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/vendors.js"></script>
+    @include('partials.production.js')
 @else
     <script src="{!! elixir('js/vendors.js') !!}"></script>
 @endif
 <script>
     var adsStatusUrl = "{{ route('api.ads.status') }}";
     var changePasswordUrl = "{{ route('employee.pass.change') }}";
-    var locale = "{!! LaravelLocalization::getCurrentLocale() !!}";
+    var locale = "{!! Localization::getCurrentLocale() !!}";
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-<script src="{{ asset('js/admin-page-layout.js') }}"></script>
+<script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-layout.js"></script>
 @yield('scripts')
 </body>
 </html>

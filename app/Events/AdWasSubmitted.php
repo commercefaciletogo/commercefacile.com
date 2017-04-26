@@ -13,6 +13,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class AdWasSubmitted implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
+
+    public $broadcastQueue = 'broadcast';
+
     private $author;
     public $submitted;
 
@@ -35,7 +38,7 @@ class AdWasSubmitted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return "author.{$this->author->id}";
+        return "Author.{$this->author->uuid}";
     }
 
     /**

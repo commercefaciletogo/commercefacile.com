@@ -5,11 +5,14 @@ namespace App\Jobs;
 use App\Ad;
 use App\AdImage;
 use App\Events\AdWasSubmitted;
+use App\Events\ProcessingAdImages;
+use Delight\Ids\Id;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -21,10 +24,7 @@ class ProcessAdImages implements ShouldQueue
      * @var
      */
     private $number_of_images;
-    /**
-     * @var Ad
-     */
-    private $ad;
+
     /**
      * @var
      */
@@ -37,23 +37,27 @@ class ProcessAdImages implements ShouldQueue
      * @var bool
      */
     private $updating;
+    /**
+     * @var
+     */
+    private $data;
 
     /**
      * Create a new job instance.
      *
-     * @param Ad $ad
      * @param $images_paths
      * @param $number_of_images
      * @param $user
      * @param bool $updating
+     * @param $data
      */
-    public function __construct(Ad $ad, $images_paths, $number_of_images, $user, $updating = false)
+    public function __construct($images_paths, $number_of_images, $user, $data, $updating = false)
     {
         $this->number_of_images = $number_of_images;
-        $this->ad = $ad;
         $this->images_paths = $images_paths;
         $this->user = $user;
         $this->updating = $updating;
+        $this->data = $data;
     }
 
     /**
@@ -64,31 +68,43 @@ class ProcessAdImages implements ShouldQueue
     public function handle()
     {
         try{
-            $this->saveAdImages();
-            $paths = $this->moveImages();
-            var_dump($paths);
-            $this->cleanDisk();
-            $this->savePaths($paths);
+            DB::transaction(function(){
+                event(new ProcessingAdImages($this->user, 10));
+                //save ad
+                $ad = Ad::create($this->data);
+                //update ad with code
+                event(new ProcessingAdImages($this->user, 30));
+                $code = (new Id())->encode($ad->id);
+                $ad->update(['code' => $code]);
+                event(new ProcessingAdImages($this->user, 50));
+                //save images
+                $this->saveAdImages($ad);
+                $paths = $this->moveImages($ad);
+                event(new ProcessingAdImages($this->user, 90));
+                $this->cleanDisk($ad);
+                $this->savePaths($paths, $ad);
+                event(new ProcessingAdImages($this->user, 100));
+            });
             event(new AdWasSubmitted($this->user, true));
         }catch (\Exception $e){
             event(new AdWasSubmitted($this->user, false));
-            dd($e->getLine(), $e->getMessage());
+            var_dump($e->getLine(), $e->getMessage());
         }
     }
 
     /**
      *
      */
-    private function saveAdImages()
+    private function saveAdImages($ad)
     {
-        collect($this->images_paths)->each(function($path, $key){
+        collect($this->images_paths)->each(function($path, $key) use($ad){
             if(!Storage::disk('local')->exists($path)) return false;
             $index = $key + 1;
             $file = $this->getImage($path);
 
-            $this->resizeAndSaveImage($file, 100, $this->ad, $index);
-            $this->resizeAndSaveImage($file, null, $this->ad, $index);
-            $this->resizeAndSaveImage($file, 'original', $this->ad, $index);
+            $this->resizeAndSaveImage($file, 100, $ad, $index);
+            $this->resizeAndSaveImage($file, null, $ad, $index);
+            $this->resizeAndSaveImage($file, 'original', $ad, $index);
         });
     }
 
@@ -101,8 +117,14 @@ class ProcessAdImages implements ShouldQueue
         if($preSize == 'original')
             return $img->save("{$path}/{$ad->uuid}_{$index}_{$stringSize}.jpg");
 
+        $watermark = Image::make(storage_path('/watermark.png'));
+
         $size = $preSize ?: $this->get_resize_size($img);
-        $img->fit((int) $size);
+        $img->insert($watermark, 'center')
+            ->resize((int) $size, null, function($c){
+                $c->aspectRatio();
+                $c->upsize();
+            });
         return $img->save("{$path}/{$ad->uuid}_{$index}_{$stringSize}.jpg");
     }
 
@@ -149,11 +171,11 @@ class ProcessAdImages implements ShouldQueue
     /**
      * @return array
      */
-    private function moveImages()
+    private function moveImages($ad)
     {
         $paths = [];
         for ($i = 1; $i <= $this->number_of_images; $i++){
-            $path = "{$this->ad->uuid}_{$i}";
+            $path = "{$ad->uuid}_{$i}";
             $paths_by_sizes = $this->move_by_size($path);
             $paths = array_add($paths, $path, $paths_by_sizes);
         }
@@ -191,12 +213,12 @@ class ProcessAdImages implements ShouldQueue
     /**
      *
      */
-    private function cleanDisk()
+    private function cleanDisk($ad)
     {
         Storage::disk('local')->delete($this->images_paths);
 
         $path = storage_path('app/ads');
-        $mask = "{$path}/{$this->ad->uuid}_*.*";
+        $mask = "{$path}/{$ad->uuid}_*.*";
         array_map('unlink', glob($mask));
     }
 
@@ -230,13 +252,13 @@ class ProcessAdImages implements ShouldQueue
         }
     }
 
-    private function savePaths($paths)
+    private function savePaths($paths, $ad)
     {
-        collect($paths)->each(function($in_paths, $name) {
+        collect($paths)->each(function($in_paths, $name) use ($ad){
             $images = collect($in_paths)
-                ->map(function($path, $size) use($name) {
+                ->map(function($path, $size) use($name, $ad) {
                     return [
-                        'ad_id' => $this->ad->id,
+                        'ad_id' => $ad->id,
                         'size' => $size,
                         'path' => $path,
                         'name' => $this->extractImageName($path),
@@ -244,7 +266,7 @@ class ProcessAdImages implements ShouldQueue
                     ];
                 })
                 ->values()->all();
-            $this->ad->images()->createMany($images);
+            $ad->images()->createMany($images);
         });
     }
 

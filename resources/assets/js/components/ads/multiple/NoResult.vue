@@ -19,7 +19,7 @@
                 no: 'No Ads.'
             },
             fr: {
-                no: 'Pas D\' Annonces.'
+                no: 'Pas d\' Annonces.'
             }
         },
     }

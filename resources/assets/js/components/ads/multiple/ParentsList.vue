@@ -4,7 +4,7 @@
             <div class="ui mini image" style="width: 20px; height: 20px;">
                 <img :src="item.icon">
             </div>
-            <div class="middle aligned content" style="padding: 0 0 0 1em;" v-text="item.name"></div>
+            <div class="middle aligned content" style="padding: 0 0 0 16px; margin-bottom: 5px;" v-text="item.name"></div>
         </div>
     </div>
 </template>
@@ -18,7 +18,6 @@
         props: ['items', 'type'],
         methods: {
             handleClick(item){
-                console.log('clicking');
                 this.$emit('selected', {item: item, type: this.type, parent: true});
             }
         },

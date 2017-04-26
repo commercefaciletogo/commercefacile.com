@@ -1,13 +1,22 @@
 <template>
     <a :href="link" class="ui segment" style="padding: 0; box-shadow: none; border-radius: 0; border-right: 0; border-left: 0;">
-        <div style="width: 322px; color: #1d305d;">
+        <div style="
+            border-bottom: 1px solid rgb(209, 213, 222);
+            padding: 5px 0 5px 0;
+            margin-bottom: 10px;
+            color: #1d305d;">
             <div class="ui container" style="background-color: #fcfcfd;">
                 <div class="ui grid" style="margin: 0;">
-                    <div class="column" style="padding: 0; width: 100px !important;">
-                        <img class="ui image" v-lazy="path" alt="">
+                    <div class="column" style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: 0; width: 120px !important;
+                    height: 120px !important;">
+                        <img v-lazy="path" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">
                     </div>
-                    <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                        <div class="row title" style="font-size: 1.5em;">
+                    <div class="column ad_info"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
+                        <div class="row title elsipzise" style="font-size: 1.5em;">
                             <span v-text="title"/>
                         </div>
                         <div class="row price" style="font-size: 1.2em;" v-text="price"></div>
@@ -21,7 +30,7 @@
     </a>
 </template>
 
-<style>
+<style type="text/css">
 
 </style>
 
@@ -56,8 +65,6 @@
                 window.location = url;
             }
         },
-        mounted(){
-            console.log('~')
-        }
+        mounted(){}
     }
 </script>

@@ -139,5 +139,5 @@
         var postCodeUrl = "{!! route('user.post.phone.verify') !!}";
         var crsf_token = "{!! csrf_token() !!}";
     </script>
-    <script src="{{ asset('js/register.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/register.js"></script>
 @endsection

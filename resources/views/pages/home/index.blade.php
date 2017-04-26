@@ -33,6 +33,12 @@
         .slick-prev:hover, .slick-next:hover{
             height: 20px;
         }
+
+        .elsipzise{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
     </style>
 
 @endsection
@@ -98,11 +104,11 @@
 
             {{--tablet and computer only--}}
             <div class="ui container computer tablet only grid">
-                <div class="twelve wide column">
+                <div class="twelve wide computer eleven wide tablet column">
                     @include('partials.pages.home._jumbo')
                 </div>
 
-                <div class="four wide column">
+                <div class="four wide computer five wide tablet column">
                     <div class="ui container" style="border-bottom: 2px solid rgb(209, 213, 222); background-color: white; color: rgb(74, 89, 125); padding: 1em; height: 350px;">
                         <div class="row" style="margin-bottom: 2em;">
                             <h3 class="ui dividing header" style="color: rgb(29, 48, 93);">
@@ -115,7 +121,7 @@
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
                                             <img src="{{ asset("/img/icons/city.png") }}">
                                         </div>
-                                        <div class="middle aligned content" style="padding: 0 0 0 1em;">
+                                        <div class="middle aligned content" style="padding: 0 0 0 1em; margin-bottom: 5px;">
                                             {{ $city['name'] }}
                                         </div>
                                     </a>
@@ -129,7 +135,7 @@
             </div>
 
             <div class="ui container grid">
-                <div class="sixteen wide mobile twelve wide computer twelve wide tablet column">
+                <div class="sixteen wide mobile twelve wide computer eleven wide tablet column">
 
                     {{--<latest-ads></latest-ads>--}}
 
@@ -155,24 +161,31 @@
                                                 <div class="ads-slide" style="height: 100px;">
 
                                                     @foreach($ads as $ad)
-                                                        <div style="width: 322px; color: #1d305d; margin-right: .5em;">
+                                                        <a href="{{ route('ads.single', ['id' => $ad['uuid']]) }}" style="width: 322px; color: #1d305d; margin-right: .5em;">
                                                             <div class="ui container" style="background-color: #fcfcfd;">
                                                                 <div class="ui grid" style="margin: 0;">
-                                                                    <div class="column" style="padding: 0; width: 100px !important;">
-                                                                        <img class="ui image" src="{!! $ad['image'] !!}" alt="">
+                                                                    <div class="column" style="
+                                                                        background-image: url({!! $ad['image'] !!});
+                                                                        background-position: center;
+                                                                        background-repeat: no-repeat;
+                                                                        padding: 0;
+                                                                        width: 100px;
+                                                                        height: 100px;
+                                                                        background-size: contain;
+                                                                        ">
                                                                     </div>
                                                                     <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                        <div class="row title" style="font-size: 1.5em;">
+                                                                        <div class="row title elsipzise" style="font-size: 1.5em;">
                                                                             <span>{{ $ad['title'] }}</span>
                                                                         </div>
                                                                         <div class="row price" style="font-size: 1.2em;">{{ $ad['price'] }} FCFA</div>
                                                                         <div class="row description" style="color: #77829d; font-size: .9em;">
-                                                                            <img style="width: 15px;" class="ui mini spaced image" src="/img/icons/user_outline.png"><span>{{ $ad['owner']['name'] }}</span>
+                                                                            <img style="width: 15px;" class="ui mini spaced image" src="{{ asset('/img/icons/user_outline.png') }}"><span>{{ $ad['owner']['name'] }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                     @endforeach
 
                                                 </div>
@@ -189,9 +202,7 @@
                     </div>
                 </div>
 
-                {{--<div class="one wide column"></div>--}}
-
-                <div class="four wide computer four wide tablet only column">
+                <div class="four wide computer five wide tablet only column">
                     <div class="ui container" style="background-color: white; color: rgb(74, 89, 125); padding: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
                         <div class="row">
                             <h3 class="ui dividing header" style="color: rgb(29, 48, 93);">
@@ -204,7 +215,7 @@
                                         <div class="ui mini image" style="width: 25px; height: 25px;">
                                             <img src="{{ asset("/img/icons/{$category['key']}.png") }}">
                                         </div>
-                                        <div class="middle aligned content" style="padding: 0 0 0 1em;">
+                                        <div class="middle aligned content" style="padding: 0 0 0 1em; margin-bottom: 5px;">
                                             {{ $category['name'] }}
                                         </div>
                                     </a>
@@ -221,14 +232,17 @@
 
 @section('scripts')
     <script>
-//        $('.ads-slide').slick({
-//            // infinite: true,
-//            slidesToShow: 2,
-//            slidesToScroll: 1,
-//            variableWidth: true,
-//            autoplay: true,
-//            autoplaySpeed: 5000
-//        });
+        $(function(){
+            $('.jumbotron-slide').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 1,
+                autoplay: true,
+                centerMode: true,
+                variableWidth: true
+            });
+        });
     </script>
-    <script src="js/home.js"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/home.js"></script>
 @endsection

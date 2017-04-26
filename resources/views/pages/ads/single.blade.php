@@ -56,13 +56,13 @@
             color: #33446d;
         }
 
-        #Ad_Images, img.ad_image {
+        #Ad_Images, #Ad_Images div.ad_image {
             width: 31.5rem !important;
             height: 31.5rem !important;
         }
 
         @media only screen and (max-width: 991px) and (min-width: 768px) {
-            #Ad_Images, img.ad_image {
+            #Ad_Images, #Ad_Images div.ad_image {
                 width: 25rem !important;
                 height: 25rem !important;
             }
@@ -74,7 +74,7 @@
         }
 
         @media only screen and (max-width: 767px) {
-            #Ad_Images, img.ad_image {
+            #Ad_Images, #Ad_Images div.ad_image {
                 width: 25rem !important;
                 height: 25rem !important;
             }
@@ -128,9 +128,16 @@
                                                 @endunless
                                             </a>
                                             <div id="Ad_Images" v-cloak class="siema">
-                                                <div v-for="path in paths" >
-                                                    <img class="ad_image" v-lazy="path">
-                                                </div>
+                                                @foreach($ad['images'] as $image)
+                                                    <div class="ad_image" style="
+                                                        background-image: url({!! $image !!});
+                                                        background-position: center;
+                                                        background-repeat: no-repeat;
+                                                        padding: 0;
+                                                        background-size: contain;
+                                                        ">
+                                                    </div>
+                                                @endforeach
                                             </div>
                                             <a class="next" style="display: flex; flex-direction: column; justify-content: center;">
                                                 @unless(count($ad['images']) == 1)
@@ -275,7 +282,7 @@
                                         <p class="ui container center aligned">
                                             <img class="ui mini spaced image" style="width: 1.25rem;"
                                                  src="{{ asset('/img/icons/city.png') }}">
-                                            <a href="" style="color: #33446d !important; text-decoration: underline;">
+                                            <a href="{{ qs_url(route('ads.multiple'), ['l' => $ad['owner']['location']['uuid']]) }}" style="color: #33446d !important; text-decoration: underline;">
                                                 {{ $ad['owner']['location']['name'] }}
                                             </a>
                                         </p>
@@ -353,9 +360,15 @@
                                                 <a href="{{ route('ads.single', ['id' => $ad['uuid']]) }}" style="width: 322px; color: #1d305d; margin-right: .5em;">
                                                     <div class="ui container" style="background-color: #fcfcfd;">
                                                         <div class="ui grid" style="margin: 0;">
-                                                            <div class="column" style="padding: 0; width: 100px !important;">
-                                                                <img class="ui image"
-                                                                     src="{!! $ad['image'] !!}" alt="">
+                                                            <div class="column" style="
+                                                                    background-image: url({!! $ad['image'] !!});
+                                                                    background-position: center;
+                                                                    background-repeat: no-repeat;
+                                                                    padding: 0;
+                                                                    width: 100px;
+                                                                    height: 100px;
+                                                                    background-size: contain;
+                                                                    ">
                                                             </div>
                                                             <div class="column"
                                                                  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
@@ -394,5 +407,5 @@
         var dereportAdUrl = "{!! route('ads.single.dereport', ['id' => $ad['uuid']]) !!}";
         var ad = {!! json_encode($ad) !!};
     </script>
-    <script src="{{ asset('js/single.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/single.js"></script>
 @endsection

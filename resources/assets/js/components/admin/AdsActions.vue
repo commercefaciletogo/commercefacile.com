@@ -8,14 +8,6 @@
 
 </style>
 <script type="text/babel">
-// import Vue from 'vue';
-// const VueI18n = require('vue-i18n');
-//
-// Vue.use(VueI18n);
-//
-// Vue.config.lang = window.locale;
-
-
 
     export default{
         props: {
@@ -61,11 +53,6 @@
                 }
                 window.location = url;
             }
-        },
-        beforeCreate(){
-            // Object.keys(locales).forEach(function (lang) {
-            //     Vue.locale(lang, locales[lang])
-            // });
         }
     }
 </script>

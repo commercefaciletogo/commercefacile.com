@@ -92,7 +92,9 @@ class PagesController extends Controller
     private function get_latest_ads()
     {
         return Category::with('ads')->get()->sortByDesc(function(Category $category){
-                return $category->ads->count();
+                return $category->ads->filter(function(Ad $ad){
+                    return $ad->status == 'online';
+                })->count();
             })->take(3)
             ->map(function(Category $category){
                 $trans_category = $category->translate();

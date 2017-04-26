@@ -11,6 +11,19 @@
             border-bottom: 2px solid rgb(209, 213, 222);
         }
 
+        .elsipzise{
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .two{
+            -webkit-line-clamp: 2;
+        }
+
+        .one{
+            -webkit-line-clamp: 1;
+        }
+
         .slick-prev, .slick-next{
             height: 20px;
             border-radius: 10px;
@@ -109,14 +122,23 @@
                                                     <a href="{{ route('ads.single', ['id' => $ad['uuid']]) }}" style="width: 322px; color: #1d305d; margin-right: .5em;">
                                                         <div class="ui container" style="background-color: #fcfcfd;">
                                                             <div class="ui grid" style="margin: 0;">
-                                                                <div class="column" style="padding: 0; width: 100px !important;">
-                                                                    <img class="ui image" src="{!! $ad['image'] !!}" alt="">
+                                                                <div class="column" style="
+                                                                    background-image: url({!! $ad['image'] !!});
+                                                                    background-position: center;
+                                                                    background-repeat: no-repeat;
+                                                                    padding: 0;
+                                                                    width: 100px;
+                                                                    height: 100px;
+                                                                    background-size: contain;
+                                                                    ">
                                                                 </div>
                                                                 <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
-                                                                    <div class="row title" style="font-size: 1.5em;">
+                                                                    <div class="row title elsipzise two"
+                                                                         style="font-size: 1.5em;">
                                                                         <span>{{ $ad['title'] }}</span>
                                                                     </div>
-                                                                    <div class="row description" style="color: #77829d;">
+                                                                    <div class="row description elsipzise one"
+                                                                         style="color: #77829d;">
                                                                         <span>{{ $ad['description'] }}</span>
                                                                     </div>
                                                                     <div class="row price" style="font-size: 1.2em;">
@@ -150,12 +172,27 @@
 @section('scripts')
     <script>
         $('.ads-slide').slick({
-            // infinite: true,
+             infinite: true,
             slidesToShow: 2,
             slidesToScroll: 1,
             variableWidth: true,
             autoplay: true,
-            autoplaySpeed: 5000
+            autoplaySpeed: 5000,
+
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
         });
 
         $('.show.phone').popup({

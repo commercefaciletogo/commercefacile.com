@@ -12,12 +12,8 @@ import SubCategories from '../components/ads/create/SubCategories.vue';
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 let oldAd = window.oldAd;
 
-console.log(window.oldAd);
-
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
 
 new Vue({
     el: 'div#main',
@@ -80,9 +76,8 @@ new Vue({
             let imagesSize = _.reduce(this.newAd.photos, (totalSize, photo) => {
                 return totalSize + photo.file.size;
             }, 0);
-            console.log(`total size -> ${imagesSize} && ${this.newAd.photos.length < 1 || imagesSize > 5000000}`);
             this.errors.images = this.newAd.photos.length < 1 || imagesSize > 5000000;
-            this.errors.price = !_.isNumber(this.newAd.price.amount);
+            this.errors.price = _.isNaN(Number.parseInt(this.newAd.price.amount));
 
             if(window.requireLocation){
                 this.errors.location = !_.isNumber(this.user.location.id);
@@ -112,16 +107,12 @@ new Vue({
                 }
             }).catch(error => {
                 this.submitting = false;
-                console.log(error.response);
             });
 
-            console.log(data);
         },
         cancel(){
             axios.post(window.cancelUpdateAdUrl).then(rep => {
-                console.log(rep.data);
             }).catch(e => {
-                console.log(e.response);
             });
             window.history.back();
         },
@@ -140,7 +131,6 @@ new Vue({
             }
         },
         removeImage(id){
-            console.log(id);
             this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
         },
         chooseCategory(e){
@@ -155,7 +145,6 @@ new Vue({
                     this.categories = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
                 });
         },
         fetchLocations(){
@@ -164,7 +153,6 @@ new Vue({
                     this.locations = response.data;
                 })
                 .catch(error => {
-                    console.log(error);
                 });
         },
         closeCategoryModal({id, name}){
@@ -181,30 +169,24 @@ new Vue({
         downloadImages(paths){
             _.each(paths, path => {
                 blodUtil.imgSrcToBlob(path, 'image/jpeg', 'Anonymous', 1.0).then( blob => {
-                    console.log(blob);
                     this.newAd.photos.push({
                         id: + new Date(),
                         file: blob
                     });
                     this.newAdBuffer = _.cloneDeep(this.newAd);
                 }).catch(error => {
-                    console.log(error);
+                    window.history.back();
                 });
             })
         }
     },
     mounted(){
 
-        window.Echo.channel(`author.${window.authorId}`)
-            .listen('.AdWasSubmitted', () => {
-                this.submitting = false;
-                window.location = window.profileUrl;
-            });
-        window.Echo.channel(`ad.${oldAd.id}`)
-            .listen('.ImagesDownloaded', () => {
-                this.downloadImages(oldAd.images);
-                this.busy = false;
-            });
+        const channel = `Ad.${oldAd.id}`;
+        socket.on(`${channel}:ImagesDownloaded`, () => {
+            this.downloadImages(oldAd.images);
+            this.busy = false;
+        });
 
         $('#chooseCategory').accordion();
 

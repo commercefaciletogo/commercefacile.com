@@ -8,6 +8,12 @@
             max-width: 500px;
         }
 
+        .elsipzise{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+        }
+
         #ad-view:hover{
             cursor: pointer;
         }
@@ -49,6 +55,14 @@
             div.big-search{
                 padding-left: 0 !important;
                 padding-right: 0 !important;
+            }
+
+            div.mobile-ads-box{
+                padding: 0 !important;
+            }
+
+            div.column.ad_info{
+                width: 185px !important;
             }
 
             div.search-modifier{
@@ -105,12 +119,12 @@
                     </div>
                 </div>
 
-                <div v-cloak id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
+                <div v-cloak v-if="result" id="result-info" style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
                     <div class="ui two column mobile only grid">
-                        <div class="column" style="display: flex; flex-direction: column; justify-content: center;">
-                            {{--@{{ ads.total }} {{ trans('general.ads') }}--}}
+                        <div class="column" style="display: flex; flex-direction: column; justify-content: center; margin-bottom: 10px;">
+                            @{{ ads.total }} {{ trans('general.ads') }}
                             <span v-show="filter.q">
-                                {{--{{ trans('general.for') }}  --}}
+                                {{ trans('general.for') }}
                                 <i v-text="filter.q"></i>
                             </span>
                         </div>
@@ -188,11 +202,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="twelve wide computer eleven wide tablet sixteen wide mobile column">
-                            <div v-cloak :class="['ui segment', {loading:busy}]" style="box-shadow: none; border: 0; height: 100%;">
+                        <div class="eight wide computer eleven wide tablet sixteen wide mobile column">
+                            <div v-cloak :class="['ui segment mobile-ads-box', {loading:busy}]" style="box-shadow: none; border: 0;">
 
-                                <div v-if="result" class="ui two column computer tablet only grid">
-                                    <div class="ten wide computer sixteen wide tablet column">
+                                <div v-if="result" class="ui two column computer tablet only grid" style="height: 10%;">
+                                    <div class="ten wide computer sixteen wide tablet column"
+                                         style="display: flex; flex-direction: column; justify-content: center;">
                                         <div>
                                             @{{ ads.from }}-@{{ ads.to }} {{ trans('general.of') }} @{{ ads.total }} {{ trans('general.ads') }}
                                             <span v-show="filter.q">
@@ -200,19 +215,44 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div v-if="paginate" class="six wide computer right aligned column">
+                                        <div class="ui pagination mini menu">
+                                            <a v-show="prevPage" class="item" @click="handlePrev">
+                                                <i class="icon angle left" style="rgb(51, 68, 109) !important;"></i>
+                                            </a>
+                                            <a v-show="nextPage" class="item" @click="handleNext">
+                                                <i class="icon angle right" style="rgb(51, 68, 109) !important;"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {{-- Ads Display --}}
 
-                                <component :is="currentView" :ads="ads.data"></component>
+                                <div class="row">
+                                    <component :is="currentView" :ads="ads.data"></component>
+                                </div>
 
-                                <paginate v-if="paginate"
-                                        :page-count="ads.last_page"
-                                        :click-handler="handlePaginate"
-                                        :prev-text="'Prev'"
-                                        :next-text="'Next'"
-                                        :container-class="'className'">
-                                </paginate>
+
+                                <div v-if="result" class="ui two column  grid" style="height: 10%;">
+                                    <div class="ten wide computer sixteen wide tablet eight wide mobile column"
+                                         style="display: flex; flex-direction: column; justify-content: center;">
+
+                                    </div>
+                                    <div class="six wide computer eight wide mobile right aligned column">
+                                        <div v-if="paginate" class="ui pagination mini menu">
+                                            <div class="ui pagination mini menu">
+                                                <a v-show="prevPage" class="item" @click="handlePrev">
+                                                    <i class="icon angle left" style="rgb(51, 68, 109) !important;"></i>
+                                                </a>
+                                                <a v-show="nextPage" class="item" @click="handleNext">
+                                                    <i class="icon angle right" style="rgb(51, 68, 109) !important;"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -313,5 +353,5 @@
             $('.ui.accordion.field').accordion();
         });
     </script>
-    <script src="{{ asset('js/multiple.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/multiple.js"></script>
 @endsection

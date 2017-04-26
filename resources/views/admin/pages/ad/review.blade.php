@@ -186,8 +186,8 @@
 
 @section('scripts')
     <script>
-        var reviewAdApiUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('api.ad.review', ['id' => $ad['id']])) !!}";
-        var adsUrl = "{!! LaravelLocalization::getLocalizedURL(null, route('admin.ads')) !!}";
+        var reviewAdApiUrl = "{!! route('api.ad.review', ['id' => $ad['id']]) !!}";
+        var adsUrl = "{!! route('admin.ads') !!}";
     </script>
-    <script src="{{ asset('js/admin-page-review-ad.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-review-ad.js"></script>
 @endsection

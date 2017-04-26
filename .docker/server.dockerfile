@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 # install supervisor
 RUN apt-get install -y supervisor && \
     mkdir -p /var/log/supervisor
-COPY .docker/conf/supervisord.dev.conf /etc/supervisor/conf.d/supervisord.conf
+COPY .docker/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # install composer
 RUN curl -sS https://getcomposer.org/installer | /usr/local/bin/php -- --install-dir=/usr/local/bin --filename=composer

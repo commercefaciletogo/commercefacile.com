@@ -24,17 +24,31 @@ new Vue({
     computed: {},
     methods: {
         performSearch(){
-            console.log(`search details -> ${this.search}`);
         }
     },
     mounted(){
         $('.ads-slide').slick({
-            // infinite: true,
+            infinite: true,
             slidesToShow: 2,
             slidesToScroll: 1,
             variableWidth: true,
             autoplay: true,
-            autoplaySpeed: 5000
+            autoplaySpeed: 5000,
+
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
         });
 
         $('#citySelect').dropdown({
@@ -56,17 +70,14 @@ new Vue({
         $('.city-select').dropdown({
             action: 'hide',
             onChange: function(value, text){
-                console.log(value);
             }
         }); 
 
         $('.category-select').dropdown({
             action: 'hide',
             onChange: function(value, text){
-                console.log(value);
             }
         });
 
-        console.log(locationsUrl, categoriesUrl);
     }
 });

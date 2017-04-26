@@ -15,10 +15,11 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         DB::table('categories')->truncate();
+        DB::table('category_translations')->truncate();
+
         foreach ($this->get_data() as $data) {
             Category::create($data);
         }
-        // DB::table('categories')->insert($this->get_data());
     }
 
     private function get_data(){
@@ -30,13 +31,13 @@ class CategoriesTableSeeder extends Seeder
                 'key' => $key,
                 'uuid' => $uuid,
                 'en' => [
-                    'name' => title_case($cat_en),
+                    'name' => $cat_en,
                     'slug' => str_slug($cat_en),
                     'key' => $key,
                     'uuid' => $uuid,
                 ],
                 'fr' => [
-                    'name' => title_case($cat_fr),
+                    'name' => $cat_fr,
                     'slug' => str_slug($cat_fr),
                     'key' => $key,
                     'uuid' => $uuid,

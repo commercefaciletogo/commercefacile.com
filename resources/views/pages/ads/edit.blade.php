@@ -307,11 +307,11 @@
     <script>
         var oldAd = {!! json_encode($ad) !!};
         var profileUrl = "{!! route('user.profile', ['user_name' => auth('user')->user()->slug]) !!}";
-        var authorId = "{!! auth('user')->user()->id !!}";
+        var authorId = "{!! auth('user')->user()->uuid !!}";
         var requireLocation = "{!! is_null(auth('user')->user()->location) !!}";
         var updateAdUrl = "{!! route('ads.single.update', ['id' => $ad['id']]) !!}";
         var cancelUpdateAdUrl = "{!! route('ads.single.update.cancel', ['id' => $ad['id']]) !!}";
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-    <script src="{{ asset('js/edit.js') }}"></script>
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/edit.js"></script>
 @endsection

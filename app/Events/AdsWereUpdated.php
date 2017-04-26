@@ -15,6 +15,8 @@ class AdsWereUpdated implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
+    public $broadcastQueue = 'broadcast';
+
     /**
      * Create a new event instance.
      *
@@ -32,7 +34,7 @@ class AdsWereUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'admin';
+        return 'Admin';
     }
 
     /**
