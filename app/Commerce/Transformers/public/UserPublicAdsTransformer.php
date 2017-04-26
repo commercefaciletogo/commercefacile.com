@@ -31,10 +31,16 @@ class UserPublicAdsTransformer extends TransformerAbstract
 
     private function getAdSmallMainImage($images)
     {
-        return collect($images)
+        $image = collect($images)
             ->filter(function($image){
                 return $image['size'] == 'small' && $image['main'] == 1;
-            })->first()->path;
+            })->first();
+
+        if($image){
+            return $image->path;
+        }else{
+            return asset('img/icons/loading.gif');
+        }
     }
 
     private function get_trans_category(Category $category)

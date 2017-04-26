@@ -104,7 +104,7 @@ class ProcessAdImages implements ShouldQueue
         $watermark = Image::make(storage_path('/watermark.png'));
 
         $size = $preSize ?: $this->get_resize_size($img);
-        $img->insert($watermark, 'bottom-left')
+        $img->insert($watermark, 'center')
             ->resize((int) $size, null, function($c){
                 $c->aspectRatio();
                 $c->upsize();
