@@ -13,6 +13,9 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class AdWasSubmitted implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
+
+    public $broadcastQueue = 'broadcast';
+
     private $author;
     public $submitted;
 

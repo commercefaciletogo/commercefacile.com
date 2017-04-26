@@ -9,10 +9,12 @@ const socket = io.connect('http://' + host + ':6001');
 
 const locales = {
     en: {
-        loading: 'Loading...'
+        loading: 'Loading...',
+        error: 'Kindly try again later!'
     },
     fr: {
-        loading: 'Chargement...'
+        loading: 'Chargement...',
+        error: 'Veuillez réessayer plus tard!'
     }
 };
 
@@ -25,7 +27,7 @@ new Vue({
     el: '#profileMeta',
     data: {
         process: {
-            status: `Loading...`,
+            status: '',
             percent: 5
         },
         showProgress: false
@@ -44,7 +46,7 @@ new Vue({
                 window.location = window.location.pathname;
             }else {
                 $('.ui.indicating.progress').progress('set error');
-                this.process.status = "Kindly try again later!";
+                this.process.status = "";
             }
         });
         console.log('meta mounted')

@@ -16,12 +16,12 @@
 
 @section('main')
 
-    <div id="main" style="">
+    <div style="">
         <div class="ui container" style="background: #fff; border-left: 1px solid #a4acbe; border-right: 1px solid #a4acbe; min-height: 65vh;">
 
             @yield('meta')
 
-            <div class="ui two grid" style="margin-top: 0; margin-bottom: 0;">
+            <div id="main" class="ui two grid" style="margin-top: 0; margin-bottom: 0;">
 
                 {{--computer and tablet--}}
                 <div class="three wide computer only column">
@@ -52,11 +52,17 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script>
         var authorId = "{!! auth('user')->user()->uuid !!}";
         $(function(){
             $('#process').progress();
         });
     </script>
+    @if(App::environment('production'))
+        <script></script>
+    @else
+        <script src="{{ asset('js/profile-meta.js') }}"></script>
+    @endif
     @yield('sub_scripts')
 @endsection

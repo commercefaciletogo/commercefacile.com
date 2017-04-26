@@ -8,9 +8,9 @@ const socket = io.connect('http://' + host + ':8443');
 new Vue({
     el: "#main",
     mounted(){
-        const channel = `Author.${window.authorId}`;
-        socket.on(`${channel}:AdWasSubmitted`, () => {
-            window.location.reload(true);
-        });
+        // const channel = `Author.${window.authorId}`;
+        // socket.on(`${channel}:AdWasSubmitted`, () => {
+        //     window.location.reload(true);
+        // });
     }
 });
