@@ -16,4 +16,8 @@
             </a>
         </div>
     </div>
+    <div class="ui progress" id="process">
+        <div class="bar" style="background: #e8eaee;"></div>
+        <div class="label" v-text="process.status"></div>
+    </div>
 </div>
