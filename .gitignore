@@ -13,3 +13,4 @@
 #/.docker
 #/.docker-compose
 /semantic
+storage/docker/redis/dump.rdb
