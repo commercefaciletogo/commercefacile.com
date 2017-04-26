@@ -138,7 +138,7 @@
 
 @endsection
 
-@section('scripts')
+@section('sub_scripts')
     <script>
         var loginUser = {!! json_encode($user) !!};
         var updateProfileUrl = "{!! route('user.profile.settings.update.profile', ['user_name' => $user['slug']]) !!}";

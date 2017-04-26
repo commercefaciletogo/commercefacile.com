@@ -169,14 +169,9 @@ class AdsController extends Controller
             $this->updateUserLocation(request());
         }
         $data = $this->prepareData(request());
-        //save ad
-        $ad = Ad::create($data);
-        //update ad with code
-        $code = (new Id())->encode($ad->id);
-        $ad->update(['code' => $code]);
-        //save images
-        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $ad);
-        $this->dispatch(new ProcessAdImages($ad, $images_paths, request()->image_length, auth('user')->user()));
+
+        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $data['uuid']);
+        $this->dispatch(new ProcessAdImages($images_paths, request()->image_length, auth('user')->user(), $data));
         return ['done' => true];
     }
 
@@ -227,7 +222,7 @@ class AdsController extends Controller
             'negotiable' => request()->negotiable
         ]);
 
-        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $ad);
+        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $ad->uuid);
         $this->dispatch(new ProcessAdImages($ad, $images_paths, request()->image_length, auth('user')->user()));
 
         return ['done' => true];
@@ -323,10 +318,11 @@ class AdsController extends Controller
     }
 
     /**
-     * @param $ad
+     * @param $request
+     * @param $uuid
      * @return array|null
      */
-    private function saveAdImagesForFurtherProcessing($request, $ad)
+    private function saveAdImagesForFurtherProcessing($request, $uuid)
     {
         $img_paths = [];
         $total_images = (int)$request->image_length;
@@ -335,7 +331,7 @@ class AdsController extends Controller
             $uploadedFile = $request->file($key);
 
             $path = Storage::disk('local')
-                ->putFileAs('ads', $uploadedFile, "{$ad->uuid}_{$i}.jpg");
+                ->putFileAs('ads', $uploadedFile, "{$uuid}_{$i}.jpg");
 
             array_push($img_paths, $path);
         }

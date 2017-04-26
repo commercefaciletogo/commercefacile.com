@@ -50,3 +50,13 @@
     </div>
 
 @endsection
+
+@section('scripts')
+    <script>
+        var authorId = "{!! auth('user')->user()->uuid !!}";
+        $(function(){
+            $('#process').progress();
+        });
+    </script>
+    @yield('sub_scripts')
+@endsection
