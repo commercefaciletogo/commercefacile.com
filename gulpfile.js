@@ -36,6 +36,7 @@ elixir((mix) => {
 
     mix.webpack('profile/settings.js', 'public/js/user-settings.js');
     mix.webpack('profile/profile.js', 'public/js/user-profile.js');
+    mix.webpack('profile/meta.js', 'public/js/profile-meta.js');
 
     mix.webpack('admin/pages/layout.js', 'public/js/admin-page-layout.js');
     mix.webpack('admin/pages/ads.js', 'public/js/admin-page-ads.js');

@@ -83,17 +83,14 @@
 
     commercefacile-socket:
         build:
-            context: .
-            dockerfile: .docker/socket.dockerfile
+            context: .socket
         container_name: commercefacile-socket
         links:
             - commercefacile-redis:redis
         depends_on:
             - commercefacile-redis
-        volumes:
-            - ./.socket:/var/www/socket
         ports:
-            - "6001:6001"
+            - "8443:8443"
         networks:
             - commercefacileapp-network
 

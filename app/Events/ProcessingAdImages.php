@@ -66,15 +66,15 @@ class ProcessingAdImages implements ShouldBroadcast
     {
         switch ($this->stage){
             case 10:
-                return 'Loading...';
+                return trans('general.loading');
             case 30:
-                return 'Processing...';
+                return trans('general.processing');
             case 50:
-                return 'Uploading...';
+                return trans('general.uploading');
             case 90:
-                return 'Saving...';
+                return trans('general.saving');
             case 100:
-                return 'Reloading...';
+                return trans('general.reloading');
             default:
                 return '';
         }

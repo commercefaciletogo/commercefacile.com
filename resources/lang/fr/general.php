@@ -17,6 +17,12 @@ return [
     'all_ads' => 'Toutes Annonces',
     'languages' => 'Langues',
 
+    'loading' => 'Chargement...',
+    'processing' => 'En traitement...',
+    'uploading' => 'Téléchargement...',
+    'saving' => 'Sauvegarde...',
+    'reloading' => 'Actualisation...',
+
     'ads' => 'Annonces',
     'favorites' => 'Favoris',
     'settings' => 'Paramètres',

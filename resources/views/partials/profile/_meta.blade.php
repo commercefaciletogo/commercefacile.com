@@ -16,8 +16,10 @@
             </a>
         </div>
     </div>
-    <div class="ui progress" id="process" style="margin-top: 10px;" data-total="100">
-        <div class="bar" style="background: #e8eaee;"></div>
-        <div class="label" v-text="process.status"></div>
+    <div v-cloak v-if="showProgress" class="ui indicating progress" id="process" style="margin-top: 10px;" data-total="100">
+        <div class="bar" style="background: rgb(209, 213, 222);">
+            <div class="progress"></div>
+        </div>
+        <div class="label" v-text="process.status" style="color: rgb(29, 48, 93);"></div>
     </div>
 </div>

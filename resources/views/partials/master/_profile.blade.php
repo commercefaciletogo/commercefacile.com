@@ -60,7 +60,7 @@
         });
     </script>
     @if(App::environment('production'))
-        <script></script>
+        <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/profile-meta.js"></script>
     @else
         <script src="{{ asset('js/profile-meta.js') }}"></script>
     @endif

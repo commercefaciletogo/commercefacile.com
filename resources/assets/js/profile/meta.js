@@ -5,7 +5,7 @@ const queryString = require('query-string');
 Vue.use(VueI18n);
 
 const host = window.location.host;
-const socket = io.connect('http://' + host + ':6001');
+const socket = io.connect('http://' + host + ':8443');
 
 const locales = {
     en: {
@@ -37,7 +37,7 @@ new Vue({
         socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
             console.log(channel);
             this.showProgress = true;
-            $('.ui.indicating.progress').progress('set percent', data.percent);
+            $('#process').progress('set percent', data.percent);
             this.process.status = data.status;
         });
 
@@ -45,7 +45,7 @@ new Vue({
             if(data.submitted){
                 window.location = window.location.pathname;
             }else {
-                $('.ui.indicating.progress').progress('set error');
+                $('#process').progress('set error');
                 this.process.status = "";
             }
         });

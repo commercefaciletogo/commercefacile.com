@@ -20,6 +20,12 @@
         'favorites' => 'Favorites',
         'settings' => 'Settings',
 
+        'loading' => 'Loading...',
+        'processing' => 'Processing...',
+        'uploading' => 'Uploading...',
+        'saving' => 'Saving...',
+        'reloading' => 'Reloading...',
+
         'personal_details' => 'Personal Details',
         'change_password' => 'Change Password',
 
