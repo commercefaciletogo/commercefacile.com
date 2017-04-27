@@ -213,17 +213,18 @@ class AdsController extends Controller
 
         if(!$ad) abort(404);
 
-        $ad->update([
+        $data = [
             'category_id' => request()->category_id,
             'title' => request()->title,
             'condition' => request()->condition == 1 ? 'new' : 'used',
             'description' => request()->description,
             'price' => request()->price,
-            'negotiable' => request()->negotiable
-        ]);
+            'negotiable' => request()->negotiable,
+            'ad_id' => $id
+        ];
 
         $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $ad->uuid);
-        $this->dispatch(new ProcessAdImages($ad, $images_paths, request()->image_length, auth('user')->user()));
+        $this->dispatch(new ProcessAdImages($images_paths, request()->image_length, auth('user')->user(), $data, false));
 
         return ['done' => true];
     }
