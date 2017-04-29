@@ -36,7 +36,7 @@ class ProcessAdImages implements ShouldQueue
     /**
      * @var bool
      */
-    private $updating;
+    private $creating;
     /**
      * @var
      */
@@ -48,15 +48,15 @@ class ProcessAdImages implements ShouldQueue
      * @param $images_paths
      * @param $number_of_images
      * @param $user
-     * @param bool $updating
+     * @param bool $creating
      * @param $data
      */
-    public function __construct($images_paths, $number_of_images, $user, $data, $updating = false)
+    public function __construct($images_paths, $number_of_images, $user, $data, $creating = true)
     {
         $this->number_of_images = $number_of_images;
         $this->images_paths = $images_paths;
         $this->user = $user;
-        $this->updating = $updating;
+        $this->creating = $creating;
         $this->data = $data;
     }
 
@@ -71,11 +71,23 @@ class ProcessAdImages implements ShouldQueue
             DB::transaction(function(){
                 event(new ProcessingAdImages($this->user, 10));
                 //save ad
-                $ad = Ad::create($this->data);
+                if($this->creating){
+                    $ad = Ad::create($this->data);
+                }else{
+                    $ad = Ad::find($this->data['ad_id']);
+                    $ad->update([
+                        'category_id' => $this->data['category_id'],
+                        'title' => $this->data['title'],
+                        'condition' => $this->data['condition'],
+                        'description' => $this->data['description'],
+                        'price' => $this->data['price'],
+                        'negotiable' => $this->data['negotiable']
+                    ]);
+                }
                 //update ad with code
-                event(new ProcessingAdImages($this->user, 30));
-                $code = (new Id())->encode($ad->id);
-                $ad->update(['code' => $code]);
+                if($this->creating) event(new ProcessingAdImages($this->user, 30));
+                if($this->creating) $code = (new Id())->encode($ad->id);
+                if($this->creating)  $ad->update(['code' => $code]);
                 event(new ProcessingAdImages($this->user, 50));
                 //save images
                 $this->saveAdImages($ad);

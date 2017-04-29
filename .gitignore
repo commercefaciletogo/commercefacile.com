@@ -15,3 +15,7 @@
 #/.docker-compose
 /semantic
 storage/docker/redis/dump.rdb
+<<<<<<< HEAD
+=======
+#.env
+>>>>>>> production
