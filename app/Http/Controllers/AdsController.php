@@ -165,14 +165,18 @@ class AdsController extends Controller
 
     public function save()
     {
-        if(request()->get('location_id')){
-            $this->updateUserLocation(request());
-        }
-        $data = $this->prepareData(request());
+        try{
+            if(request()->get('location_id')){
+                $this->updateUserLocation(request());
+            }
+            $data = $this->prepareData(request());
 
-        $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $data['uuid']);
-        $this->dispatch(new ProcessAdImages($images_paths, request()->image_length, auth('user')->user(), $data));
-        return ['done' => true];
+            $images_paths = $this->saveAdImagesForFurtherProcessing(request(), $data['uuid']);
+            $this->dispatch(new ProcessAdImages($images_paths, request()->image_length, auth('user')->user(), $data));
+            return ['done' => true];
+        } catch (\Exception $e){
+            return ['done' => false, 'reason' => $e->getMessage()];
+        }
     }
 
     public function edit($id)
