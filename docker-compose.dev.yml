@@ -25,15 +25,11 @@
         privileged: true
         volumes:
             - ./:/var/www/
+            - /var/lib/redis
         depends_on:
             - commercefacile-db
-            - commercefacile-queue
-            - commercefacile-redis
-            - commercefacile-socket
         links:
             - commercefacile-db
-            - commercefacile-queue
-            - commercefacile-redis
         networks:
             - commercefacileapp-network
 
@@ -62,20 +58,30 @@
         networks:
             - commercefacileapp-network
 
-    commercefacile-queue:
-        image: thomasdolar/beanstalkd
-        container_name: commercefacile-queue
-        ports:
-            - "11300:11300"
-            - "8080:8080"
-        networks:
-            - commercefacileapp-network
+#    commercefacile-redis-vl:
+#        image: ubuntu:14.04
+#        container_name: commercefacile-redis-vl
+#        volumes:
+#            - /var/lib/redis
+#        networks:
+#            - commercefacileapp-network
+
+#    commercefacile-queue:
+#        image: thomasdolar/beanstalkd
+#        container_name: commercefacile-queue
+#        ports:
+#            - "11300:11300"
+#            - "8080:8080"
+#        networks:
+#            - commercefacileapp-network
 
     commercefacile-redis:
         image: sameersbn/redis
         container_name: commercefacile-redis
-        volumes:
-            - ./storage/docker/redis:/var/lib/redis
+        volumes_from:
+            - commercefacile-server
+#        volumes:
+#            - ./storage/docker/redis:/var/lib/redis
         ports:
             - "6379:6379"
         networks:
@@ -113,6 +119,8 @@
 #            - "9200:9200"
 #        networks:
 #            - commercefacileapp-network
+
+
 
 
  networks:

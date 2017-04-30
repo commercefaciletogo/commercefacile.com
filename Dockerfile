@@ -31,7 +31,7 @@ RUN         apt-get update \
             && rm -rf /var/lib/apt/lists/*
 
 # add entry to crontab
-RUN         (crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1")| crontab -
+#RUN         (crontab -l 2>/dev/null; echo "* * * * * /usr/local/bin/php /var/www/artisan schedule:run >> /dev/null 2>&1")| crontab -
 
 COPY        . /var/www
 

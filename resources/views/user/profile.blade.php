@@ -132,9 +132,9 @@
                                         <p>
                                             {{ trans('general.since') }}: {{ $ad['start_date'] }}
                                         </p>
-                                        <p>
-                                            {{ trans('general.going_off_on') }}: {{ $ad['end_date'] }}
-                                        </p>
+                                        {{--<p>--}}
+                                            {{--{{ trans('general.going_off_on') }}: {{ $ad['end_date'] }}--}}
+                                        {{--</p>--}}
                                     </div>
                                 </div>
                                 @elseif($ad['status'] == 'offline')
@@ -272,9 +272,9 @@
                                                 <p>
                                                     {{ trans('general.since') }}: {{ $ad['start_date'] }}
                                                 </p>
-                                                <p>
-                                                    {{ trans('general.going_off_on') }}: {{ $ad['end_date'] }}
-                                                </p>
+                                                {{--<p>--}}
+                                                    {{--{{ trans('general.going_off_on') }}: {{ $ad['end_date'] }}--}}
+                                                {{--</p>--}}
                                             </div>
                                         </div>
                                 @elseif($ad['status'] == 'offline')

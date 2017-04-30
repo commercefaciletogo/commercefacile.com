@@ -79,7 +79,7 @@
 
             <h2 class="header" style="margin-bottom: 1em; color: #33446d;">{{ trans('general.edit_ad') }}</h2>
 
-            <div v-cloak :class="['ui ', {loading:busy}, ' segment']" style="padding: 0; border: none; box-shadow: none;">
+            <div :class="['ui ', {loading:busy}, ' segment']" style="padding: 0; border: none; box-shadow: none;">
                 <div class="ui two column centered grid">
                     <div class="twelve wide computer fourteen wide tablet fourteen wide mobile column" style="color: #33446d;">
 
@@ -88,7 +88,7 @@
                         <div class="ui grid row">
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_title') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
-                                <div :class="['ui small fluid', {error: errors.title}, 'input']">
+                                <div v-cloak :class="['ui small fluid', {error: errors.title}, 'input']">
                                     <input type="text" v-model="newAd.title" placeholder="{{ trans('general.ad_title') }}">
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                         <div class="ui grid row">
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_category') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
-                                <div :class="['ui right action fluid small', {error: errors.category} , 'input']">
+                                <div v-cloak :class="['ui right action fluid small', {error: errors.category} , 'input']">
                                     <input type="text" v-model="newAd.category.text" readonly placeholder="{{ trans('general.ad_category') }}">
                                     <div class="ui basic floating button" data-remodal-target="choose-category">
                                         <i class="dropdown icon"></i>
@@ -151,7 +151,7 @@
                             <div class="three wide computer three wide tablet only column"><label>{{ trans('general.ad_description') }}</label></div>
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                                 <div class="ui small fluid input">
-                                    <textarea :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="20" cols="50" rows="10"></textarea>
+                                    <textarea v-cloak :class="[{error: errors.description}]" v-model="newAd.description" maxlength="500" minlength="20" cols="50" rows="10"></textarea>
                                 </div>
                             </div>
                             <div class="five wide computer tablet only column">
@@ -170,7 +170,7 @@
                                     <div class="six wide computer tablet column">
                                         <div style="position: relative;overflow: hidden;">
                                             <input id="fileInput" accept="image/jpg" type="file" class="custom" @change="addImage" style="position: absolute; top: 0;bottom: 0;left: 0;right: 0;opacity: 0.001; display: none;">
-                                            <label for="fileInput" :class="[moreImageDefaultStyle, errors.images ? 'error' : '', moreImage ? '' : 'disabled']" style="cursor: pointer;">
+                                            <label v-cloak for="fileInput" :class="[moreImageDefaultStyle, errors.images ? 'error' : '', moreImage ? '' : 'disabled']" style="cursor: pointer;">
                                                 + Image
                                             </label>
                                         </div>
@@ -196,7 +196,7 @@
                             <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                                 <div class="ui grid">
                                     <div class="ten wide column">
-                                        <div :class="['ui right small labeled fluid', {error: errors.price}, 'input']">
+                                        <div v-cloak :class="['ui right small labeled fluid', {error: errors.price}, 'input']">
                                             <input v-model="newAd.price.amount" type="number" placeholder="{{ trans('general.ad_price') }}">
                                             <div class="ui basic label" style="font-weight: 100; color: #4a597d;">FCFA</div>
                                         </div>
@@ -314,4 +314,5 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/edit.js"></script>
+    {{--<script src="{{ asset('js/edit.js') }}"></script>--}}
 @endsection

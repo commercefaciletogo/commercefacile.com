@@ -184,7 +184,7 @@ class AdsController extends Controller
         $raw_ad = Ad::with('images')->where('uuid', $id)->first();
         if( !$raw_ad ) abort(404);
 
-        $this->dispatch(new DownloadAdImages(auth('user')->user(), $raw_ad, "original"));
+//        $this->dispatch(new DownloadAdImages(auth('user')->user(), $raw_ad, "original"));
 
         $ad = Ad::with('category')->where('uuid', $id)
             ->get()
@@ -368,8 +368,11 @@ class AdsController extends Controller
             })->map(function($img){
                 $path = $img['path'];
                 $name = $this->extractImageName($path);
-                return "/storage/ads/{$name}";
-            })->unique()->toArray();
+                return "/ads/{$name}";
+            })->unique()
+            ->map(function($path){
+                return base64_encode(Storage::cloud()->get($path));
+            })->toArray();
     }
 
     private function deleteAdExistingImages($ad)

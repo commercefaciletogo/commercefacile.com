@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import axios from 'axios';
 import Vue from 'vue';
-import Echo from 'laravel-echo';
 import blodUtil from 'blob-util';
 
 import Categories from '../components/ads/create/Categories.vue';
@@ -12,14 +11,11 @@ import SubCategories from '../components/ads/create/SubCategories.vue';
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 let oldAd = window.oldAd;
 
-const host = window.location.host;
-const socket = io.connect('http://' + host + ':8443');
-
 new Vue({
     el: 'div#main',
     data: {
         submitting: false,
-        busy: true,
+        busy: false,
         categories: [],
         locations: [],
         selectedCategory: {},
@@ -133,9 +129,6 @@ new Vue({
         removeImage(id){
             this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
         },
-        chooseCategory(e){
-
-        },
         fetchSub(category){
             this.selectedCategory = category;
         },
@@ -166,27 +159,28 @@ new Vue({
             this.user.location.text = name;
             $('#chooseLocation').remodal().close();
         },
-        downloadImages(paths){
-            _.each(paths, path => {
-                blodUtil.imgSrcToBlob(path, 'image/jpeg', 'Anonymous', 1.0).then( blob => {
+        convertImages(bases){
+            console.log('start downloading...');
+            _.each(bases, base => {
+                blodUtil.base64StringToBlob(base).then(blob => {
                     this.newAd.photos.push({
                         id: + new Date(),
                         file: blob
                     });
                     this.newAdBuffer = _.cloneDeep(this.newAd);
                 }).catch(error => {
-                    window.history.back();
+
                 });
             })
         }
     },
     mounted(){
 
-        const channel = `Ad.${oldAd.id}`;
-        socket.on(`${channel}:ImagesDownloaded`, () => {
-            this.downloadImages(oldAd.images);
-            this.busy = false;
-        });
+        this.convertImages(oldAd.images);
+
+        console.log('edit mounted');
+
+        console.log(oldAd.images);
 
         $('#chooseCategory').accordion();
 
