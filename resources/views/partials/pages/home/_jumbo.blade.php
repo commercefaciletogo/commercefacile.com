@@ -13,8 +13,8 @@
             <img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_one.jpg')}}" alt="">
             <img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_two.jpg')}}" alt="">
             <img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_three.jpg')}}" alt="">
-            <img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_four.jpg')}}" alt="">
-            <img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_five.jpg')}}" alt="">
+            {{--<img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_four.jpg')}}" alt="">--}}
+            {{--<img class="ui image" style="max-height: 350px;" src="{{asset('/img/jumbo_five.jpg')}}" alt="">--}}
         </div>
     </div>
 </div>
