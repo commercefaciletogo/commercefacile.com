@@ -40,7 +40,7 @@ class LocationsSeeder extends Seeder
 
 //      cities
 //          maritime
-            ['name' => 'ablogamé', 'parent_id' => 1],
+            ['name' => 'Ablogamé', 'parent_id' => 1],
             ['name' => 'Abobokomé', 'parent_id' => 1],
             ['name' => 'Abové', 'parent_id' => 1],
             ['name' => 'Adakpamé', 'parent_id' => 1],
@@ -99,7 +99,7 @@ class LocationsSeeder extends Seeder
             ['name' => 'Tokoin-Aéroport', 'parent_id' => 1],
             ['name' => 'Tokoin-Elavagnon', 'parent_id' => 1],
             ['name' => 'Tokoin-Forever', 'parent_id' => 1],
-            ['name' => ' Tokoin-Gbadago', 'parent_id' => 1],
+            ['name' => 'Tokoin-Gbadago', 'parent_id' => 1],
             ['name' => 'Tokoin-Hopital', 'parent_id' => 1],
             ['name' => 'Tokoin-Lycée', 'parent_id' => 1],
             ['name' => 'Tokoin-Ouest', 'parent_id' => 1],
@@ -112,6 +112,15 @@ class LocationsSeeder extends Seeder
             ['name' => 'Wétrivi Kondji', 'parent_id' => 1],
             ['name' => 'Zone Portuaire', 'parent_id' => 1],
             ['name' => 'xédranawoe', 'parent_id' => 1],
+            ['name' => 'Amoutivé', 'parent_id' => 1],
+            ['name' => 'Baguida', 'parent_id' => 1],
+            ['name' => 'Agoè – Nyivé', 'parent_id' => 1],
+            ['name' => 'Sanguéra', 'parent_id' => 1],
+            ['name' => 'Fiata', 'parent_id' => 1],
+            ['name' => 'Agouègan ', 'parent_id' => 1],
+            ['name' => 'Togoville', 'parent_id' => 1],
+            ['name' => 'Vogan', 'parent_id' => 1],
+            ['name' => 'Avèpozo', 'parent_id' => 1]
 
 //            kara
 //            ['name' => 'ablogamé', 'parent_id' => 3],
