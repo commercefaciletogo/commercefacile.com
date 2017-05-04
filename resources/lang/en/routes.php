@@ -24,4 +24,5 @@ return [
     "user-favorites" => "{user_name}/favorites",
     "phone" => "user/phone-number",
     "phone_verify" => "user/verify-phone",
+    "get_phone_verify" => "user/verify-phone/{token}",
 ];

@@ -21,11 +21,20 @@
                                 @endif
                                 <form class="ui form" method="POST" action="{{ route('user.post.pass.phone') }}">
                                     {{ csrf_field() }}
-                                    <div class="field {!! $errors->has('phone') ? 'error' : '' !!}">
-                                        <div class="ui left icon input">
-                                            <input type="tel" required placeholder="{!! trans('general.phone_number') !!}" name="phone" value="{{ old('phone') }}">
-                                            <i class="phone icon" style="color: #4a597d;"></i>
+                                    <div class="field {{ $errors->has('phone') ? 'error' : '' }}">
+                                        <div class="ui right labeled input">
+                                            <div class="ui basic label" style="color: #4a597d;">+228</div>
+                                            <input type="tel" name="phone" placeholder="{{ trans('general.phone_number') }}" value="{{ old('phone') }}">
                                         </div>
+                                        @if($errors->has('phone'))
+                                            <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
+                                                {{ $errors->first('phone') }}
+                                            </div>
+                                        @else
+                                            <div class="ui pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
+                                                {{ trans('auth.phone_hint') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <button type="submit" class="ui submit button fluid sigin">{{ trans('auth.send_code') }}</button>
 

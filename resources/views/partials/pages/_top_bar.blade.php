@@ -1,12 +1,12 @@
 <div class="ui container fluid">
     <div class="ui grid">
         <div class="computer only sixteen wide column">
-            <div style="background: white; border-bottom: 2px solid #d1d5de;">
+            <div style="background: #1D305D; border-bottom: 2px solid #d1d5de;">
                 <div class="ui container">
-                    <div class="ui borderless huge menu" style="border-radius: 0; border: 0; box-shadow: none;">
+                    <div class="ui borderless huge menu" style="border-radius: 0; border: 0; box-shadow: none; background: #1D305D;">
 
                         <a class="item" href="{{ route('home.page') }}" style="color: white;">
-                            <img style="width: 250px;" src="{{ asset('/img/logos/logo_w_n.png') }}" alt="">
+                            <img src="{{ asset('/img/logos/logo_acro.png') }}" alt="">
                         </a>
 
                         <div class="right menu">
@@ -15,7 +15,7 @@
                             </div>
                             @if(auth('user')->guest())
                                 <div class="item">
-                                    <a href="{{ route('user.get.login') }}" class="ui button menu-signin" >{{ trans('auth.sign_in') }}</a>
+                                    <a style="color: white;" href="{{ route('user.get.login') }}" class="ui button menu-signin" >{{ trans('auth.sign_in') }}</a>
                                 </div>
                             @else
                                 <div class="item">
@@ -31,12 +31,12 @@
         {{--Tablet--}}
 
         <div class="tablet only sixteen wide column">
-            <div style="background: white; border-bottom: 2px solid #d1d5de;">
+            <div style="background: #1D305D; border-bottom: 2px solid #d1d5de;">
                 <div class="ui container">
-                    <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none;">
+                    <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none; background: #1D305D;">
 
                         <a class="item" href="{{ route('home.page') }}" style="color: white;">
-                            <img style="width: 10em;" src="{{ asset('/img/logos/logo_w_n.png') }}" alt="">
+                            <img src="{{ asset('/img/logos/logo_acro.png') }}" alt="">
                         </a>
                         <div class="right menu">
                             <div class="item">
@@ -44,7 +44,7 @@
                             </div>
                             @if(Auth::guard('user')->guest())
                                 <div class="item">
-                                    <a href="{{ route('user.get.login') }}" class="ui button menu-signin" >{{ trans('auth.sign_in') }}</a>
+                                    <a style="color: white;" href="{{ route('user.get.login') }}" class="ui button menu-signin" >{{ trans('auth.sign_in') }}</a>
                                 </div>
                             @else
                                 <div class="item">
@@ -60,8 +60,8 @@
         {{--Mobile--}}
 
         <div class="mobile only sixteen wide column">
-            <div style="background: white; border-bottom: 2px solid #d1d5de;">
-                <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none;">
+            <div style="background: #1D305D; border-bottom: 2px solid #d1d5de;">
+                <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none; background: #1D305D;">
                     <a class="item" href="{{ route('home.page') }}" style="color: white;">
                         <img src="{{ asset('/img/logos/logo_acro.png') }}" alt="">
                     </a>

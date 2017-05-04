@@ -44,18 +44,30 @@
                                 <form class="ui form {{ $errors->any() ? ' error' : '' }}" method="POST" action="{{ route('user.post.login') }}">
                                     {{ csrf_field() }}
                                     <div class="field {{ $errors->has('username') ? 'error' : '' }}">
-                                        {{--<label>Username</label>--}}
-                                        <div class="ui left icon input">
-                                            <input type="text" placeholder="{{ trans('general.phone_number') }} {{ trans('auth.or') }} email" name="username" value="{{ old('username') }}">
-                                            <i class="mail icon" style="color: #4a597d;"></i>
+                                        <div class="ui right labeled input">
+                                            <div class="ui basic label" style="color: #4a597d;">+228</div>
+                                            <input type="tel" name="username" value="{{ old('username') }}" placeholder="{{ trans('general.phone_number') }}">
                                         </div>
+                                        @if($errors->has('username'))
+                                            <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
+                                                {{ $errors->first('username') }}
+                                            </div>
+                                        @else
+                                            <div class="ui pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
+                                                {{ trans('auth.phone_hint') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="field {{ $errors->has('password') ? 'error' : '' }}">
-                                        {{--<label>Password</label>--}}
                                         <div class="ui left icon input">
                                             <input type="password" name="password" placeholder="{{ trans('auth.password') }}">
                                             <i class="lock icon" style="color: #4a597d;"></i>
                                         </div>
+                                        @if($errors->has('password'))
+                                            <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
+                                                {{ $errors->first('password') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="field">
                                         <div class="ui checkbox">

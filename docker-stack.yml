@@ -40,3 +40,8 @@ nginx:
     - '443:443'
   volumes_from:
     - commercefacile-server
+commercefacile-queue:
+  image: 'commercefacile/queue:latest'
+  ports:
+    - '8080:8080'
+    - '11300:11300'

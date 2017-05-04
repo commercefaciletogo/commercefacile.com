@@ -33,6 +33,11 @@
                                             <input type="password" required placeholder="{!! trans('auth.password') !!}" name="password">
                                             <i class="lock icon" style="color: #4a597d;"></i>
                                         </div>
+                                        @if($errors->has('password'))
+                                            <div class="ui pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
+                                                {{ trans('auth.password_hint') }}
+                                            </div>
+                                        @endif
                                     </div>
 
                                     <div class="field {!! $errors->has('password_confirmation') ? 'error' : '' !!}">

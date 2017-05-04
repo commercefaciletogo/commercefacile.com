@@ -35,8 +35,10 @@ class LocationsSeeder extends Seeder
 
 //      regions
             ['name' => 'Maritime', 'parent_id' => null],
-            ['name' => 'Plateau', 'parent_id' => null],
+            ['name' => 'Plateaux', 'parent_id' => null],
+            ['name' => 'Centrale', 'parent_id' => null],
             ['name' => 'Kara', 'parent_id' => null],
+            ['name' => 'Savanes', 'parent_id' => null],
 
 //      cities
 //          maritime

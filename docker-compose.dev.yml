@@ -17,6 +17,15 @@
         networks:
             - commercefacileapp-network
 
+    commercefacile-queue:
+        image: thomasdolar/beanstalkd
+        container_name: commercefacile-queue
+        ports:
+            - "11300:11300"
+            - "8080:8080"
+        networks:
+            - commercefacileapp-network
+
     commercefacile-server:
         build:
             context: .
@@ -33,19 +42,6 @@
         networks:
             - commercefacileapp-network
 
-#    commercefacile-db:
-#        image: mysql:latest
-#        container_name: commercefacile-db
-#        ports:
-#            - "3306:3306"
-#        environment:
-#            - MYSQL_ROOT_PASSWORD=commercefacile
-#            - MYSQL_DATABASE=commercefacile
-#            - MYSQL_USER=commercefacile
-#            - MYSQL_PASSWORD=commercefacile
-#        networks:
-#            - commercefacileapp-network
-
     commercefacile-db:
         image: postgres:latest
         container_name: commercefacile-db
@@ -58,30 +54,11 @@
         networks:
             - commercefacileapp-network
 
-#    commercefacile-redis-vl:
-#        image: ubuntu:14.04
-#        container_name: commercefacile-redis-vl
-#        volumes:
-#            - /var/lib/redis
-#        networks:
-#            - commercefacileapp-network
-
-#    commercefacile-queue:
-#        image: thomasdolar/beanstalkd
-#        container_name: commercefacile-queue
-#        ports:
-#            - "11300:11300"
-#            - "8080:8080"
-#        networks:
-#            - commercefacileapp-network
-
     commercefacile-redis:
         image: sameersbn/redis
         container_name: commercefacile-redis
         volumes_from:
             - commercefacile-server
-#        volumes:
-#            - ./storage/docker/redis:/var/lib/redis
         ports:
             - "6379:6379"
         networks:
@@ -99,29 +76,6 @@
             - "8443:8443"
         networks:
             - commercefacileapp-network
-
-#    commercefacile-elk:
-#        image: sebp/elk
-#        container_name: commercefacile-elk
-#        ports:
-#            - "5601:5601"
-#            - "9200:9200"
-#            - "5044:5044"
-##        volumes:
-##            - /var/elk-data:/var/lib/elasticsearch
-#        networks:
-#            - commercefacileapp-network
-
-#    commercefacile-search:
-#        image: elasticsearch
-#        container_name: commercefacile-search
-#        ports:
-#            - "9200:9200"
-#        networks:
-#            - commercefacileapp-network
-
-
-
 
  networks:
     commercefacileapp-network:

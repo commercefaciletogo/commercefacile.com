@@ -23,5 +23,6 @@ return [
     "user-favorites" => "{user_name}/favoris",
     "phone" => "utilisateur/numéro-de-téléphone",
     "phone_verify" => "utilisateur/verifier-numéro-de-téléphone",
+    "get_phone_verify" => "utilisateur/verifier-numéro-de-téléphone/{token}",
     "user" => "utilisateur"
 ];

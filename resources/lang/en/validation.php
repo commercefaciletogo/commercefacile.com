@@ -98,9 +98,32 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => 'You must provide your full name',
+            'max' => 'The name may not be greater than :max characters.',
         ],
+        'username' => [
+            'required' => 'You must provide your phone number.',
+        ],
+        'code' => [
+            'required' => 'You must provide the code.',
+            'same' => 'Invalid code.',
+        ],
+        'phone' => [
+            'required' => 'You must provide your phone number',
+            'unique' => 'The phone has already been taken.',
+            'exists' => 'The phone is invalid.',
+            'regex' => 'The phone is invalid.',
+        ],
+        'password' => [
+            'required' => 'You must provide your password',
+            'min' => 'Your password must be at least :min characters.',
+            'confirmed' => 'You must confirm your password',
+        ],
+        'password_confirmation' => [
+            'required' => 'You must confirm your password',
+            'same' => 'Must match your password',
+        ]
     ],
 
     /*

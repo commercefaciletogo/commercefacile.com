@@ -80,6 +80,7 @@ Route::localizedGroup(function(){
 
     Route::transGet('routes.register', ['as' => 'user.get.register', 'uses' => 'UserAuth\RegisterController@showRegistrationForm']);
     Route::transPost('routes.register', ['as' => 'user.post.register', 'uses' => 'UserAuth\RegisterController@registerUser']);
+    Route::transGet('routes.get_phone_verify', ['as' => 'user.get.phone.verify', 'uses' => 'UserAuth\RegisterController@showCodeForm']);
     Route::transPost('routes.phone_verify', ['as' => 'user.post.phone.verify', 'uses' => 'UserAuth\RegisterController@authenticatePhone']);
 
     Route::transPost('routes.password-email', ['as' => 'user.post.pass.phone', 'uses' => 'UserAuth\ForgotPasswordController@sendResetCode']);

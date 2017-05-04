@@ -32,61 +32,24 @@
                         <div class="eight wide computer eight wide tablet sixteen wide mobile column">
                             <div style="margin-left: 1.5em; margin-right: 1.5em;">
 
-                                <form class="ui form {{ $errors->any() ? ' error' : '' }}" method="post" action="{{ route('user.post.register') }}">
+                                <form class="ui form {{ $errors->any() ? ' error' : '' }}" method="post" action="{{ route('user.post.phone.verify') }}">
                                     {{ csrf_field() }}
-                                    <div class="field {{ $errors->has('name') ? 'error' : '' }}">
+                                    <div class="field {{ $errors->has('code') ? 'error' : '' }}">
                                         <div class="ui left icon input">
-                                            <input type="text" placeholder="{{ trans('general.full_name') }}" value="{{ old('name') }}" name="name">
-                                            <i class="user icon"></i>
+                                            <input type="text" placeholder="Code" name="code">
+                                            <i class="code icon" style="color: #4a597d;"></i>
                                         </div>
-                                        @if($errors->has('name'))
+                                        @if($errors->has('code'))
                                             <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
-                                                {{ $errors->first('name') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="field {{ $errors->has('phone') ? 'error' : '' }}">
-                                        <div class="ui right labeled input">
-                                            <div class="ui basic label" style="color: #4a597d;">+228</div>
-                                            <input type="tel" name="phone" placeholder="{{ trans('general.phone_number') }}" value="{{ old('phone') }}">
-                                        </div>
-                                        @if($errors->has('phone'))
-                                            <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
-                                                {{ $errors->first('phone') }}
+                                                {{ $errors->first('code') }}
                                             </div>
                                         @else
                                             <div class="ui pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
-                                                {{ trans('auth.phone_hint') }}
+                                                {{ trans('auth.enter_code') }}
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="field {{ $errors->has('password') ? 'error' : '' }}">
-                                        <div class="ui left icon input">
-                                            <input type="password" name="password" placeholder="{{ trans('auth.password') }}">
-                                            <i class="lock icon"></i>
-                                        </div>
-                                        @if($errors->has('password'))
-                                            <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
-                                                {{ $errors->first('password') }}
-                                            </div>
-                                        @else
-                                            <div class="ui pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
-                                                {{ trans('auth.password_hint') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="field {{ $errors->has('password_confirmation') ? 'error' : '' }}">
-                                        <div class="ui left icon input">
-                                            <input type="password" name="password_confirmation" placeholder="{{ trans('auth.confirm_password') }}">
-                                            <i class="lock icon"></i>
-                                        </div>
-                                        @if($errors->has('password_confirmation'))
-                                            <div class="ui red pointing label" style="background: white; color: #33446d; font-size: .8em; font-weight: 300;">
-                                                {{ $errors->first('password_confirmation') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <button type="submit" class="ui submit button fluid">{{ trans('auth.register') }}</button>
+                                    <button type="submit" class="ui submit button fluid sigin">{{ trans('auth.verify') }}</button>
                                 </form>
 
                                 <div class="ui horizontal divider" style="text-transform: capitalize; color: #77829d;">

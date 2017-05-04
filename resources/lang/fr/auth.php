@@ -37,5 +37,8 @@
         'verify' => 'Verifier',
         'enter_code' => 'Entrez le code de 4 chiffres reçu par sms.',
         'invalid_code' => 'Code invalide',
-        'invalid_phone' => 'Numéro de téléphone invalide'
+        'invalid_phone' => 'Numéro de téléphone invalide',
+
+        'phone_hint' => 'Voter numero de telephone sans le code',
+        'password_hint' => 'Mot de passe doit etre au moins 6 carateres.',  
     ];

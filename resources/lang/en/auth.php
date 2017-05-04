@@ -37,5 +37,8 @@ return [
     'verify' => 'Verify',
     'enter_code' => 'Please enter the 4 digits code received by sms.',
     'invalid_code' => 'Invalid Code',
-    'invalid_phone' => 'Invalid Phone Number'
+    'invalid_phone' => 'Invalid Phone Number',
+
+    'phone_hint' => 'Your phone number without the code',
+    'password_hint' => 'Password must be at least 6 characters',  
 ];

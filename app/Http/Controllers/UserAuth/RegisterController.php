@@ -55,9 +55,11 @@ class RegisterController extends Controller
         $sendCode = $this->sendCode(request('phone'));
         if($sendCode == true){
             session()->put('user_registration_data', array_add($data, 'status', 'active'));
-            return response()->json(['sent' => true]);
+            $token = Uuid::uuid4();
+            session()->put('token', $token);
+            return redirect()->route('user.get.phone.verify', ['token' => $token]);
         }
-        return response()->json(['sent' => false]);
+        return redirect()->back();
     }
 
     private function sendCode($phone)
@@ -74,19 +76,28 @@ class RegisterController extends Controller
         }
     }
 
+    public function showCodeForm($token)
+    {
+        $t = session()->get('token');
+        if($t != $token) return redirect()->back();
+
+        return view('user.auth.code');        
+    }
+
     public function authenticatePhone()
     {
+        $this->validate(request(), ['code' => 'required|min:4|max:4']);
         $submitted_code = request()->get('code');
         $sent_code = session()->get('code');
         $matched = $submitted_code == $sent_code;
 
         if(!$matched){
-            return response()->json(['code' => 'no match'])->setStatusCode(422);
+            return redirect()->back()->withErrors(['code' => trans('validation.custom.code.same')]);
         }
 
         $user = $this->add_user(session('user_registration_data'));
         Auth::guard('user')->login($user);
-        return response()->json(['done' => $matched, 'url' => $this->get_user_profile_url($user->slug)]);
+        return redirect($this->get_user_profile_url($user->slug));
     }
 
     /**
