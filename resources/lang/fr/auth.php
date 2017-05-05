@@ -39,6 +39,6 @@
         'invalid_code' => 'Code invalide',
         'invalid_phone' => 'Numéro de téléphone invalide',
 
-        'phone_hint' => 'Voter numero de telephone sans le code',
+        'phone_hint' => 'Votre numero de telephone sans le code',
         'password_hint' => 'Mot de passe doit etre au moins 6 carateres.',  
     ];

@@ -53,7 +53,7 @@
                             </div>
                             @if(auth('user')->guest())
                                 <div class="item">
-                                    <a href="{{ route('user.get.login') }}" class="ui button signin naked" >{{ trans('auth.sign_in') }}</a>
+                                    <a style="color: white;" href="{{ route('user.get.login') }}" class="ui button signin naked" >{{ trans('auth.sign_in') }}</a>
                                 </div>
                             @else
                                 <div class="item">
