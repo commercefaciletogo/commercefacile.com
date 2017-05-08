@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Ad;
 use App\AdImage;
 use App\Events\AdWasSubmitted;
+use App\Events\AdsWereUpdated;
 use App\Events\ProcessingAdImages;
 use Delight\Ids\Id;
 use Illuminate\Bus\Queueable;
@@ -97,6 +98,7 @@ class ProcessAdImages implements ShouldQueue
                 $this->savePaths($paths, $ad);
                 event(new ProcessingAdImages($this->user, 100));
             });
+            event(new AdsWereUpdated());
             event(new AdWasSubmitted($this->user, true));
         }catch (\Exception $e){
             event(new AdWasSubmitted($this->user, false));

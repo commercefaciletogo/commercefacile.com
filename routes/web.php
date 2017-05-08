@@ -103,6 +103,7 @@ Route::localizedGroup(function(){
 //        ads/{id}/update
         Route::transPost('routes.ads-single-update', ['as' => 'ads.single.update', 'uses' => 'AdsController@update']);
         Route::transPost('routes.ads-single-update-cancel', ['as' => 'ads.single.update.cancel', 'uses' => 'AdsController@cancelUpdate']);
+        Route::put('ads/{id}/change-status', ['as' => 'ads.single.status', 'uses' => 'AdsController@changeStatus']);
 
 //        ads/{id}/report
         Route::post('routes.ads-single-report', ['as' => 'ads.single.report', 'uses' => 'AdsController@report']);

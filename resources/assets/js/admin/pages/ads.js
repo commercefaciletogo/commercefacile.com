@@ -45,7 +45,13 @@ new Vue({
     },
     data: {
         currentStatus: 'all',
-        query: ''
+        query: '',
+        loading: false
+    },
+    computed: {
+        showReset() {
+            return !this.loading;
+        }
     },
     methods: {
         changeStatus(type){
@@ -54,9 +60,21 @@ new Vue({
         search() {
             if (_.isEmpty(this.query)) return;
             this.$events.$emit('search', { query: this.query });
+        },
+        resetSearch() {
+            if (_.isEmpty(this.query)) return;
+            this.query = '';
+            this.$events.$emit('search:reset');
         }
     },
-    mounted(){
+    mounted() {
+        this.$events.$on('table:loaded', () => {
+            this.loading = true;
+        });
+        this.$events.$on('table:loaded', () => {
+            this.loading = false;
+        });
+        
         socket.on('Admin:AdsWereUpdated', () => this.$events.$emit('reload'));
     }
 });

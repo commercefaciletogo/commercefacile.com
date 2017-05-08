@@ -9,6 +9,7 @@ use App\Commerce\Transformers\AdsTransformer;
 use App\Commerce\Transformers\AdTransformer;
 use App\Commerce\Transformers\UserPublicAdsTransformer;
 use App\Events\AdWasSubmitted;
+use App\Events\AdsWereUpdated;
 use App\Jobs\DeleteAdImages;
 use App\Jobs\DownloadAdImages;
 use App\Jobs\ProcessAdImages;
@@ -252,6 +253,18 @@ class AdsController extends Controller
         return $paths;
     }
 
+    public function changeStatus($id)
+    {
+        $ad = Ad::find($id);
+        if(!$ad) return abort(404);
+
+        $status = request()->status;
+        $ad->update(['status' => $status, 'start_date' => Carbon::now()]);
+        event(new AdsWereUpdated());
+
+        return redirect()->back();
+    }
+
     public function report($uuid)
     {
         $ad = Ad::where('uuid', $uuid)->first();
@@ -303,6 +316,8 @@ class AdsController extends Controller
         $ad->images()->delete();
 
         $ad->delete();
+
+        event(new AdsWereUpdated());
 
         return redirect()->route('user.profile', ['user_name' => auth('user')->user()->slug]);
     }

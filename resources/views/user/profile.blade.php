@@ -77,7 +77,7 @@
                                                 <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic {{ $ad['editable'] ? '' : 'disabled' }} compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
                                                     <i class="icon pencil"></i>
                                                 </a>
-                                                <form method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit" class="ui mini basic compact icon button"
@@ -105,7 +105,7 @@
                                                 <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
                                                     <i class="icon pencil"></i>
                                                 </a>
-                                                <form method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button type="submit" class="ui mini basic compact icon button"
@@ -126,9 +126,24 @@
                                 @elseif($ad['status'] == 'online')
                                     <div class="mobile only column" style="display: flex; flex-direction: column; justify-content: flex-start; padding-bottom: 0 !important;">
                                     <div class="ui small green bottom pointing label">
-                                        <p>
-                                            {{ trans('general.status') }}: {{ trans('general.online') }}
-                                        </p>
+                                        <div class="ui two column grid">
+                                            <div class="column">
+                                                <p>
+                                                    {{ trans('general.status') }}: {{ trans('general.online') }}
+                                                </p>
+                                            </div>
+                                            <div class="right aligned column">
+                                                <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.status', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    <input type="hidden" name="status" value="offline">
+                                                    <button type="submit" class="ui mini basic compact icon button"
+                                                            style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                        <i class="icon undo"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                         <p>
                                             {{ trans('general.since') }}: {{ $ad['start_date'] }}
                                         </p>
@@ -140,19 +155,31 @@
                                 @elseif($ad['status'] == 'offline')
                                     <div class="mobile only column" style="display: flex; flex-direction: column; justify-content: flex-start; padding-bottom: 0 !important;">
                                     <div class="ui small ash bottom pointing label">
-                                        <div class="ui two column grid">
-                                            <div class="column">
-                                                <p>
-                                                    {{ trans('general.status') }}: {{ trans('general.offline') }}
-                                                </p>
-                                            </div>
+                                         <p>
+                                            {{ trans('general.status') }}: {{ trans('general.offline') }}
+                                        </p>
+                                        <div class="ui grid">
                                             <div class="right aligned column">
-                                                <div class="ui mini basic compact icon button">
-                                                    <i class="icon send"></i>
-                                                </div>
-                                                <div class="ui mini basic compact icon button">
-                                                    <i class="icon trash"></i>
-                                                </div>
+                                                <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                    <i class="icon pencil"></i>
+                                                </a>
+                                                <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.status', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="PUT">
+                                                    <input type="hidden" name="status" value="online">
+                                                    <button type="submit" class="ui mini basic compact icon button"
+                                                            style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                        <i class="icon send"></i>
+                                                    </button>
+                                                </form>
+                                                <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="ui mini basic compact icon button"
+                                                            style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                        <i class="icon trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                         <p>
@@ -244,7 +271,7 @@
                                                         <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
                                                             <i class="icon pencil"></i>
                                                         </a>
-                                                        <form method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                        <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <button type="submit" class="ui mini basic compact icon button"
@@ -266,9 +293,24 @@
                                 @elseif($ad['status'] == 'online')
                                         <div class="eight wide computer tablet only column">
                                             <div class="ui small green left pointing label">
-                                                <p>
-                                                    {{ trans('general.status') }}: {{ trans('general.online') }}
-                                                </p>
+                                                <div class="ui two column grid">
+                                                    <div class="column">
+                                                        <p>
+                                                            {{ trans('general.status') }}: {{ trans('general.online') }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="right aligned column">
+                                                        <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.status', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="PUT">
+                                                            <input type="hidden" name="status" value="offline">
+                                                            <button type="submit" class="ui mini basic compact icon button"
+                                                                    style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                                <i class="icon undo"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                                 <p>
                                                     {{ trans('general.since') }}: {{ $ad['start_date'] }}
                                                 </p>
@@ -280,19 +322,31 @@
                                 @elseif($ad['status'] == 'offline')
                                         <div class="eight wide computer eight wide tablet only column">
                                             <div class="ui small ash left pointing label" style="min-width: 225px;">
-                                                <div class="ui two column grid">
-                                                    <div class="column">
-                                                        <p>
-                                                            {{ trans('general.status') }}: {{ trans('general.offline') }}
-                                                        </p>
-                                                    </div>
+                                                <p>
+                                                    {{ trans('general.status') }}: {{ trans('general.offline') }}
+                                                </p>
+                                                <div class="ui grid">
                                                     <div class="right aligned column">
-                                                        <div class="ui mini basic compact icon button">
-                                                            <i class="icon send"></i>
-                                                        </div>
-                                                        <div class="ui mini basic compact icon button">
-                                                            <i class="icon trash"></i>
-                                                        </div>
+                                                    <a href="{{ route('ads.single.edit', ['id' => $ad['uuid']]) }}" class="ui mini basic compact icon button" style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                        <i class="icon pencil"></i>
+                                                    </a>
+                                                        <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.status', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="PUT">
+                                                            <input type="hidden" name="status" value="online">
+                                                            <button type="submit" class="ui mini basic compact icon button"
+                                                                    style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                                <i class="icon send"></i>
+                                                            </button>
+                                                        </form>
+                                                        <form onsubmit="return confirm('{{ trans('general.sure?') }}');" method="post" action="{{ route('ads.single.delete', ['id' => $ad['id']]) }}" style="display: inline-block;">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <button type="submit" class="ui mini basic compact icon button"
+                                                                    style="color: white !important; border:1px solid white !important; box-shadow: none !important;">
+                                                                <i class="icon trash"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
 

@@ -1,3 +1,4 @@
+import Notify from 'izitoast';
 import Vue from 'vue';
 const VueI18n = require('vue-i18n');
 const queryString = require('query-string');
@@ -10,11 +11,13 @@ const socket = io.connect('http://' + host + ':8443');
 const locales = {
     en: {
         loading: 'Loading...',
-        error: 'Kindly try again later!'
+        error: 'Kindly try again later!',
+        copied: 'Link copied.'
     },
     fr: {
         loading: 'Chargement...',
-        error: 'Veuillez réessayer plus tard!'
+        error: 'Veuillez réessayer plus tard!',
+        copied: 'Lien copié.'
     }
 };
 
@@ -32,7 +35,28 @@ new Vue({
         },
         showProgress: false
     },
-    mounted(){
+    methods: {
+
+        initClipboard(){
+            var clipboard = new Clipboard('.public');
+            console.log('init clipboard')
+
+            clipboard.on('success', function (e) {
+                console.log('copied');
+                this.notify(this.$t('copied'), "topCenter", "success");
+
+                e.clearSelection();
+            }.bind(this));
+
+            clipboard.on('error', function(e) {
+            }.bind(this));
+        },
+        notify(message, position, status){
+            Notify[status]({message, position, progressBar: false});
+        },
+    },
+    mounted() {
+        this.initClipboard();
         const channel = `Author.${window.authorId}`;
         socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
             console.log(channel);
