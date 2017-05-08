@@ -3,7 +3,7 @@
         <a class="floating ui red label circular tiny" @click="remove">
             x
         </a>
-        <img :src="image">
+        <img :src="image" :id="src.id">
     </div>
 </template>
 

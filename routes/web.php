@@ -57,6 +57,7 @@ Route::localizedGroup(function(){
             Route::get('/ads', ['as' => 'admin.ads', 'uses' => 'AdminPagesController@adsPage']);
             Route::get('/ads/{id}', ['as' => 'admin.ad.action', 'uses' => 'AdminPagesController@adPage']);
             Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminPagesController@usersPage']);
+            Route::get('/users/search', ['as' => 'admin.users.search', 'uses' => 'AdminPagesController@usersSearch']);
 
             Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
             Route::delete('/employees', ['as' => 'employee.delete', 'uses' => 'AdminEmployeesController@delete']);

@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import axios from 'axios';
-import Vue from 'vue';
+import base64toblob from 'base64toblob';
 import Notify from 'izitoast';
+import Vue from 'vue';
 
 import Categories from '../components/ads/create/Categories.vue';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
@@ -27,6 +28,7 @@ new Vue({
             description: '',
             condition: 1,
             photos: [],
+            compressedImages: [],
             price: {
                 amount: '',
                 negotiable: true
@@ -46,7 +48,12 @@ new Vue({
                 id: ''
             },
         },
-        moreImageDefaultStyle: 'ui tiny compact button inp act'
+        moreImageDefaultStyle: 'ui tiny compact button inp act',
+        currentUploadedFile: {},
+        scale: 100,
+        quality: 50,
+        result: {},
+        reader: {}
     },
     computed: {
         moreImage() {
@@ -107,14 +114,117 @@ new Vue({
         addImage(event){
             const input = event.target;
 
-            if(input.files && input.files[0]){
+            if (input.files && input.files[0]) {
+                let file = input.files[0];
                 this.newAd.photos.push({
-                    id: input.files[0].name,
-                    file: input.files[0]
+                    id: file.name,
+                    file
                 });
+                // this.currentUploadedFile = file;
                 this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
+
+                 // Make new FileReader
+                // this.reader = new FileReader()
+
+                // // Convert the file to base64 text
+                // this.reader.readAsDataURL(file)
+
+                // // on reader load somthing...
+                // this.reader.onload = this.fileOnLoad
             }
         },
+
+        fileOnLoad() {
+            // The File
+            let { currentUploadedFile } = this
+
+            // Make a fileInfo Object
+            let fileInfo = {
+                name: currentUploadedFile.name,
+                type: currentUploadedFile.type,
+                size: Math.round(currentUploadedFile.size / 1000)+' kB',
+                base64: this.reader.result,
+                file: currentUploadedFile
+            }
+
+            // Push it to the state
+            this.result = fileInfo
+
+            // DrawImage
+            this.drawImage(this.result.base64)
+        },
+
+        drawImage(imgUrl) {
+            // Recreate Canvas Element
+            let canvas = document.createElement('canvas')
+            this.canvas = canvas
+
+            // Set Canvas Context
+            let ctx = this.canvas.getContext('2d')
+
+            // Create New Image
+            let img = new Image()
+            img.src = imgUrl
+
+            // Image Size After Scaling
+            let scale = this.scale / 100
+            let width = img.width * scale
+            let height = img.height * scale
+
+            // Set Canvas Height And Width According to Image Size And Scale
+            this.canvas.setAttribute('width', width)
+            this.canvas.setAttribute('height', height)
+
+            ctx.drawImage(img, 0, 0, width, height)
+
+            // Quality Of Image
+            let quality = this.quality ? (this.quality / 100) : 1
+
+            // If all files have been proceed
+            let base64 = this.canvas.toDataURL('image/jpeg', quality)
+            let fileName = this.result.file.name
+            let lastDot = fileName.lastIndexOf(".")
+            fileName = fileName.substr(0,lastDot) + '.jpeg'
+
+            let objToPass = {
+            canvas: this.canvas,
+            original: this.result,
+            compressed: {
+                blob: this.toBlob(base64),
+                base64: base64,
+                name: fileName,
+                file: this.buildFile(base64, fileName)
+            },
+            }
+
+            objToPass.compressed.size = Math.round(objToPass.compressed.file.size / 1000)+' kB'
+            objToPass.compressed.type = "image/jpeg"
+
+            this.doneCompressing(objToPass)
+
+        },
+
+        toBlob (imgUrl) {
+            let blob = base64toblob(imgUrl.split(',')[1], "image/jpeg")
+            let url = window.URL.createObjectURL(blob)
+            return url
+        },
+
+        // Convert Blob To File
+        buildFile (blob, name) {
+            return new File([blob], name)
+        },   
+
+        doneCompressing({ compressed }) {
+            console.log(compressed);
+            this.newAd.compressedImages.push({
+                id: compressed.file.name,
+                file: compressed.file
+            });
+            this.newAd.compressedImages = _.uniqBy(this.newAd.compressedImages, 'id');
+        },
+        
+
         removeImage(id){
             this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
         },

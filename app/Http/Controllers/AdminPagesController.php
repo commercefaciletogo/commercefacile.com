@@ -76,4 +76,23 @@ class AdminPagesController extends Controller
         $transformed = (new Manager())->createData(new Collection($users, new UsersTransformer()))->toArray()['data'];
         return view('admin.pages.users', ['users' => $transformed]);
     }
+
+    public function usersSearch()
+    {
+        // dd(request()->all());
+        $q = request()->get('q');
+        $user = User::with('ads')->where('phone', $q)->first();
+        if(!$user) return ['incomplete_results' => false, 'items' => []];
+
+        return response()->json([
+            'incomplete_results' => false,
+            'items' => [
+                [
+                    'name' => $user->name,
+                    'phone' => $user->phone,
+                    'ads' => $user->ads->count()
+                ]
+            ]
+        ]);
+    }
 }
