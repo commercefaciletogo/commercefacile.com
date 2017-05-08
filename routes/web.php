@@ -50,6 +50,7 @@ Route::localizedGroup(function(){
                 Route::get('ads', ['as' => 'api.ads', 'uses' => 'AdsApiController@all']);
                 Route::get('ads/status', ['as' => 'api.ads.status', 'uses' => 'AdsApiController@status']);
                 Route::post('ads/{id}', ['as' => 'api.ad.review', 'uses' => 'AdsApiController@review']);
+                Route::delete('ads/{id}', ['as' => 'api.ad.delete', 'uses' => 'AdsApiController@delete']);
             });
 
             Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminPagesController@dashboardPage']);
@@ -60,6 +61,8 @@ Route::localizedGroup(function(){
             Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
             Route::delete('/employees', ['as' => 'employee.delete', 'uses' => 'AdminEmployeesController@delete']);
             Route::post('/employees/new', ['as' => 'employee.save', 'uses' => 'AdminEmployeesController@save']);
+            Route::put('/employees/{id}/pass-reset', ['as' => 'employee.pass.reset', 'uses' => 'AdminEmployeesController@reset']);
+            Route::put('/employees/{id}/role-change', ['as' => 'employee.role.change', 'uses' => 'AdminEmployeesController@changeRole']);
             Route::post('/employees', ['as' => 'employee.pass.change', 'uses' => 'AdminEmployeesController@changePassword']);
         });
     });

@@ -72,7 +72,7 @@ class AdminPagesController extends Controller
 
     public function usersPage()
     {
-        $users = User::with('location', 'ads')->get();
+        $users = User::with('location', 'ads')->get()->sortByDesc('crreated_at');
         $transformed = (new Manager())->createData(new Collection($users, new UsersTransformer()))->toArray()['data'];
         return view('admin.pages.users', ['users' => $transformed]);
     }

@@ -59,6 +59,14 @@ class AdsApiController extends Controller
                 ->orderBy('id', 'asc');
         }
 
+        if($request->exists('q')){
+            $query->where(function ($q) use ($request) {
+                    $query = "%{$request->q}%";
+                    $q->where('code' , $request->q)
+                        ->orWhere('title', 'like', $query);
+            });
+        }
+
         if ($request->exists('filter')) {
             if(collect(['pending', 'online', 'offline', 'rejected'])->contains($request->filter)){
                 $query->where(function ($q) use ($request) {
@@ -100,6 +108,12 @@ class AdsApiController extends Controller
             $this->reject_ad($id, $fields);
         }
         return response()->json(['success' => true]);
+    }
+
+    public function delete($id)
+    {
+        $deleted = Ad::find($id)->delete();
+        return ['deleted' => $deleted];
     }
 
     /**

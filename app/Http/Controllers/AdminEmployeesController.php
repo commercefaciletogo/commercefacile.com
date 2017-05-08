@@ -28,6 +28,20 @@ class AdminEmployeesController extends Controller
         return redirect()->route('admin.employees');
     }
 
+    public function reset($id)
+    {
+        $employee = Admin::find($id);
+        $employee->update(['password' => bcrypt($this->get_default_pass())]);
+        return redirect()->route('admin.employees');
+    }
+
+    public function changeRole($id)
+    {
+        $employee = Admin::find($id);
+        $employee->update(['role_id' => request()->role_id]);
+        return redirect()->route('admin.employees');
+    }
+
     public function changePassword(Request $request)
     {
         $this->validate($request, [

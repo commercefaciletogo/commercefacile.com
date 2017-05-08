@@ -8,8 +8,7 @@
             <div v-cloak class="ui three column grid">
                 <div class="four wide column">
                     <div class="ui mini horizontal statistic">
-                        <div class="value">
-                            {{--@{{ ads.total }}--}}
+                        <div v-cloak class="value">
                         </div>
                         <div class="label">
                             {{ trans('general.ads') }}
@@ -17,10 +16,12 @@
                     </div>
                 </div>
                 <div class="six wide column">
-                    {{--<div class="ui mini fluid icon input">--}}
-                        {{--<input type="text" placeholder="Search...">--}}
-                        {{--<i class="circular search link icon"></i>--}}
-                    {{--</div>--}}
+                    <form style="margin-bottom: 0;" @submit.prevent="search">
+                        <div class="ui mini fluid icon input">
+                            <input v-model="query" type="text">
+                            <i @click="search" class="circular search link icon"></i>
+                        </div>
+                    </form>
                 </div>
                 <div class="six wide right aligned column">
                     <div class="mini ui buttons">
@@ -54,6 +55,11 @@
     <script>
         var adsApiUrl = "{!! route('api.ads') !!}";
         var adsUrl = "{!! route('admin.ads') !!}";
+        var adminRoleId = "{{ auth('admin')->user()->role->id }}";
     </script>
-    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-ads.js"></script>
+    @if(App::environment('local'))
+        <script src="{{ asset('js/admin-page-ads.js') }}"></script>
+    @else
+        <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-ads.js"></script>
+    @endif
 @endsection

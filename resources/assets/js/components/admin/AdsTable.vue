@@ -6,6 +6,7 @@
             :fields="fields"
             :per-page="20"
             pagination-path=""
+            :query-params="{filter: 'filter', q: 'query'}"
             :css="css.table"
             :sort-order="sortOrder"
             :multi-sort="true"
@@ -83,6 +84,8 @@
         props: ['api-url', 'status'],
         data(){
             return{
+                query: '',
+                filter: '',
                 fields: [
                     {name: 'code', title: `# Code`, titleClass: 'center aligned', dataClass: 'center aligned' },
                     {name: 'author', title: this.$t("fields.author"), titleClass: 'center aligned', dataClass: 'center aligned' },
@@ -117,12 +120,19 @@
         },
         watch: {
             status(val){
+                this.filter = val;
                 this.setFilter(val);
             }
         },
         methods: {
             setFilter(filterType){
-                this.moreParams = {filter: filterType};
+                this.moreParams = {filter: this.filter, q: this.query};
+                console.log(this.filter, this.query);
+                Vue.nextTick(() => this.$refs.vuetable.refresh());
+            },
+            setSearchQuery(query){
+                this.moreParams = {filter: this.filter, q: this.query};
+                console.log(this.filter, this.query);
                 Vue.nextTick(() => this.$refs.vuetable.refresh());
             },
             onPaginationData (paginationData) {
@@ -167,6 +177,12 @@
         mounted(){
             this.$events.$on('reload', () => {
                 this.setFilter(this.status);
+            });
+
+            this.$events.$on('search', ({query}) => {
+                this.query = query;
+                console.log(this.query);
+                this.setSearchQuery(query);
             })
         }
     }

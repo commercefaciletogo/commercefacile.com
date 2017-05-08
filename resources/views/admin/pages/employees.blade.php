@@ -46,19 +46,41 @@
                     <tr>
                         <td>{{ $employee['name'] }}</td>
                         <td>{{ $employee['email'] }}</td>
-                        <td>{{ ucfirst($employee->role->name) }}</td>
+                        <td>
+                            <form action="{{ route('employee.role.change', ['id'=>$employee['id']]) }}" class="ui inline form" method="POST" style="margin-bottom: 0 !important; display: inline-block;">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="id" value="{{ $employee['id'] }}">
+                                <select name="role_id" id="">
+                                    @foreach($roles as $role)
+                                        <option {{ $role->id == $employee->role->id ? "selected" : "" }} value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="mini compact ui button">
+                                    change role
+                                </button>
+                            </form>
+                        </td>
                         {{--<td>--}}
                             {{--<div class="ui mini compact {{ $employee['status'] == 'active' ? 'green' : 'red' }} horizontal label">--}}
                                 {{--{{ $employee['status'] }}--}}
                             {{--</div>--}}
                         {{--</td>--}}
                         <td>
-                            <form action="{{ route('employee.delete') }}" class="ui form" method="POST" style="margin-bottom: 0 !important;">
+                            <form action="{{ route('employee.delete') }}" class="ui form" method="POST" style="margin-bottom: 0 !important; display: inline-block;">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="id" value="{{ $employee['id'] }}">
                                 <button type="submit" class="mini compact ui button">
                                     delete
+                                </button>
+                            </form>
+                            <form action="{{ route('employee.pass.reset', ['id'=>$employee['id']]) }}" class="ui form" method="POST" style="margin-bottom: 0 !important; display: inline-block;">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="id" value="{{ $employee['id'] }}">
+                                <button type="submit" class="mini compact ui button">
+                                    reset
                                 </button>
                             </form>
                         </td>

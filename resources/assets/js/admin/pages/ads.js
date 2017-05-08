@@ -1,6 +1,9 @@
+import _ from 'lodash';
 import Vue from 'vue';
-import AdsTable from '../../components/admin/AdsTable.vue';
 import VueEvents from 'vue-events';
+
+import AdsTable from '../../components/admin/AdsTable.vue';
+
 const VueI18n = require('vue-i18n');
 
 const host = window.location.host;
@@ -41,11 +44,16 @@ new Vue({
         'ads-table': AdsTable
     },
     data: {
-        currentStatus: 'all'
+        currentStatus: 'all',
+        query: ''
     },
     methods: {
         changeStatus(type){
             this.currentStatus = type;
+        },
+        search() {
+            if (_.isEmpty(this.query)) return;
+            this.$events.$emit('search', { query: this.query });
         }
     },
     mounted(){
