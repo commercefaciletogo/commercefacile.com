@@ -186,10 +186,12 @@ class AdsController extends Controller
         $raw_ad = Ad::with('images')->where('uuid', $id)->first();
         if( !$raw_ad ) abort(404);
 
-        try{
-            $ad = Ad::with('category')->where('uuid', $id)
+//        $this->dispatch(new DownloadAdImages(auth('user')->user(), $raw_ad, "original"));
+
+        $ad = Ad::with('category')->where('uuid', $id)
             ->get()
             ->map(function($ad){
+//                dd($ad);
                 return [
                     'id' => $ad['id'],
                     'code' => $ad['code'],
@@ -205,9 +207,6 @@ class AdsController extends Controller
                     ]
                 ];
             })->first();
-        }catch(\Exception $e){
-            return redirect()->back();
-        }
 
         if(!$ad) abort(404);
 
@@ -220,10 +219,13 @@ class AdsController extends Controller
 
         if(!$ad) abort(404);
 
-        // $paths = $ad->images->map(function($img){
-        //     return $this->formatPath($img['path']);
-        // });
-        // $this->deleteAdImages($paths, 'rackspace');
+        $paths = $ad->images->map(function($img){
+            return $this->formatPath($img['path']);
+        });
+
+        $this->deleteAdImages($paths, 'rackspace');
+
+        $ad->images()->delete();
 
         $data = [
             'category_id' => request()->category_id,
@@ -247,15 +249,15 @@ class AdsController extends Controller
 
         if(!$ad) return abort(404);
 
-        // $paths = collect($ad['images'])
-        //     ->filter(function($img){
-        //         return $img['size'] == 'original';
-        //     })
-        //     ->map(function($img){
-        //     return "/ads/{$img['name']}";
-        // });
+        $paths = collect($ad['images'])
+            ->filter(function($img){
+                return $img['size'] == 'original';
+            })
+            ->map(function($img){
+            return "/ads/{$img['name']}";
+        });
 
-        // $this->deleteAdImages($paths, 'public');
+        $this->deleteAdImages($paths, 'public');
 
         return $paths;
     }

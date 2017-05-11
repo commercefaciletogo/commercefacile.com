@@ -96,8 +96,8 @@ new Vue({
                 data.append('location_id', this.user.location.id);
             }
             data.append('_token', csrf);
-            data.append('image_length', this.newAd.photos.length);
-            _.forEach(this.newAd.photos, (photo, i) => data.append(`image_${i + 1}`, photo.file));
+            data.append('image_length', this.newAd.compressedImages.length);
+            _.forEach(this.newAd.compressedImages, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios.post(window.postAdUrl, data).then(res => {
                 if(res.data.done){
@@ -120,17 +120,17 @@ new Vue({
                     id: file.name,
                     file
                 });
-                // this.currentUploadedFile = file;
+                this.currentUploadedFile = file;
                 this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
 
                  // Make new FileReader
-                // this.reader = new FileReader()
+                this.reader = new FileReader();
 
-                // // Convert the file to base64 text
-                // this.reader.readAsDataURL(file)
+                // on reader load somthing...
+                this.reader.onload = this.fileOnLoad;
 
-                // // on reader load somthing...
-                // this.reader.onload = this.fileOnLoad
+                // Convert the file to base64 text
+                this.reader.readAsDataURL(file);
             }
         },
 
@@ -155,53 +155,55 @@ new Vue({
         },
 
         drawImage(imgUrl) {
-            // Recreate Canvas Element
-            let canvas = document.createElement('canvas')
-            this.canvas = canvas
-
-            // Set Canvas Context
-            let ctx = this.canvas.getContext('2d')
-
             // Create New Image
             let img = new Image()
+            img.onload = event => { 
+                // Recreate Canvas Element
+                let canvas = document.createElement('canvas')
+                // this.canvas = canvas
+
+                // Set Canvas Context
+                let ctx = canvas.getContext('2d')
+
+                // Image Size After Scaling
+                let scale = this.scale / 100
+                let width = img.width * scale
+                let height = img.height * scale
+
+                // Set Canvas Height And Width According to Image Size And Scale
+                canvas.setAttribute('width', width);
+                canvas.setAttribute('height', height);
+
+                ctx.drawImage(img, 0, 0, width, height);
+
+                // Quality Of Image
+                let quality = this.quality ? (this.quality / 100) : 1
+
+                // If all files have been proceed
+                let base64 = canvas.toDataURL('image/jpeg', quality);
+
+                let fileName = this.result.file.name;
+                let lastDot = fileName.lastIndexOf(".");
+                fileName = fileName.substr(0, lastDot) + '.jpeg';
+
+                let objToPass = {
+                canvas: canvas,
+                original: this.result,
+                compressed: {
+                        blob: this.toBlob(base64),
+                        base64: base64,
+                        name: fileName,
+                        file: this.buildFile(base64, fileName)
+                    },
+                }
+
+                objToPass.compressed.size = Math.round(objToPass.compressed.file.size / 1000)+' kB'
+                objToPass.compressed.type = "image/jpeg"
+
+                this.doneCompressing(objToPass)
+
+            };
             img.src = imgUrl
-
-            // Image Size After Scaling
-            let scale = this.scale / 100
-            let width = img.width * scale
-            let height = img.height * scale
-
-            // Set Canvas Height And Width According to Image Size And Scale
-            this.canvas.setAttribute('width', width)
-            this.canvas.setAttribute('height', height)
-
-            ctx.drawImage(img, 0, 0, width, height)
-
-            // Quality Of Image
-            let quality = this.quality ? (this.quality / 100) : 1
-
-            // If all files have been proceed
-            let base64 = this.canvas.toDataURL('image/jpeg', quality)
-            let fileName = this.result.file.name
-            let lastDot = fileName.lastIndexOf(".")
-            fileName = fileName.substr(0,lastDot) + '.jpeg'
-
-            let objToPass = {
-            canvas: this.canvas,
-            original: this.result,
-            compressed: {
-                blob: this.toBlob(base64),
-                base64: base64,
-                name: fileName,
-                file: this.buildFile(base64, fileName)
-            },
-            }
-
-            objToPass.compressed.size = Math.round(objToPass.compressed.file.size / 1000)+' kB'
-            objToPass.compressed.type = "image/jpeg"
-
-            this.doneCompressing(objToPass)
-
         },
 
         toBlob (imgUrl) {

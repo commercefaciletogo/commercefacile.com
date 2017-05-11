@@ -1,12 +1,15 @@
 import _ from 'lodash';
 import axios from 'axios';
-import Vue from 'vue';
 import blodUtil from 'blob-util';
+import Vue from 'vue';
 
 import Categories from '../components/ads/create/Categories.vue';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
 import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
+
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
 
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 let oldAd = window.oldAd;
@@ -32,7 +35,7 @@ new Vue({
             photos: [],
             price: {
                 amount: oldAd.price.amount,
-                negotiable: true
+                negotiable: oldAd.price.negotiable
             }
         },
         errors: {
@@ -99,7 +102,7 @@ new Vue({
                 method: 'POST',
                 data: data}).then(res => {
                 if(res.data.done){
-                    return window.location = window.profileUrl;
+                    return ;
                 }
             }).catch(error => {
                 this.submitting = false;
@@ -188,5 +191,10 @@ new Vue({
 
         this.fetchCategories();
         this.fetchLocations();
+
+        const channel = `Author.${window.authorId}`;
+        socket.on(`${channel}:AdWasSubmitted`, () => {
+            window.location = window.profileUrl
+        });
     }
 });

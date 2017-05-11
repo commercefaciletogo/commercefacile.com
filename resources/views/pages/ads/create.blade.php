@@ -181,7 +181,7 @@
                                 <div class="ui grid">
                                     <div class="six wide computer tablet column">
                                         <div style="position: relative;overflow: hidden;">
-                                            <input id="fileInput" accept="image/*" type="file" class="custom" @change="addImage" style="position: absolute; top: 0;bottom: 0;left: 0;right: 0;opacity: 0.001; display: none;">
+                                            <input id="fileInput" accept=".jpg" type="file" class="custom" @change="addImage" style="position: absolute; top: 0;bottom: 0;left: 0;right: 0;opacity: 0.001; display: none;">
                                             <label  v-cloak for="fileInput" :class="[moreImageDefaultStyle, errors.images ? 'error' : '', moreImage ? '' : 'disabled']" style="cursor: pointer;">
                                                 + Image
                                             </label>
