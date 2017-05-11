@@ -272,7 +272,7 @@
                             <div class="eight wide computer eight wide tablet only column">
                             </div>
                             <div class="three wide computer three wide tablet sixteen wide mobile column right aligned">
-                                <button @click.prevent="submit" class="ui fluid button">{{ trans('general.submit') }}</button>
+                                <button v-cloak @click.prevent="submit" :class="['ui fluid ', {loading:submitting}, ' button']">{{ trans('general.submit') }}</button>
                             </div>
                         </div>
                     </div>
