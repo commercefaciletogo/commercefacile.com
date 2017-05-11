@@ -220,10 +220,10 @@ class AdsController extends Controller
 
         if(!$ad) abort(404);
 
-        $paths = $ad->images->map(function($img){
-            return $this->formatPath($img['path']);
-        });
-        $this->deleteAdImages($paths, 'rackspace');
+        // $paths = $ad->images->map(function($img){
+        //     return $this->formatPath($img['path']);
+        // });
+        // $this->deleteAdImages($paths, 'rackspace');
 
         $data = [
             'category_id' => request()->category_id,
