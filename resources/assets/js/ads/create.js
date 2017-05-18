@@ -108,8 +108,8 @@ new Vue({
                 data.append('location_id', this.user.location.id);
             }
             data.append('_token', csrf);
-            data.append('image_length', this.newAd.compressedImages.length);
-            _.forEach(this.newAd.compressedImages, (photo, i) => data.append(`image_${i + 1}`, photo.file));
+            data.append('image_length', this.newAd.photos.length);
+            _.forEach(this.newAd.photos, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios.post(window.postAdUrl, data).then(res => {
                 if (res.data.done) {
@@ -128,12 +128,6 @@ new Vue({
 
             if (input.files && input.files[0]) {
                 let file = input.files[0];
-                this.newAd.photos.push({
-                    id: file.name,
-                    file
-                });
-                // this.currentUploadedFile = file;
-                this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
                 let compressor = new ImageCompressor(file,
                     document.createElement('canvas'),
                     this.scale,
@@ -146,16 +140,21 @@ new Vue({
 
         doneCompressing({ compressed }) {
             console.log(compressed);
-            this.newAd.compressedImages.push({
+            this.newAd.photos.push({
                 id: compressed.file.name,
-                file: compressed.file
+                file: compressed.file,
+                base: compressed.base64
             });
-            this.newAd.compressedImages = _.uniqBy(this.newAd.compressedImages, 'id');
+            this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
         },
         
 
         removeImage(id){
-            this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
+            console.log(id);
+            let newComp = _.reject(this.newAd.photos, { 'id': id });
+            this.$set(this.newAd, 'photos', newComp);
+            console.log(newComp);
+             
         },
         chooseCategory(e){
 
@@ -179,7 +178,8 @@ new Vue({
                 .catch(error => {
                 });
         },
-        closeCategoryModal({id, name}){
+        closeCategoryModal({id, name}) {
+            console.log(id, name);
             this.selectedSubCategory = {id, name};
             this.newAd.category.text = `${name}`;
             this.newAd.category.id = id;

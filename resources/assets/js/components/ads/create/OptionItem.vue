@@ -29,7 +29,7 @@
                 </div>
             </div>
         </template>
-        <div v-else class="title" @click="select(item.id, item.name)">
+        <div v-else class="title" @click="select({id: item.id, name: item.name})">
             <img class="ui mini right spaced image" style="width: 20px;" :src="item.icon">
             {{ item.name }}
         </div>

@@ -104,8 +104,8 @@ new Vue({
                 data.append('location_id', this.user.location.id);
             }
             data.append('_token', csrf);
-            data.append('image_length', this.newAd.compressedImages.length);
-            _.forEach(this.newAd.compressedImages, (photo, i) => data.append(`image_${i + 1}`, photo.file));
+            data.append('image_length', this.newAd.photos.length);
+            _.forEach(this.newAd.photos, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios({url: window.updateAdUrl,
                 method: 'POST',
@@ -132,12 +132,6 @@ new Vue({
 
             if (input.files && input.files[0]) {
                 let file = input.files[0];
-
-                this.newAd.photos.push({
-                    id: file.name,
-                    file: file
-                });
-                this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
                 let compressor = new ImageCompressor(file,
                     document.createElement('canvas'),
                     this.scale,
@@ -149,14 +143,15 @@ new Vue({
         },
          doneCompressing({ compressed }) {
             console.log(compressed);
-            this.newAd.compressedImages.push({
+            this.newAd.photos.push({
                 id: compressed.file.name,
-                file: compressed.file
+                file: compressed.file,
+                base: compressed.base64
             });
-            this.newAd.compressedImages = _.uniqBy(this.newAd.compressedImages, 'id');
+            this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
         },
-        removeImage(id){
-            this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
+         removeImage(id) {
+             this.$set(this.newAd, 'photos', _.reject(this.newAd.photos, {'id': id}));
         },
         fetchSub(category){
             this.selectedCategory = category;
@@ -191,10 +186,11 @@ new Vue({
         convertImages(bases){
             console.log('start downloading...');
             _.each(bases, base => {
-                blodUtil.base64StringToBlob(base).then(blob => {
-                    this.newAd.photos.push({
+                blodUtil.base64StringToBlob(base)
+                .then(blob => {this.newAd.photos.push({
                         id: + new Date(),
-                        file: blob
+                        file: blob,
+                        base: `data:image/jpeg;base64,${base}`
                     });
                     this.newAdBuffer = _.cloneDeep(this.newAd);
                 }).catch(error => {

@@ -15,7 +15,7 @@
         },
         computed: {
             image(){
-                return URL.createObjectURL(this.src.file);
+                return this.src.base;
             }
         },
         props: ['src'],
