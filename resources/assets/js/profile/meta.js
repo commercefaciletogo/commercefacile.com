@@ -57,22 +57,22 @@ new Vue({
     },
     mounted() {
         this.initClipboard();
-        const channel = `Author.${window.authorId}`;
-        socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
-            console.log(channel);
-            this.showProgress = true;
-            $('#process').progress('set percent', data.percent);
-            this.process.status = data.status;
-        });
+        // const channel = `Author.${window.authorId}`;
+        // socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
+        //     console.log(channel);
+        //     this.showProgress = true;
+        //     $('#process').progress('set percent', data.percent);
+        //     this.process.status = data.status;
+        // });
 
-        socket.on(`${channel}:AdWasSubmitted`, ({data}) => {
-            if(data.submitted){
-                window.location = window.location.pathname;
-            }else {
-                $('#process').progress('set error');
-                this.process.status = "";
-            }
-        });
+        // socket.on(`${channel}:AdWasSubmitted`, ({data}) => {
+        //     if(data.submitted){
+        //         window.location = window.location.pathname;
+        //     }else {
+        //         $('#process').progress('set error');
+        //         this.process.status = "";
+        //     }
+        // });
         console.log('meta mounted')
     }
 });

@@ -281,6 +281,8 @@
 
         </div>
 
+         @include('partials.pages.loading_modal')
+
         <div class="remodal" data-remodal-id="choose-category" id="chooseCategory" data-remodal-options="closeOnOutsideClick: false">
             <button data-remodal-action="close" class="remodal-close"></button>
             <div class="ui container left aligned">
@@ -313,6 +315,9 @@
         var cancelUpdateAdUrl = "{!! route('ads.single.update.cancel', ['id' => $ad['id']]) !!}";
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/edit.js"></script>
-    {{--<script src="{{ asset('js/edit.js') }}"></script>--}}
+    @if(App::environment('production'))
+        <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/edit.js"></script>
+    @else
+        <script src="{{ asset('js/edit.js') }}"></script>
+    @endif
 @endsection

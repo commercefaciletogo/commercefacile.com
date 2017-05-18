@@ -4,6 +4,7 @@ import blodUtil from 'blob-util';
 import Vue from 'vue';
 
 import Categories from '../components/ads/create/Categories.vue';
+import ImageCompressor from '../helpers/compressor';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
 import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
@@ -33,6 +34,7 @@ new Vue({
             description: oldAd.description,
             condition: oldAd.condition,
             photos: [],
+            compressedImages: [],
             price: {
                 amount: oldAd.price.amount,
                 negotiable: oldAd.price.negotiable
@@ -52,7 +54,14 @@ new Vue({
                 id: ''
             },
         },
-        moreImageDefaultStyle: 'ui tiny compact button inp act'
+        moreImageDefaultStyle: 'ui tiny compact button inp act',
+        scale: 100,
+        quality: 50,
+        process: {
+            status: '',
+            percent: 5,
+            modal: {}
+        },
     },
     computed: {
         moreImage() {
@@ -95,14 +104,14 @@ new Vue({
                 data.append('location_id', this.user.location.id);
             }
             data.append('_token', csrf);
-            data.append('image_length', this.newAd.photos.length);
-            _.forEach(this.newAd.photos, (photo, i) => data.append(`image_${i + 1}`, photo.file));
+            data.append('image_length', this.newAd.compressedImages.length);
+            _.forEach(this.newAd.compressedImages, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios({url: window.updateAdUrl,
                 method: 'POST',
                 data: data}).then(res => {
                 if(res.data.done){
-                    return ;
+                    this.process.modal.open();
                 }
             }).catch(error => {
                 this.submitting = false;
@@ -121,13 +130,30 @@ new Vue({
         addImage(event){
             const input = event.target;
 
-            if(input.files && input.files[0]){
+            if (input.files && input.files[0]) {
+                let file = input.files[0];
+
                 this.newAd.photos.push({
-                    id: input.files[0].name,
-                    file: input.files[0]
+                    id: file.name,
+                    file: file
                 });
                 this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
+                let compressor = new ImageCompressor(file,
+                    document.createElement('canvas'),
+                    this.scale,
+                    this.quality,
+                    this.doneCompressing);
+                
+                compressor.run();
             }
+        },
+         doneCompressing({ compressed }) {
+            console.log(compressed);
+            this.newAd.compressedImages.push({
+                id: compressed.file.name,
+                file: compressed.file
+            });
+            this.newAd.compressedImages = _.uniqBy(this.newAd.compressedImages, 'id');
         },
         removeImage(id){
             this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
@@ -177,7 +203,27 @@ new Vue({
             })
         }
     },
-    mounted(){
+    mounted() {
+        
+        this.process.modal = $('[data-remodal-id=process-loading]').remodal({ closeOnOutsideClick: false, hashTracking: false });
+        
+        const channel = `Author.${window.authorId}`;
+        socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
+            console.log(channel);
+            this.showProgress = true;
+            $('#process').progress('set percent', data.percent);
+            this.process.status = data.status;
+        });
+
+        socket.on(`${channel}:AdWasSubmitted`, ({data}) => {
+            if(data.submitted){
+                window.location = window.profileUrl;
+            }else {
+                $('#process').progress('set error');
+                this.process.status = "";
+                this.process.modal.close();
+            }
+        });
 
         this.convertImages(oldAd.images);
 
@@ -191,10 +237,5 @@ new Vue({
 
         this.fetchCategories();
         this.fetchLocations();
-
-        const channel = `Author.${window.authorId}`;
-        socket.on(`${channel}:AdWasSubmitted`, () => {
-            window.location = window.profileUrl
-        });
     }
 });

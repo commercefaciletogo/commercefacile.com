@@ -288,6 +288,8 @@
 
         </div>
 
+        @include('partials.pages.loading_modal')
+
         <div class="remodal" data-remodal-id="choose-category" id="chooseCategory" data-remodal-options="closeOnOutsideClick: false">
             <button data-remodal-action="close" class="remodal-close"></button>
             <div class="ui container left aligned">
@@ -315,10 +317,9 @@
         var postAdUrl = "{!! route('ads.save') !!}";
         var profileUrl = "{!! route('user.profile', ['user_name' => auth('user')->user()->slug]) !!}";
         var requireLocation = "{!! is_null(auth('user')->user()->location) !!}";
-        var authorId = "{!! auth('user')->user()->id !!}";
+        var authorId = "{!! auth('user')->user()->uuid !!}";
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jic/2.0.2/JIC.min.js"></script>
     @if(App::environment('production'))
         <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/create.js"></script>
     @else

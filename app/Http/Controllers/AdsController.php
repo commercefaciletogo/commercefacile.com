@@ -166,7 +166,6 @@ class AdsController extends Controller
 
     public function save()
     {
-        // dd(request()->all());
         try{
             if(request()->get('location_id')){
                 $this->updateUserLocation(request());
@@ -223,7 +222,6 @@ class AdsController extends Controller
             return $this->formatPath($img['path']);
         });
 
-        $this->deleteAdImages($paths, 'rackspace');
 
         $ad->images()->delete();
 

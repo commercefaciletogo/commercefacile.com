@@ -5,15 +5,21 @@ import Notify from 'izitoast';
 import Vue from 'vue';
 
 import Categories from '../components/ads/create/Categories.vue';
+import ImageCompressor from '../helpers/compressor';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
 import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
+
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
+
 
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 
 new Vue({
     el: 'div#main',
     data: {
+        showProgress: false,
         submitting: false,
         categories: [],
         locations: [],
@@ -53,7 +59,12 @@ new Vue({
         scale: 100,
         quality: 50,
         result: {},
-        reader: {}
+        reader: {},
+        process: {
+            status: '',
+            percent: 5,
+            modal: {}
+        },
     },
     computed: {
         moreImage() {
@@ -68,7 +79,8 @@ new Vue({
         'option-item' : OptionItem
     },
     methods: {
-        submit(){
+        submit() {
+            
             this.submitting = true;
             this.errors.title = _.trim(this.newAd.title).length < 5;
             this.errors.category = !_.isNumber(this.newAd.category.id);
@@ -100,8 +112,8 @@ new Vue({
             _.forEach(this.newAd.compressedImages, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios.post(window.postAdUrl, data).then(res => {
-                if(res.data.done){
-                    window.location = window.profileUrl;
+                if (res.data.done) {
+                    this.process.modal.open();
                 }
             }).catch(error => {
                 this.submitting = false;
@@ -120,102 +132,17 @@ new Vue({
                     id: file.name,
                     file
                 });
-                this.currentUploadedFile = file;
+                // this.currentUploadedFile = file;
                 this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
-
-                 // Make new FileReader
-                this.reader = new FileReader();
-
-                // on reader load somthing...
-                this.reader.onload = this.fileOnLoad;
-
-                // Convert the file to base64 text
-                this.reader.readAsDataURL(file);
+                let compressor = new ImageCompressor(file,
+                    document.createElement('canvas'),
+                    this.scale,
+                    this.quality,
+                    this.doneCompressing);
+                
+                compressor.run();
             }
-        },
-
-        fileOnLoad() {
-            // The File
-            let { currentUploadedFile } = this
-
-            // Make a fileInfo Object
-            let fileInfo = {
-                name: currentUploadedFile.name,
-                type: currentUploadedFile.type,
-                size: Math.round(currentUploadedFile.size / 1000)+' kB',
-                base64: this.reader.result,
-                file: currentUploadedFile
-            }
-
-            // Push it to the state
-            this.result = fileInfo
-
-            // DrawImage
-            this.drawImage(this.result.base64)
-        },
-
-        drawImage(imgUrl) {
-            // Create New Image
-            let img = new Image()
-            img.onload = event => { 
-                // Recreate Canvas Element
-                let canvas = document.createElement('canvas')
-                // this.canvas = canvas
-
-                // Set Canvas Context
-                let ctx = canvas.getContext('2d')
-
-                // Image Size After Scaling
-                let scale = this.scale / 100
-                let width = img.width * scale
-                let height = img.height * scale
-
-                // Set Canvas Height And Width According to Image Size And Scale
-                canvas.setAttribute('width', width);
-                canvas.setAttribute('height', height);
-
-                ctx.drawImage(img, 0, 0, width, height);
-
-                // Quality Of Image
-                let quality = this.quality ? (this.quality / 100) : 1
-
-                // If all files have been proceed
-                let base64 = canvas.toDataURL('image/jpeg', quality);
-
-                let fileName = this.result.file.name;
-                let lastDot = fileName.lastIndexOf(".");
-                fileName = fileName.substr(0, lastDot) + '.jpeg';
-
-                let objToPass = {
-                canvas: canvas,
-                original: this.result,
-                compressed: {
-                        blob: this.toBlob(base64),
-                        base64: base64,
-                        name: fileName,
-                        file: this.buildFile(base64, fileName)
-                    },
-                }
-
-                objToPass.compressed.size = Math.round(objToPass.compressed.file.size / 1000)+' kB'
-                objToPass.compressed.type = "image/jpeg"
-
-                this.doneCompressing(objToPass)
-
-            };
-            img.src = imgUrl
-        },
-
-        toBlob (imgUrl) {
-            let blob = base64toblob(imgUrl.split(',')[1], "image/jpeg")
-            let url = window.URL.createObjectURL(blob)
-            return url
-        },
-
-        // Convert Blob To File
-        buildFile (blob, name) {
-            return new File([blob], name)
-        },   
+        }, 
 
         doneCompressing({ compressed }) {
             console.log(compressed);
@@ -262,9 +189,31 @@ new Vue({
             this.user.location.id = id;
             this.user.location.text = name;
             $('#chooseLocation').remodal().close();
+        },
+        getProcessLoadingModal() {
+            return $('[data-remodal-id=process-loading]').remodal({closeOnOutsideClick: false});
         }
     },
-    mounted(){
+    mounted() {    
+         this.process.modal = $('[data-remodal-id=process-loading]').remodal({ closeOnOutsideClick: false, hashTracking: false });
+        
+        const channel = `Author.${window.authorId}`;
+        socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
+            console.log(channel);
+            this.showProgress = true;
+            $('#process').progress('set percent', data.percent);
+            this.process.status = data.status;
+        });
+
+        socket.on(`${channel}:AdWasSubmitted`, ({data}) => {
+            if(data.submitted){
+                window.location = window.profileUrl;
+            }else {
+                $('#process').progress('set error');
+                this.process.status = "";
+                this.process.modal.close();
+            }
+        });
 
         $('#chooseCategory').accordion();
 
