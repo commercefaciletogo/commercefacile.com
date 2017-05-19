@@ -15,6 +15,10 @@
                 Employees
             </a>
         @endif
+        <a class="item {{ starts_with(Route::currentRouteName(), 'admin.agent') ? 'active' : ''  }}"
+            href="{{ route('admin.agents') }}">
+            Agents
+        </a>
         <a class="item {{ Route::currentRouteName() == 'admin.users' ? 'active' : '' }}"
            href="{{ route('admin.users') }}">
             Users

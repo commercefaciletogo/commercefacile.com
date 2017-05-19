@@ -46,7 +46,11 @@ new Vue({
                     fields: {
                         results : 'items',
                         title: 'name',
-                        price: 'ads'
+                        description: 'agent',
+                        price: 'ads',
+                        action: 'view',
+                        actionText: '<i class="icon eye"></i>',
+                        actionUrl: 'url',
                     },
                     minCharacters : 8
                 })

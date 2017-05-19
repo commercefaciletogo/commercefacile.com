@@ -4,6 +4,8 @@ namespace App\Http\Controllers\UserAuth;
 
 use App\Notifications\PhoneConfirmation;
 use App\User;
+use App\AgentMeta;
+use App\AgentSubscriber;
 use Bjrnblm\Messagebird\Facades\Messagebird;
 use Illuminate\Notifications\Notifiable;
 use NotificationChannels\Messagebird\MessagebirdMessage;
@@ -52,7 +54,10 @@ class RegisterController extends Controller
         $data = request()->all();
         $this->validator($data)->validate();
 
-        $sendCode = $this->sendCode(request('phone'));
+        // $sendCode = $this->sendCode(request('phone'));
+        $sendCode = true;
+        session()->put('code', '1234');
+
         if($sendCode == true){
             session()->put('user_registration_data', array_add($data, 'status', 'active'));
             $token = Uuid::uuid4();
@@ -96,6 +101,13 @@ class RegisterController extends Controller
         }
 
         $user = $this->add_user(session('user_registration_data'));
+
+        if(session()->has('agent')){
+            $agent = session()->get('agent');
+            AgentSubscriber::create(['agent_id' => $agent->id, 'user_id' => $user->id]);
+            session()->forget('agent');
+        }
+
         Auth::guard('user')->login($user);
         return redirect($this->get_user_profile_url($user->slug));
     }
@@ -140,6 +152,15 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
+        if(request()->has('a')){
+            $agent_token = request()->get('a');
+            $meta = AgentMeta::where('token', $agent_token)->first();
+            if(!$meta) return;
+
+            $agent = $meta->agent;
+            if(!$agent) return;
+            session()->put('agent', $agent); 
+        }
         return view('user.auth.register');
     }
 

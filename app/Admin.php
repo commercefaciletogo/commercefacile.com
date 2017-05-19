@@ -45,4 +45,14 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public function meta()
+    {
+        return $this->hasOne(AgentMeta::class, 'agent_id');
+    }
+
+    public function subscribers()
+    {
+        return $this->hasMany(AgentSubscriber::class, 'agent_id');
+    }
 }
