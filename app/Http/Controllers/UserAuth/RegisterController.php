@@ -54,9 +54,9 @@ class RegisterController extends Controller
         $data = request()->all();
         $this->validator($data)->validate();
 
-        // $sendCode = $this->sendCode(request('phone'));
-        $sendCode = true;
-        session()->put('code', '1234');
+        $sendCode = $this->sendCode(request('phone'));
+        // $sendCode = true;
+        // session()->put('code', '1234');
 
         if($sendCode == true){
             session()->put('user_registration_data', array_add($data, 'status', 'active'));
