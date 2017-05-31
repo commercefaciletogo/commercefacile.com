@@ -353,12 +353,13 @@ class AdsController extends Controller
     {
         $img_paths = [];
         $total_images = (int)$request->image_length;
-        for ($i = 1; $i <= $total_images; $i++) {
-            $key = "image_{$i}";
+        for ($i = 0; $i < $total_images; $i++) {
+            $img_num = $i + 1;
+            $key = "image_{$img_num}";
             $uploadedFile = $request->file($key);
 
             $path = Storage::disk('local')
-                ->putFileAs('ads', $uploadedFile, "{$uuid}_{$i}.jpg");
+                ->putFileAs('ads', $uploadedFile, "{$uuid}_{$img_num}.jpg");
 
             array_push($img_paths, $path);
         }

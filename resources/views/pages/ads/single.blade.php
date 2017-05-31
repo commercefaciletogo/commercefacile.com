@@ -183,8 +183,7 @@
                                                     <i data-clipboard-text="{{$ad['owner']['phone']}}" class="icon big copy" style="cursor:pointer;"></i>
                                                 </div>
                                                 <div v-else class="middle aligned content">
-                                                    {!! "{$ad['owner']['phone'][0]}xxxxxxx" !!}
-                                                    <i @click="showPhone" class="icon big eye" style="cursor:pointer;"></i>
+                                                    {!! $ad['owner']['phone'] !!}
                                                 </div>
                                             </div>
                                             <div class="item" style="">
@@ -205,6 +204,13 @@
                                                     {{ $ad['date']}}
 {{--                                                    {{ \Carbon\Carbon::now()->toFormattedDateString()}}--}}
                                                 </div>
+                                            </div>
+                                            <div class="item">
+                                                <a class="ui button fluid" href="{{ route('user.profile.public', ['user_name' => $ad['owner']['slug']]) }}"
+                                                        style="">
+                                                    {{-- <i class="star empty icon"></i> --}}
+                                                    {{ trans('general.view_user_all') }}
+                                                </a>
                                             </div>
                                             <div class="item">
                                                 <button {{ auth('user')->check() ? '' : 'disabled' }}
@@ -270,8 +276,8 @@
                                                 <i data-clipboard-text="{{$ad['owner']['phone']}}" class="icon big copy" style="cursor:pointer;"></i>
                                             </span>
                                             <span v-else>
-                                                {{ "{$ad['owner']['phone'][0]}xxxxxxx" }}
-                                                <i @click="showPhone" class="icon big eye" style="cursor:pointer;"></i>
+                                                {{ $ad['owner']['phone'] }}
+                                                {{-- <i @click="showPhone" class="icon big eye" style="cursor:pointer;"></i> --}}
                                             </span>
                                         </p>
                                         <p class="ui container center aligned">
@@ -324,6 +330,9 @@
                     <div class="mobile only row">
                         <div class="column">
                             <div style="margin-top: 1em;padding: .5em; background-color: #fff; border-bottom: 2px solid #d1d5de;">
+                                <a style="margin-bottom: 1em;" href="{{ route('user.profile.public', ['user_name' => $ad['owner']['slug']]) }}" class="ui fluid button">
+                                    {{ trans('general.view_user_all') }}
+                                </a>
                                 <button
                                         {{ auth('user')->check() ? '' : 'disabled' }}
                                         v-cloak

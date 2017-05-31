@@ -119,5 +119,6 @@
         'sure?' => 'Are you sure?',
         'no_ad' => 'No Ads.',
         'no_favorite' => 'No Favorites',
-        'copy_link' => "Copy link"
+        'copy_link' => "Copy link",
+        'view_user_all' => 'See all ads from this seller'
     ];
