@@ -151,7 +151,7 @@
                 </h5>
                 <div class="ui attached segment">
                     <div class="ui tiny images">
-                        @foreach($ad['images']['small'] as $image)
+                        @foreach(collect($ad['images']['small'])->sortBy('path')->all() as $image)
                             <img class="ui image" src="{{ $image['path'] }}">
                         @endforeach
                     </div>
@@ -162,7 +162,7 @@
                 </h5>
                 <div class="ui attached segment">
                     <div class="ui big images">
-                        @foreach($ad['images']['big'] as $image)
+                        @foreach(collect($ad['images']['big'])->sortBy('path')->all() as $image)
                             <img class="ui image" src="{{ $image['path'] }}">
                         @endforeach
                     </div>
@@ -172,7 +172,7 @@
                 </h5>
                 <div class="ui bottom attached segment">
                     <div class="ui big images">
-                        @foreach($ad['images']['original'] as $image)
+                        @foreach(collect($ad['images']['original'])->sortBy('path')->all() as $image)
                             <img class="ui image" src="{{ $image['path'] }}">
                         @endforeach
                     </div>

@@ -140,9 +140,11 @@ class AdsController extends Controller
     public function single($id)
     {
         $ad = Ad::with('images', 'owner', 'category', 'owner.location')
+            ->where('status', 'online')
             ->where('uuid', $id)
             ->first();
         if(! $ad) abort(404);
+        
         $similar = Ad::with('images', 'category')
             ->where('status', 'online')
             ->where('category_id', $ad->category_id)
