@@ -48,7 +48,8 @@ class PagesController extends Controller
         });
         $cities = $this->location->whereNotNull('parent_id')->take(7)->get();
         $latest_ads = $this->get_latest_ads();
-        return view('pages.home.index', ['categories' => $categories, 'cities' => $cities, 'latest' => $latest_ads]);
+        $popular_cat_ads = $this->get_pop_ads();
+        return view('pages.home.index', ['categories' => $categories, 'cities' => $cities, 'pop_cat' => $popular_cat_ads, 'latest' => $latest_ads]);
     }
 
     public function sell()
@@ -91,21 +92,11 @@ class PagesController extends Controller
      */
     private function get_latest_ads()
     {
-        return Category::with('ads')->get()->sortByDesc(function(Category $category){
-                return $category->ads->filter(function(Ad $ad){
-                    return $ad->status == 'online';
-                })->count();
-            })->take(3)
-            ->map(function(Category $category){
-                $trans_category = $category->translate();
-                return [
-                    $trans_category['name'] => $this->get_category_latest_ads($category)
-                ];
-            })
-            ->flatMap(function($c){
-                return $c;
-            })
-            ->all();
+        $ads = Ad::with('owner')->where('status', 'online')->get()
+            ->sortByDesc(function($ad){
+            return $ad['start_date'];
+        })->take(7);
+        return $this->fractal->createData(new Collection($ads, new AdsTransformer))->toArray()['data'];
     }
 
     /**
@@ -120,5 +111,24 @@ class PagesController extends Controller
             return $ad['start_date'];
         });
         return $this->fractal->createData(new Collection($ads, new AdsTransformer))->toArray()['data'];
+    }
+
+    private function get_pop_ads()
+    {
+        return Category::with('ads')->get()->sortByDesc(function(Category $category){
+                return $category->ads->filter(function(Ad $ad){
+                    return $ad->status == 'online';
+                })->count();
+            })->take(2)
+            ->map(function(Category $category){
+                $trans_category = $category->translate();
+                return [
+                    $trans_category['name'] => $this->get_category_latest_ads($category)
+                ];
+            })
+            ->flatMap(function($c){
+                return $c;
+            })
+            ->all();
     }
 }

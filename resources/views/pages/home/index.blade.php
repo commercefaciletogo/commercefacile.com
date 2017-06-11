@@ -140,21 +140,58 @@
                     {{--<latest-ads></latest-ads>--}}
 
                     <div class="ui container" v-cloak>
-                        <div class="row" style="border-bottom: 2px solid rgb(209, 213, 222); background: white; padding: .5em; margin-bottom: 1em;">
-                            <a href="" style="font-size: 1.5em; color: #1d305d;">
-                                {{ trans('general.latest_ads') }}
-                            </a>
+                        <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
+
+                            <div class="row" style="border-bottom: 2px solid rgb(209, 213, 222); background: white; padding: .5em;">
+                                <a style="font-size: 1.5em; color: #1d305d;">
+                                    {{ trans('general.latest_ads') }}
+                                </a>
+                            </div>
+
+                            <div class="row" style="background: transparent;">
+                                <div class="ads-slide" style="height: 100px;">
+
+                                    @foreach($latest as $ad)
+                                        <a href="{{ route('ads.single', ['id' => $ad['uuid']]) }}" style="width: 322px; color: #1d305d; margin-right: .5em;">
+                                            <div class="ui container" style="background-color: #fcfcfd;">
+                                                <div class="ui grid" style="margin: 0;">
+                                                    <div class="column" style="
+                                                        background-image: url({!! $ad['image'] !!});
+                                                        background-position: center;
+                                                        background-repeat: no-repeat;
+                                                        padding: 0;
+                                                        width: 100px;
+                                                        height: 100px;
+                                                        background-size: contain;
+                                                        ">
+                                                    </div>
+                                                    <div class="column"  style="width: 222px!important;display: flex;flex-direction: column;justify-content: space-between;">
+                                                        <div class="row title elsipzise" style="font-size: 1.5em;">
+                                                            <span>{{ $ad['title'] }}</span>
+                                                        </div>
+                                                        <div class="row price" style="font-size: 1.2em;">{{ $ad['price'] }} FCFA</div>
+                                                        <div class="row description" style="color: #77829d; font-size: .9em;">
+                                                            <img style="width: 15px;" class="ui mini spaced image" src="{{ asset('/img/icons/user_outline.png') }}"><span>{{ $ad['owner']['name'] }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @endforeach
+
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row" style="background: transparent;">
                             <div class="ui segments" style="border: 0; box-shadow: none; border-radius: 0;">
                                 <div class="ui segment" style="background: transparent; padding: 0; border: 0; box-shadow: none; border-radius: 0; margin-bottom: 2em;">
 
-                                    @foreach($latest as $cat => $ads)
+                                    @foreach($pop_cat as $cat => $ads)
 
                                         <div class="ui container" style="margin-bottom: 1em; border-bottom: 2px solid rgb(209, 213, 222);">
                                             <div class="row" style="padding: .5em; background: #606e8d;">
-                                                <a href="" style="font-size: 1.2em; color: white; ">{{ $cat }}</a>
+                                                <a style="font-size: 1.2em; color: white; ">{{ $cat }}</a>
                                             </div>
 
                                             <div class="row" style="background: transparent;">
