@@ -110,8 +110,8 @@
                             <div class="eight wide column search-input">
                                 <form @submit.prevent="updateSearchQuery" class="ui form" style="margin-bottom: 0 !important;">
                                     <div class="ui action small fluid input">
-                                        <input v-model="filter.q" style="border-radius: 0; border: 1px solid #606e8d !important; padding: .4em;" type="text" placeholder="Search...">
-                                        <button type="submit" style="border: 1px solid #606e8d !important; border-radius: 0; background: #606e8d; color: white;" class="ui button">{{ trans('general.search') }}</button>
+                                        <input v-model="filter.q" style="border-radius: 0; border: 1px solid #606e8d !important; padding: .4em;" type="text">
+                                        <button type="submit" style="border: 1px solid #606e8d !important; border-radius: 0; background: #606e8d; color: white;" class="ui button" v-text="searchButton"></button>
                                     </div>
                                 </form>
                             </div>
@@ -353,5 +353,9 @@
             $('.ui.accordion.field').accordion();
         });
     </script>
-    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/multiple.js"></script>
+    @if(App::environment('local'))
+        <script src="js/multiple.js"></script>
+    @else
+        <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/multiple.js"></script>
+    @endif
 @endsection

@@ -21,7 +21,8 @@ class RolesSeeder extends Seeder
         return [
             ['name' => 'admin'],
             ['name' => 'employee'],
-            ['name' => 'manager']
+            ['name' => 'manager'],
+            ['name' => 'agent']
         ];
     }
 }

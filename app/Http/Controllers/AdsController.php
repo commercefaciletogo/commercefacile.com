@@ -9,6 +9,7 @@ use App\Commerce\Transformers\AdsTransformer;
 use App\Commerce\Transformers\AdTransformer;
 use App\Commerce\Transformers\UserPublicAdsTransformer;
 use App\Events\AdWasSubmitted;
+use App\Events\AdsWereUpdated;
 use App\Jobs\DeleteAdImages;
 use App\Jobs\DownloadAdImages;
 use App\Jobs\ProcessAdImages;
@@ -139,9 +140,11 @@ class AdsController extends Controller
     public function single($id)
     {
         $ad = Ad::with('images', 'owner', 'category', 'owner.location')
+            ->where('status', 'online')
             ->where('uuid', $id)
             ->first();
         if(! $ad) abort(404);
+        
         $similar = Ad::with('images', 'category')
             ->where('status', 'online')
             ->where('category_id', $ad->category_id)
@@ -217,6 +220,13 @@ class AdsController extends Controller
 
         if(!$ad) abort(404);
 
+        $paths = $ad->images->map(function($img){
+            return $this->formatPath($img['path']);
+        });
+
+
+        $ad->images()->delete();
+
         $data = [
             'category_id' => request()->category_id,
             'title' => request()->title,
@@ -250,6 +260,18 @@ class AdsController extends Controller
         $this->deleteAdImages($paths, 'public');
 
         return $paths;
+    }
+
+    public function changeStatus($id)
+    {
+        $ad = Ad::find($id);
+        if(!$ad) return abort(404);
+
+        $status = request()->status;
+        $ad->update(['status' => $status, 'start_date' => Carbon::now()]);
+        event(new AdsWereUpdated());
+
+        return redirect()->back();
     }
 
     public function report($uuid)
@@ -304,6 +326,8 @@ class AdsController extends Controller
 
         $ad->delete();
 
+        event(new AdsWereUpdated());
+
         return redirect()->route('user.profile', ['user_name' => auth('user')->user()->slug]);
     }
 
@@ -331,12 +355,13 @@ class AdsController extends Controller
     {
         $img_paths = [];
         $total_images = (int)$request->image_length;
-        for ($i = 1; $i <= $total_images; $i++) {
-            $key = "image_{$i}";
+        for ($i = 0; $i < $total_images; $i++) {
+            $img_num = $i + 1;
+            $key = "image_{$img_num}";
             $uploadedFile = $request->file($key);
 
             $path = Storage::disk('local')
-                ->putFileAs('ads', $uploadedFile, "{$uuid}_{$i}.jpg");
+                ->putFileAs('ads', $uploadedFile, "{$uuid}_{$img_num}.jpg");
 
             array_push($img_paths, $path);
         }

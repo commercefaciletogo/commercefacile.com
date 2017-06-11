@@ -116,5 +116,7 @@ return [
     'cancel' => 'Annuler',
     'sure?' => 'Êtes-vous sûr?',
     'no_ad' => 'Pas d\' annonces.',
-    'no_favorite' => 'Pas de favoris'
+    'no_favorite' => 'Pas de favoris',
+    'copy_link' => "Copier votre lien",
+    'view_user_all' => 'Voir toutes ses annonces'
 ];

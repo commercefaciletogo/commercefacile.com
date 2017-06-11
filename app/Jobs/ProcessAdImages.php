@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Ad;
 use App\AdImage;
 use App\Events\AdWasSubmitted;
+use App\Events\AdsWereUpdated;
 use App\Events\ProcessingAdImages;
 use Delight\Ids\Id;
 use Illuminate\Bus\Queueable;
@@ -81,7 +82,8 @@ class ProcessAdImages implements ShouldQueue
                         'condition' => $this->data['condition'],
                         'description' => $this->data['description'],
                         'price' => $this->data['price'],
-                        'negotiable' => $this->data['negotiable']
+                        'negotiable' => $this->data['negotiable'],
+                        'status' => 'pending'
                     ]);
                 }
                 //update ad with code
@@ -97,6 +99,7 @@ class ProcessAdImages implements ShouldQueue
                 $this->savePaths($paths, $ad);
                 event(new ProcessingAdImages($this->user, 100));
             });
+            event(new AdsWereUpdated());
             event(new AdWasSubmitted($this->user, true));
         }catch (\Exception $e){
             event(new AdWasSubmitted($this->user, false));
@@ -212,12 +215,21 @@ class ProcessAdImages implements ShouldQueue
         $paths = [];
         foreach ($this->getSizes() as $size) {
             $path = "ads/{$name}_{$size}.jpg";
-            var_dump($path);
+            var_dump("******************************BEGIN {$path} OPERATION******************************");
+            if(Storage::cloud()->exists($path)){
+                var_dump("{$path} exists");
+                Storage::cloud()->delete($path);
+                var_dump("{$path} deleted");
+            }
+            var_dump("getting local image @ {$path}");
             $file = $this->getImage($path);
+            var_dump("saving {$path}");
             Storage::cloud()->put($path, $file);
+            var_dump("{$path} saved");
             $path_url = $this->getUrlPath($path);
             var_dump($path_url);
             $paths = array_add($paths, $size, $path_url);
+            var_dump("******************************END {$path} OPERATION******************************");
         }
         return $paths;
     }

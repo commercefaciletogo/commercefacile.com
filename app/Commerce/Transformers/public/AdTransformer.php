@@ -69,7 +69,7 @@ class AdTransformer extends TransformerAbstract
                 return $image['size'] == 'big';
             })->map(function($image){
                 return $image['path'];
-            })->all();
+            })->sort()->all();
     }
 
     private function get_trans_category_parent(Category $category)

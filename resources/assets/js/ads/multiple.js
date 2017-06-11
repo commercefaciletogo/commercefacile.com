@@ -31,7 +31,9 @@ const locales = {
             recentAds: "recent-ads",
             sort: 'sort',
             location: 'Location',
-            category: 'Category'
+            category: 'Category',
+            search: 'Search',
+            reset: 'Reset'
         }
     },
     fr: {
@@ -40,7 +42,9 @@ const locales = {
             recentAds: "annonces-recentes",
             sort: 'trier',
             location: 'Lieu',
-            category: 'Categorie'
+            category: 'Categorie',
+            search: 'Chercher',
+            reset: 'Réinitialiser'
         }
     }
 };
@@ -109,6 +113,11 @@ new Vue({
         'no-result': NoResult
     },
     computed: {
+        searchButton() { 
+            let text = this.$t('filter.search');
+            if (this.search.q) text = this.$t('filter.reset');
+            return text;
+        },
         query(){
             let base = `&${this.$t('filter.sort')}=${this.filter.sort}`;
             if(this.filter.category.id !== null) base = `${base}&c=${this.filter.category.uuid}`;
@@ -302,7 +311,12 @@ new Vue({
             let search = `?${queryString.stringify(params)}`;
             history.push(search);
         },
-        updateSearchQuery(){
+        updateSearchQuery() {
+            if (this.search.q) {
+                this.$set(this.filter, 'q', null);
+                this.$set(this.search, 'q', null);
+                return;
+            }
             if(_.isEmpty(this.filter.q)) return ;
             this.$set(this.search, 'q', this.filter.q);
         },

@@ -1,5 +1,5 @@
-import Vue from 'vue';
 import axios from 'axios';
+import Vue from 'vue';
 
 const host = window.location.host;
 const socket = io.connect('http://' + host + ':8443');
@@ -41,19 +41,23 @@ new Vue({
             $('.ui.search')
                 .search({
                     apiSettings: {
-                        url: '//api.github.com/search/repositories?q={query}'
+                        url: `${window.usersSearchUrl}?q={query}`
                     },
                     fields: {
                         results : 'items',
-                        title   : 'name',
-                        url     : 'html_url'
+                        title: 'name',
+                        description: 'agent',
+                        price: 'ads',
+                        action: 'view',
+                        actionText: '<i class="icon eye"></i>',
+                        actionUrl: 'url',
                     },
-                    minCharacters : 3
+                    minCharacters : 8
                 })
         }
     },
     mounted(){
-
+        this.initSearch();
         socket.on('Admin:AdsWereUpdated', ({ data }) => {
             this.pending = !data.pending.empty;
         });

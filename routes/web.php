@@ -46,24 +46,32 @@ Route::localizedGroup(function(){
         Route::group(['middleware' => ['admin']], function(){
             Route::get('/logout', ['as' => 'admin.get.logout', 'uses' => 'AdminAuth\LoginController@logout']);
 
-            Route::group(['prefix' => 'api'], function(){
-                Route::get('ads', ['as' => 'api.ads', 'uses' => 'AdsApiController@all']);
-                Route::get('ads/status', ['as' => 'api.ads.status', 'uses' => 'AdsApiController@status']);
-                Route::post('ads/{id}', ['as' => 'api.ad.review', 'uses' => 'AdsApiController@review']);
-                Route::delete('ads/{id}', ['as' => 'api.ad.delete', 'uses' => 'AdsApiController@delete']);
+            Route::group(['middleware' => ['redirectIfAgent']], function(){
+                    Route::group(['prefix' => 'api'], function(){
+                    Route::get('ads', ['as' => 'api.ads', 'uses' => 'AdsApiController@all']);
+                    Route::get('ads/status', ['as' => 'api.ads.status', 'uses' => 'AdsApiController@status']);
+                    Route::post('ads/{id}', ['as' => 'api.ad.review', 'uses' => 'AdsApiController@review']);
+                    Route::delete('ads/{id}', ['as' => 'api.ad.delete', 'uses' => 'AdsApiController@delete']);
+                });
+
+                Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminPagesController@dashboardPage']);
+                Route::get('/ads', ['as' => 'admin.ads', 'uses' => 'AdminPagesController@adsPage']);
+                Route::get('/ads/{id}', ['as' => 'admin.ad.action', 'uses' => 'AdminPagesController@adPage']);
+                Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminPagesController@usersPage']);
+                Route::get('/users/search', ['as' => 'admin.users.search', 'uses' => 'AdminPagesController@usersSearch']);
+
+                Route::get('/agents', ['as' => 'admin.agents', 'uses' => 'AdminPagesController@agentsPage']);
+                Route::post('/agents', ['as' => 'admin.agent.save', 'uses' => 'AdminPagesController@agentsNew']);
+
+                Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
+                Route::delete('/employees', ['as' => 'employee.delete', 'uses' => 'AdminEmployeesController@delete']);
+                Route::post('/employees/new', ['as' => 'employee.save', 'uses' => 'AdminEmployeesController@save']);
+                Route::put('/employees/{id}/pass-reset', ['as' => 'employee.pass.reset', 'uses' => 'AdminEmployeesController@reset']);
+                Route::put('/employees/{id}/role-change', ['as' => 'employee.role.change', 'uses' => 'AdminEmployeesController@changeRole']);
+                Route::post('/employees', ['as' => 'employee.pass.change', 'uses' => 'AdminEmployeesController@changePassword']);
             });
 
-            Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminPagesController@dashboardPage']);
-            Route::get('/ads', ['as' => 'admin.ads', 'uses' => 'AdminPagesController@adsPage']);
-            Route::get('/ads/{id}', ['as' => 'admin.ad.action', 'uses' => 'AdminPagesController@adPage']);
-            Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminPagesController@usersPage']);
-
-            Route::get('/employees', ['as' => 'admin.employees', 'uses' => 'AdminPagesController@employeesPage']);
-            Route::delete('/employees', ['as' => 'employee.delete', 'uses' => 'AdminEmployeesController@delete']);
-            Route::post('/employees/new', ['as' => 'employee.save', 'uses' => 'AdminEmployeesController@save']);
-            Route::put('/employees/{id}/pass-reset', ['as' => 'employee.pass.reset', 'uses' => 'AdminEmployeesController@reset']);
-            Route::put('/employees/{id}/role-change', ['as' => 'employee.role.change', 'uses' => 'AdminEmployeesController@changeRole']);
-            Route::post('/employees', ['as' => 'employee.pass.change', 'uses' => 'AdminEmployeesController@changePassword']);
+            Route::get('/agents/{id}', ['as' => 'admin.agent', 'uses' => 'AdminPagesController@agentPage']);
         });
     });
 
@@ -103,6 +111,7 @@ Route::localizedGroup(function(){
 //        ads/{id}/update
         Route::transPost('routes.ads-single-update', ['as' => 'ads.single.update', 'uses' => 'AdsController@update']);
         Route::transPost('routes.ads-single-update-cancel', ['as' => 'ads.single.update.cancel', 'uses' => 'AdsController@cancelUpdate']);
+        Route::put('ads/{id}/change-status', ['as' => 'ads.single.status', 'uses' => 'AdsController@changeStatus']);
 
 //        ads/{id}/report
         Route::post('routes.ads-single-report', ['as' => 'ads.single.report', 'uses' => 'AdsController@report']);

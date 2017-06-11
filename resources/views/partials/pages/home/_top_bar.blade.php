@@ -44,8 +44,8 @@
                 <div class="ui container">
                     <div class="ui borderless menu" style="border-radius: 0; border: 0; box-shadow: none; background: #1D305D;">
 
-                        <a class="item" href="{{ route('home.page') }}" style="color: white;">
-                            <img style="" src="{!! asset('/img/logos/logo_acro.png') !!}" alt="">
+                       <a class="item" href="{{ route('home.page') }}" style="color: white;">
+                            <img src="{{ asset('/img/logos/logo_w_d_white.png') }}" style="width: 250px;">
                         </a>
                         <div class="right menu">
                             <div class="item">

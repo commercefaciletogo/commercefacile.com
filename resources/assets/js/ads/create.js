@@ -1,18 +1,25 @@
 import _ from 'lodash';
 import axios from 'axios';
-import Vue from 'vue';
+import base64toblob from 'base64toblob';
 import Notify from 'izitoast';
+import Vue from 'vue';
 
 import Categories from '../components/ads/create/Categories.vue';
+import ImageCompressor from '../helpers/compressor';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
 import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
+
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
+
 
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 
 new Vue({
     el: 'div#main',
     data: {
+        showProgress: false,
         submitting: false,
         categories: [],
         locations: [],
@@ -27,6 +34,7 @@ new Vue({
             description: '',
             condition: 1,
             photos: [],
+            compressedImages: [],
             price: {
                 amount: '',
                 negotiable: true
@@ -46,7 +54,17 @@ new Vue({
                 id: ''
             },
         },
-        moreImageDefaultStyle: 'ui tiny compact button inp act'
+        moreImageDefaultStyle: 'ui tiny compact button inp act',
+        currentUploadedFile: {},
+        scale: 100,
+        quality: 50,
+        result: {},
+        reader: {},
+        process: {
+            status: '',
+            percent: 5,
+            modal: {}
+        },
     },
     computed: {
         moreImage() {
@@ -61,7 +79,8 @@ new Vue({
         'option-item' : OptionItem
     },
     methods: {
-        submit(){
+        submit() {
+            
             this.submitting = true;
             this.errors.title = _.trim(this.newAd.title).length < 5;
             this.errors.category = !_.isNumber(this.newAd.category.id);
@@ -93,8 +112,8 @@ new Vue({
             _.forEach(this.newAd.photos, (photo, i) => data.append(`image_${i + 1}`, photo.file));
 
             axios.post(window.postAdUrl, data).then(res => {
-                if(res.data.done){
-                    window.location = window.profileUrl;
+                if (res.data.done) {
+                    this.process.modal.open();
                 }
             }).catch(error => {
                 this.submitting = false;
@@ -107,16 +126,35 @@ new Vue({
         addImage(event){
             const input = event.target;
 
-            if(input.files && input.files[0]){
-                this.newAd.photos.push({
-                    id: input.files[0].name,
-                    file: input.files[0]
-                });
-                this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
+            if (input.files && input.files[0]) {
+                let file = input.files[0];
+                let compressor = new ImageCompressor(file,
+                    document.createElement('canvas'),
+                    this.scale,
+                    this.quality,
+                    this.doneCompressing);
+                
+                compressor.run();
             }
+        }, 
+
+        doneCompressing({ compressed }) {
+            console.log(compressed);
+            this.newAd.photos.push({
+                id: compressed.file.name,
+                file: compressed.file,
+                base: compressed.base64
+            });
+            this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
         },
+        
+
         removeImage(id){
-            this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
+            console.log(id);
+            let newComp = _.reject(this.newAd.photos, { 'id': id });
+            this.$set(this.newAd, 'photos', newComp);
+            console.log(newComp);
+             
         },
         chooseCategory(e){
 
@@ -140,7 +178,8 @@ new Vue({
                 .catch(error => {
                 });
         },
-        closeCategoryModal({id, name}){
+        closeCategoryModal({id, name}) {
+            console.log(id, name);
             this.selectedSubCategory = {id, name};
             this.newAd.category.text = `${name}`;
             this.newAd.category.id = id;
@@ -150,9 +189,31 @@ new Vue({
             this.user.location.id = id;
             this.user.location.text = name;
             $('#chooseLocation').remodal().close();
+        },
+        getProcessLoadingModal() {
+            return $('[data-remodal-id=process-loading]').remodal({closeOnOutsideClick: false});
         }
     },
-    mounted(){
+    mounted() {    
+         this.process.modal = $('[data-remodal-id=process-loading]').remodal({ closeOnOutsideClick: false, hashTracking: false });
+        
+        const channel = `Author.${window.authorId}`;
+        socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
+            console.log(channel);
+            this.showProgress = true;
+            $('#process').progress('set percent', data.percent);
+            this.process.status = data.status;
+        });
+
+        socket.on(`${channel}:AdWasSubmitted`, ({data}) => {
+            if(data.submitted){
+                window.location = window.profileUrl;
+            }else {
+                $('#process').progress('set error');
+                this.process.status = "";
+                this.process.modal.close();
+            }
+        });
 
         $('#chooseCategory').accordion();
 

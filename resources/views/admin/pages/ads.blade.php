@@ -16,12 +16,24 @@
                     </div>
                 </div>
                 <div class="six wide column">
-                    <form style="margin-bottom: 0;" @submit.prevent="search">
-                        <div class="ui mini fluid icon input">
-                            <input v-model="query" type="text">
-                            <i @click="search" class="circular search link icon"></i>
+                    <div class="ui grid">
+                        <div class="twelve wide column">
+                            <form style="margin-bottom: 0;" @submit.prevent="search">
+                                <div class="ui mini fluid icon input">
+                                    <input v-model="query" type="text">
+                                    <i @click="search" class="circular search link icon"></i>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                        <div class="tow wide column">
+                            <button v-show="showReset" @click="resetSearch" v-cloak class="ui basic icon mini button">
+                                <i class="remove icon"></i>
+                            </button>
+                        </div>
+                        <div class="two wide column">
+                            <div v-show="loading" class="ui active inline small loader"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="six wide right aligned column">
                     <div class="mini ui buttons">

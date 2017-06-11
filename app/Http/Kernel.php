@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'redirectIfNotOwner' => \App\Http\Middleware\RedirectIfNotOwner::class,
         'redirectIfNotLogin' => \App\Http\Middleware\RedirectIfNotLogIn::class,
+        'redirectIfAgent' => \App\Http\Middleware\RedirectIfAgent::class,
     ];
 }

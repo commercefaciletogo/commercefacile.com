@@ -39,15 +39,21 @@ class AdTransformer extends TransformerAbstract
     private function get_trans_category(Category $category)
     {
         $cat = $category->translate();
-        $par = $category->parent->translate();
-        return [
+        $catego = [
             'id' => $cat->category_id,
-            'name' => $cat->name,
-            'parent' => [
-                'id' => $par->category_id,
-                'name' => $par->name
-            ]
+            'name' => $cat->name
         ];
+        
+        if(!$category->parent){
+            return array_add($catego, 'parent', null);
+        }
+
+        $par = $category->parent->translate();
+        $parent = [
+            'id' => $par->category_id,
+            'name' => $par->name
+        ];
+        return array_add($catego, 'parent', $parent);
     }
 
     private function get_date(Ad $ad)

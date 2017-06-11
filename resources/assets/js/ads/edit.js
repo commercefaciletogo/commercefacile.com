@@ -1,12 +1,16 @@
 import _ from 'lodash';
 import axios from 'axios';
-import Vue from 'vue';
 import blodUtil from 'blob-util';
+import Vue from 'vue';
 
 import Categories from '../components/ads/create/Categories.vue';
+import ImageCompressor from '../helpers/compressor';
 import ImagePreview from '../components/ads/create/ImagePreview.vue';
 import OptionItem from '../components/ads/create/OptionItem.vue';
 import SubCategories from '../components/ads/create/SubCategories.vue';
+
+const host = window.location.host;
+const socket = io.connect('http://' + host + ':8443');
 
 let csrf = document.querySelector("meta[name=csrf-token]").content;
 let oldAd = window.oldAd;
@@ -30,9 +34,10 @@ new Vue({
             description: oldAd.description,
             condition: oldAd.condition,
             photos: [],
+            compressedImages: [],
             price: {
                 amount: oldAd.price.amount,
-                negotiable: true
+                negotiable: oldAd.price.negotiable
             }
         },
         errors: {
@@ -49,7 +54,14 @@ new Vue({
                 id: ''
             },
         },
-        moreImageDefaultStyle: 'ui tiny compact button inp act'
+        moreImageDefaultStyle: 'ui tiny compact button inp act',
+        scale: 100,
+        quality: 50,
+        process: {
+            status: '',
+            percent: 5,
+            modal: {}
+        },
     },
     computed: {
         moreImage() {
@@ -99,7 +111,7 @@ new Vue({
                 method: 'POST',
                 data: data}).then(res => {
                 if(res.data.done){
-                    return window.location = window.profileUrl;
+                    this.process.modal.open();
                 }
             }).catch(error => {
                 this.submitting = false;
@@ -118,16 +130,28 @@ new Vue({
         addImage(event){
             const input = event.target;
 
-            if(input.files && input.files[0]){
-                this.newAd.photos.push({
-                    id: input.files[0].name,
-                    file: input.files[0]
-                });
-                this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
+            if (input.files && input.files[0]) {
+                let file = input.files[0];
+                let compressor = new ImageCompressor(file,
+                    document.createElement('canvas'),
+                    this.scale,
+                    this.quality,
+                    this.doneCompressing);
+                
+                compressor.run();
             }
         },
-        removeImage(id){
-            this.newAd.photos = _.reject(this.newAd.photos, {'id': id});
+         doneCompressing({ compressed }) {
+            console.log(compressed);
+            this.newAd.photos.push({
+                id: compressed.file.name,
+                file: compressed.file,
+                base: compressed.base64
+            });
+            this.newAd.photos = _.uniqBy(this.newAd.photos, 'id');
+        },
+         removeImage(id) {
+             this.$set(this.newAd, 'photos', _.reject(this.newAd.photos, {'id': id}));
         },
         fetchSub(category){
             this.selectedCategory = category;
@@ -162,10 +186,11 @@ new Vue({
         convertImages(bases){
             console.log('start downloading...');
             _.each(bases, base => {
-                blodUtil.base64StringToBlob(base).then(blob => {
-                    this.newAd.photos.push({
+                blodUtil.base64StringToBlob(base)
+                .then(blob => {this.newAd.photos.push({
                         id: + new Date(),
-                        file: blob
+                        file: blob,
+                        base: `data:image/jpeg;base64,${base}`
                     });
                     this.newAdBuffer = _.cloneDeep(this.newAd);
                 }).catch(error => {
@@ -174,7 +199,27 @@ new Vue({
             })
         }
     },
-    mounted(){
+    mounted() {
+        
+        this.process.modal = $('[data-remodal-id=process-loading]').remodal({ closeOnOutsideClick: false, hashTracking: false });
+        
+        const channel = `Author.${window.authorId}`;
+        socket.on(`${channel}:ProcessingAdImages`, ({data}) => {
+            console.log(channel);
+            this.showProgress = true;
+            $('#process').progress('set percent', data.percent);
+            this.process.status = data.status;
+        });
+
+        socket.on(`${channel}:AdWasSubmitted`, ({data}) => {
+            if(data.submitted){
+                window.location = window.profileUrl;
+            }else {
+                $('#process').progress('set error');
+                this.process.status = "";
+                this.process.modal.close();
+            }
+        });
 
         this.convertImages(oldAd.images);
 

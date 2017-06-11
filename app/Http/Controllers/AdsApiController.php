@@ -56,7 +56,7 @@ class AdsApiController extends Controller
                 ->orderBy($sortCol, $sortDir);
         } else {
             $query = Ad::with(['owner', 'images', 'category', 'category.parent'])
-                ->orderBy('id', 'asc');
+                ->orderBy('updated_at', 'desc');
         }
 
         if($request->exists('q')){

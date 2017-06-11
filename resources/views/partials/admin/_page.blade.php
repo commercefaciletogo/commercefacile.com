@@ -90,9 +90,15 @@
     var adsStatusUrl = "{{ route('api.ads.status') }}";
     var changePasswordUrl = "{{ route('employee.pass.change') }}";
     var locale = "{!! Localization::getCurrentLocale() !!}";
+    var usersSearchUrl = "{{ route('admin.users.search') }}";
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
-<script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-layout.js"></script>
+@if(App::environment("production"))
+    <script src="https://b86068563707f1548c7c-cc73bb3144250bf95e4a0690bc25f5d2.ssl.cf5.rackcdn.com/assets/admin-page-layout.js"></script>
+@else
+    <script src="{{ asset('js/admin-page-layout.js') }} "></script>
+@endif
+
 @yield('scripts')
 </body>
 </html>

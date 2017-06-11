@@ -179,6 +179,19 @@
                 this.setFilter(this.status);
             });
 
+            this.$events.$on('vuetable:loading', () => {
+                this.$events.$emit('table:loading', {loading: true});
+            });
+
+            this.$events.$on('vuetable:loaded', () => {
+                this.$events.$emit('table:loading', {loading: false});
+            });
+
+            this.$events.$on('search:reset', () => {
+                this.query = '';
+               this.setSearchQuery();
+            });
+
             this.$events.$on('search', ({query}) => {
                 this.query = query;
                 console.log(this.query);
